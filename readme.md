@@ -22,6 +22,12 @@ Install plugin by OctoberCMS plugin udpater.
 
 Go to Settings->Updates&Plugins and find Gutenberg in search click on icon and install it.
 
+## Installation
+
+Install plugin by OctoberCMS plugin udpater.
+
+Go to Settings->Updates&Plugins and find Gutenberg in search click on icon and install it.
+
 ## Usage
 
 This plugin works only by implementing Gutenberg behavior in your model. 
@@ -39,7 +45,18 @@ After you need to add behavior to $implement in your model controller.
 public $implement = ['ReaZzon.Gutenberg.Behaviors.GutenbergController'];
 ```
 
-Done. Just open model form and your Gutenberg is ready to go!
+Done. Your model now has morphOne with Gutenberg Content Model by 'content' field.
 
+## Rendering
+
+Rendering examples below. 
+
+```twig
+{{ post.content.render }}
+```
+ 
+```php
+$post->content->render();
+```
 
 [reazzon.ru](https://reazzon.ru)
