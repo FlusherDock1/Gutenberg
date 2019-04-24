@@ -1,6 +1,20 @@
 # Gutenberg for OctoberCMS
 
+**PLUGIN CURRENTLY IN BETA ALSO AS LARABERG.**
+
 Integration of Laraberg by [VanOns\Laraberg](https://github.com/VanOns/laraberg) for OctoberCMS. All credits goes to VanOns.
+
+Working:
+- Common blocks
+- Formatting
+- Layout elements
+- Embeds
+
+Not working:
+- Widgets (they are mostly from WP :) so anyway)
+- Mediauploader (You can only paste links)
+
+Laraberg is currently in beta so is Gutenberg for OctoberCMS.
 
 ## Installation
 
