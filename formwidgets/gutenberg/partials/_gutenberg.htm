@@ -1,0 +1,18 @@
+<?php if ($this->previewMode): ?>
+
+    <div class="form-control">
+        <?= $value ?>
+    </div>
+
+<?php else: ?>
+
+    <input
+        type="hidden"
+        id="<?= $this->getId('input') ?>"
+        name="<?= $name ?>"
+        value="<?= e($model->getRawContent()) ?>"
+        class="form-control"
+        autocomplete="off"
+        data-control="gutenberg" />
+
+<?php endif ?>

@@ -1,0 +1,6 @@
+1.0.2: 
+  - Migrations
+  - create_blocks_table.php
+  - create_contents_table.php
+
+1.0.1: First version of Gutenberg

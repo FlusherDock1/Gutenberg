@@ -1,0 +1,7 @@
+{
+    "minimum-stability": "dev",
+    "prefer-stable" : true,
+    "require": {
+        "embed/embed": "^3.3"
+    }
+}
