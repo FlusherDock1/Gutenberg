@@ -22,12 +22,6 @@ Install plugin by OctoberCMS plugin udpater.
 
 Go to Settings->Updates&Plugins and find Gutenberg in search click on icon and install it.
 
-## Installation
-
-Install plugin by OctoberCMS plugin udpater.
-
-Go to Settings->Updates&Plugins and find Gutenberg in search click on icon and install it.
-
 ## Usage
 
 This plugin works only by implementing Gutenberg behavior in your model. 
