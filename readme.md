@@ -2,7 +2,7 @@
 
 Gutenberg is a rich-text visual editor from WordPress, with the features of bulidng content with blocks. With Gutenberg, you can create truly unique content for your website by simply dragging and dropping blocks.
 
-You can test it online here [Gutenberg playground](https://testgutenberg.com/)
+You can test it online here [Gutenberg playground](https://testgutenberg.com/).
 
 This plugin allows you to embed Gutenberg in the backend form of your own model by creating Polymorph relation with your model.
 
@@ -10,17 +10,17 @@ This plugin allows you to embed Gutenberg in the backend form of your own model 
 
 Integration of Laraberg by [VanOns\Laraberg](https://github.com/VanOns/laraberg) for OctoberCMS. All credits goes to VanOns.
 
-All current block are from standart [Gutenberg.js](https://github.com/front/gutenberg-js) package.
+All current block are from standart [Gutenberg.js](https://github.com/front/gutenberg-js) package. None of them are custom from Laraberg.
 
 **Working:**
 - Common blocks
     - Paragraph
-    - Image (only by link, file upload not working)
+    - Image _(only by link, file upload not working)_
     - Heading
-    - Audio (only by link, file upload not working)
+    - Audio _(only by link, file upload not working)_
     - List
     - Quote
-    - Video (only by link, file upload not working)
+    - Video _(only by link, file upload not working)_
 - Formatting
     - Code
     - Preformatted
@@ -35,7 +35,7 @@ All current block are from standart [Gutenberg.js](https://github.com/front/gute
     - Separator
     - Spacer
 - Embeds
-    - All embeds (only by links)
+    - All embeds _(only by links)_
 
 **Not working:**
 - Inline elements
