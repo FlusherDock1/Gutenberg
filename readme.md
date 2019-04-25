@@ -58,13 +58,11 @@ All current block are from standart [Gutenberg.js](https://github.com/front/gute
 I will be happy if you help me with medialibrary implementation. Please sumbit your PR in [plugin Github Repository](https://github.com/FlusherDock1/Gutenberg).
 
 ---
-
-
 ## Installation
 
-Install plugin by OctoberCMS plugin udpater.
+Install plugin by OctoberCMS plugin updater.
 
-Go to `Settings` -> `Updates&Plugins` and find Gutenberg in search click on icon and install it.
+Go to Settings –> Updates&Plugins find Gutenberg in plugin search. Click on icon and install it.
 
 ## Usage
 
@@ -93,7 +91,7 @@ Rendering examples below.
 {{ post.content.render }}
 ```
  
-```php
+```
 $post->content->render();
 ```
 ---

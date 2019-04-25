@@ -1,14 +1,12 @@
 /*
- * Rich text editor form field control (WYSIWYG)
+ * Rich text editor with blocks form field control (WYSIWYG)
  *
  * Data attributes:
- * - data-control="richeditor" - enables the rich editor plugin
+ * - data-control="gutenberg" - enables the rich editor plugin
  *
  * JavaScript API:
- * $('textarea').richEditor()
+ * $('input').gutenberg()
  *
- * Dependancies:
- * - Froala Editor (froala_editor.js)
  */
 +function ($) { "use strict";
     var Base = $.oc.foundation.base,
