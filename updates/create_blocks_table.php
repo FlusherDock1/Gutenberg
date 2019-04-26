@@ -11,7 +11,7 @@ class CreateBlocksTable extends Migration
         Schema::create('reazzon_gutenberg_blocks', function(Blueprint $table) {
             $table->engine = 'InnoDB';
             $table->increments('id');
-            $table->json('title');
+            $table->text('title');
             $table->text('raw_content')->nullable();
             $table->text('rendered_content')->nullable();
             $table->string('status');

@@ -16,6 +16,13 @@ class Block extends Model
     public $table = 'reazzon_gutenberg_blocks';
 
     /**
+     * Jsonable fields
+     */
+    public $jsonable = [
+        'title'
+    ];
+
+    /**
      * Updates slug according to title
      */
     public function updateSlug()
