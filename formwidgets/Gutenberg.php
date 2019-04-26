@@ -49,7 +49,7 @@ class Gutenberg extends FormWidgetBase
         // Required dependencies
         // The Gutenberg editor expects React, ReactDOM, Moment and JQuery to be in the environment it runs in. 
         // An easy way to do this would be to add the following lines to your page:
-        // Juqery already on page by default OctoberCMS env.
+        // Jquery already on page by default OctoberCMS env.
         $this->addJs('js/react.production.min.js', 'ReaZzon.Gutenberg');
         $this->addJs('js/react-dom.production.min.js', 'ReaZzon.Gutenberg');
         $this->addJs('js/moment.min.js', 'ReaZzon.Gutenberg');
