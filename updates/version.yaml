@@ -1,3 +1,7 @@
+1.0.3: 
+  - Deleting laraberg json column type, adding public assets
+  - update_blocks_table.php
+
 1.0.2: 
   - Migrations
   - create_blocks_table.php
