@@ -8,7 +8,7 @@ class BlockController extends ApplicationController
     public function index()
     {
         $blocks = Block::get();
-        return $blocks;
+        return $this->ok($blocks);
     }
 
     public function store(Request $request)

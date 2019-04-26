@@ -94,5 +94,11 @@ Rendering examples below.
 ```
 $post->content->render();
 ```
+
+In order to correctly display Gutenberg styles. You must add laraberg public styles to your page:
+```html
+<link href="/plugins/reazzon/gutenberg/assets/laraberg.min.css" rel="stylesheet">
+```
+
 ---
 Devloped by [reazzon.ru](https://reazzon.ru).

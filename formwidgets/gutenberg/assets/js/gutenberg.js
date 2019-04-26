@@ -41,7 +41,6 @@
         }
 
         Laraberg.initGutenberg(this.$el.attr('id'), { minHeight: '300px' })
-
         this.initProxy()
     }
 
