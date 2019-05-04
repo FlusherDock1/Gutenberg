@@ -100,5 +100,13 @@ In order to correctly display Gutenberg styles. You must add laraberg public sty
 <link href="/plugins/reazzon/gutenberg/assets/laraberg.min.css" rel="stylesheet">
 ```
 
+## Working with source js code
+
+If you want add some features you can work with source react files in /formwidgets/gutenberg/assets/resources folder run following commands:
+```bash
+npm i
+npm run watch
+```
+
 ---
 Devloped by [reazzon.ru](https://reazzon.ru).
