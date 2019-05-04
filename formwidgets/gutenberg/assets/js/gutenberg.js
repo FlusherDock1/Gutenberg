@@ -40,7 +40,7 @@
             this.$el.attr('id', 'element-' + Math.random().toString(36).substring(7))
         }
 
-        Laraberg.initGutenberg(this.$el.attr('id'), { minHeight: '300px' })
+        Laraberg.initGutenberg(this.$el.attr('id'), { minHeight: '300px', laravelFilemanager: true })
         this.initProxy()
     }
 

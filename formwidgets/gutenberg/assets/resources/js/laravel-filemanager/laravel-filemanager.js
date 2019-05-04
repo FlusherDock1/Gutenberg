@@ -5,7 +5,7 @@ export default function (config) {
   class LaravelFilemanager extends Component {
     constructor () {
       super(...arguments)
-      this.openModal = this.openModal.bind(this)
+      this.openMediaManager = this.openMediaManager.bind(this)
       this.onSelect = this.onSelect.bind(this)
       this.state = {
         media: []
@@ -25,36 +25,57 @@ export default function (config) {
       }
     }
 
-    onSelect (url, path) {
+    onSelect (items) {
       this.props.value = null
       const { multiple, onSelect } = this.props
-      const media = {
-        url: url,
-        type: this.getMediaType(path)
+
+      var path, publicUrl
+      for (var i=0, len=items.length; i<len; i++) {
+          path = items[i].path
+          publicUrl = items[i].publicUrl
+
+          const media = {
+            url: publicUrl,
+            type: this.getMediaType(path)
+          }
+
+          if (multiple) {
+            this.state.media.push(media)
+          } else if (items.length > 1) {
+            $.oc.alert($.oc.lang.get('mediamanager.invalid_file_single_insert'))
+            return
+          }
+
+          onSelect(multiple ? this.state.media : media)
       }
-      if (multiple) { this.state.media.push(media) }
-      onSelect(multiple ? this.state.media : media)
     }
 
-    openModal () {
-      let options = {}
-      if (this.props.allowedTypes.length === 1 && this.props.allowedTypes[0] === 'image') {
-        options.type = 'image'
-      } else {
-        options.type = 'file'
-      }
-      this.openLFM(options, this.onSelect)
+    openMediaManager () {
+      let media = new $.oc.mediaManager.popup({
+        alias: 'ocmediamanager',
+        cropAndInsertButton: true,
+        onInsert: (items) => {
+          if (!items.length) {
+              $.oc.alert($.oc.lang.get('mediamanager.invalid_file_empty_insert'))
+              return
+          }
+      
+          this.onSelect(items)
+
+          media.hide()
+        }
+      })
     }
 
-    openLFM (options, cb) {
-      let routePrefix = (config && config.prefix) ? config.prefix : '/laravel-filemanager'
-      window.open(routePrefix + '?type=' + options.type || 'file', 'FileManager', 'width=900,height=600')
-      window.SetUrl = cb
-    }
+    // openLFM (options, cb) {
+    //   let routePrefix = (config && config.prefix) ? config.prefix : '/laravel-filemanager'
+    //   window.open(routePrefix + '?type=' + options.type || 'file', 'FileManager', 'width=900,height=600')
+    //   window.SetUrl = cb
+    // }
 
     render () {
       const { render } = this.props
-      return render({ open: this.openModal })
+      return render({ open: this.openMediaManager })
     }
   }
 
