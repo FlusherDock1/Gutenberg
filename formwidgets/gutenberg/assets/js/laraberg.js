@@ -81,487 +81,969 @@
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = "./src/resources/js/laraberg.js");
+/******/ 	return __webpack_require__(__webpack_require__.s = "./js/laraberg.js");
 /******/ })
 /************************************************************************/
 /******/ ({
 
-/***/ "./node_modules/@babel/runtime/helpers/arrayWithoutHoles.js":
-/*!******************************************************************!*\
-  !*** ./node_modules/@babel/runtime/helpers/arrayWithoutHoles.js ***!
-  \******************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
+/***/ "./js/api/api-fetch.js":
+/*!*****************************!*\
+  !*** ./js/api/api-fetch.js ***!
+  \*****************************/
+/*! exports provided: postPage, putPage, default, configureAPI */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
-function _arrayWithoutHoles(arr) {
-  if (Array.isArray(arr)) {
-    for (var i = 0, arr2 = new Array(arr.length); i < arr.length; i++) {
-      arr2[i] = arr[i];
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "postPage", function() { return postPage; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "putPage", function() { return putPage; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return apiFetch; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "configureAPI", function() { return configureAPI; });
+/* harmony import */ var _mock_data__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./mock-data */ "./js/api/mock-data.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _gutenberg_settings__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../gutenberg/settings */ "./js/gutenberg/settings.js");
+/* harmony import */ var _lib_notices__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../lib/notices */ "./js/lib/notices.js");
+
+
+
+
+let routePrefix;
+const requests = {
+  getBlock: {
+    method: 'GET',
+    regex: /\/wp\/v2\/blocks\/(\d*)/g,
+    run: getBlock
+  },
+  getBlocks: {
+    method: 'GET',
+    regex: /\/wp\/v2\/blocks($|[?].*)/g,
+    run: getBlocks
+  },
+  postBlocks: {
+    method: 'POST',
+    regex: /\/wp\/v2\/blocks.*/g,
+    run: postBlocks
+  },
+  putBlock: {
+    method: 'PUT',
+    regex: /\/wp\/v2\/blocks\/(\d*)/g,
+    run: putBlock
+  },
+  deleteBlock: {
+    method: 'DELETE',
+    regex: /\/wp\/v2\/blocks\/(\d*)/g,
+    run: deleteBlock
+  },
+  getEmbed: {
+    method: 'GET',
+    regex: /\/oembed\/1\.0\/proxy\?(.*)/g,
+    run: getEmbed
+  },
+  optionsMedia: {
+    method: 'OPTIONS',
+    regex: /\/wp\/v2\/media/g,
+    run: optionsMedia
+  },
+  getPage: {
+    method: 'GET',
+    regex: /\/wp\/v2\/pages\/(\d*)/g,
+    run: getPage
+  },
+  putPage: {
+    method: 'PUT',
+    regex: /\/wp\/v2\/pages\/(\d*)/g,
+    run: putPage
+  },
+  getTaxonomies: {
+    method: 'GET',
+    regex: /\/wp\/v2\/taxonomies\?(.*)/g,
+    run: getTaxonomies
+  },
+  getThemes: {
+    method: 'GET',
+    regex: /\/wp\/v2\/themes/g,
+    run: getThemes
+  },
+  getTypeBlock: {
+    method: 'GET',
+    regex: /\/wp\/v2\/types\/wp_block/g,
+    run: getTypeBlock
+  },
+  getTypePage: {
+    method: 'GET',
+    regex: /\/wp\/v2\/types\/page/g,
+    run: getTypePage
+  },
+  getTypes: {
+    method: 'GET',
+    regex: /\/wp\/v2\/types\?(.*)/g,
+    run: getTypes
+  },
+  getUsers: {
+    method: 'GET',
+    regex: /\/wp\/v2\/users\/\?(.*)/g,
+    run: getUsers
+  }
+};
+
+async function getBlock(options, matches) {
+  let id = matches[1];
+  let response = await axios__WEBPACK_IMPORTED_MODULE_1___default.a.get(`${routePrefix}/blocks/${id}`);
+  return response.data;
+}
+
+async function getBlocks() {
+  let response = await axios__WEBPACK_IMPORTED_MODULE_1___default.a.get(`${routePrefix}/blocks`);
+  return response.data;
+}
+
+async function postBlocks(options) {
+  let response = await axios__WEBPACK_IMPORTED_MODULE_1___default.a.post(`${routePrefix}/blocks`, options.data);
+  return response.data;
+}
+
+async function putBlock(options, matches) {
+  let id = matches[1];
+  let response = await axios__WEBPACK_IMPORTED_MODULE_1___default.a.put(`${routePrefix}/blocks/${id}`, options.data);
+  return response.data;
+}
+
+async function deleteBlock(options, matches) {
+  let id = matches[1];
+  let response = await axios__WEBPACK_IMPORTED_MODULE_1___default.a.delete(`${routePrefix}/blocks/${id}`);
+  return response.data;
+}
+
+async function getEmbed(options, matches) {
+  let response = await axios__WEBPACK_IMPORTED_MODULE_1___default.a.get(`${routePrefix}/oembed?${matches[1]}`);
+  return response.data;
+}
+
+async function optionsMedia() {
+  return _mock_data__WEBPACK_IMPORTED_MODULE_0__["media"];
+}
+
+async function getPage() {
+  let content = document.getElementById(_gutenberg_settings__WEBPACK_IMPORTED_MODULE_2__["editorSettings"].target).value || '';
+  return { ..._mock_data__WEBPACK_IMPORTED_MODULE_0__["page"],
+    content: {
+      raw: content
     }
-
-    return arr2;
-  }
-}
-
-module.exports = _arrayWithoutHoles;
-
-/***/ }),
-
-/***/ "./node_modules/@babel/runtime/helpers/assertThisInitialized.js":
-/*!**********************************************************************!*\
-  !*** ./node_modules/@babel/runtime/helpers/assertThisInitialized.js ***!
-  \**********************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-function _assertThisInitialized(self) {
-  if (self === void 0) {
-    throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
-  }
-
-  return self;
-}
-
-module.exports = _assertThisInitialized;
-
-/***/ }),
-
-/***/ "./node_modules/@babel/runtime/helpers/asyncToGenerator.js":
-/*!*****************************************************************!*\
-  !*** ./node_modules/@babel/runtime/helpers/asyncToGenerator.js ***!
-  \*****************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) {
-  try {
-    var info = gen[key](arg);
-    var value = info.value;
-  } catch (error) {
-    reject(error);
-    return;
-  }
-
-  if (info.done) {
-    resolve(value);
-  } else {
-    Promise.resolve(value).then(_next, _throw);
-  }
-}
-
-function _asyncToGenerator(fn) {
-  return function () {
-    var self = this,
-        args = arguments;
-    return new Promise(function (resolve, reject) {
-      var gen = fn.apply(self, args);
-
-      function _next(value) {
-        asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value);
-      }
-
-      function _throw(err) {
-        asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err);
-      }
-
-      _next(undefined);
-    });
   };
 }
 
-module.exports = _asyncToGenerator;
-
-/***/ }),
-
-/***/ "./node_modules/@babel/runtime/helpers/classCallCheck.js":
-/*!***************************************************************!*\
-  !*** ./node_modules/@babel/runtime/helpers/classCallCheck.js ***!
-  \***************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-function _classCallCheck(instance, Constructor) {
-  if (!(instance instanceof Constructor)) {
-    throw new TypeError("Cannot call a class as a function");
-  }
-}
-
-module.exports = _classCallCheck;
-
-/***/ }),
-
-/***/ "./node_modules/@babel/runtime/helpers/construct.js":
-/*!**********************************************************!*\
-  !*** ./node_modules/@babel/runtime/helpers/construct.js ***!
-  \**********************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-var setPrototypeOf = __webpack_require__(/*! ./setPrototypeOf */ "./node_modules/@babel/runtime/helpers/setPrototypeOf.js");
-
-function isNativeReflectConstruct() {
-  if (typeof Reflect === "undefined" || !Reflect.construct) return false;
-  if (Reflect.construct.sham) return false;
-  if (typeof Proxy === "function") return true;
-
-  try {
-    Date.prototype.toString.call(Reflect.construct(Date, [], function () {}));
-    return true;
-  } catch (e) {
-    return false;
-  }
-}
-
-function _construct(Parent, args, Class) {
-  if (isNativeReflectConstruct()) {
-    module.exports = _construct = Reflect.construct;
-  } else {
-    module.exports = _construct = function _construct(Parent, args, Class) {
-      var a = [null];
-      a.push.apply(a, args);
-      var Constructor = Function.bind.apply(Parent, a);
-      var instance = new Constructor();
-      if (Class) setPrototypeOf(instance, Class.prototype);
-      return instance;
-    };
-  }
-
-  return _construct.apply(null, arguments);
-}
-
-module.exports = _construct;
-
-/***/ }),
-
-/***/ "./node_modules/@babel/runtime/helpers/createClass.js":
-/*!************************************************************!*\
-  !*** ./node_modules/@babel/runtime/helpers/createClass.js ***!
-  \************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-function _defineProperties(target, props) {
-  for (var i = 0; i < props.length; i++) {
-    var descriptor = props[i];
-    descriptor.enumerable = descriptor.enumerable || false;
-    descriptor.configurable = true;
-    if ("value" in descriptor) descriptor.writable = true;
-    Object.defineProperty(target, descriptor.key, descriptor);
-  }
-}
-
-function _createClass(Constructor, protoProps, staticProps) {
-  if (protoProps) _defineProperties(Constructor.prototype, protoProps);
-  if (staticProps) _defineProperties(Constructor, staticProps);
-  return Constructor;
-}
-
-module.exports = _createClass;
-
-/***/ }),
-
-/***/ "./node_modules/@babel/runtime/helpers/defineProperty.js":
-/*!***************************************************************!*\
-  !*** ./node_modules/@babel/runtime/helpers/defineProperty.js ***!
-  \***************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-function _defineProperty(obj, key, value) {
-  if (key in obj) {
-    Object.defineProperty(obj, key, {
-      value: value,
-      enumerable: true,
-      configurable: true,
-      writable: true
-    });
-  } else {
-    obj[key] = value;
-  }
-
-  return obj;
-}
-
-module.exports = _defineProperty;
-
-/***/ }),
-
-/***/ "./node_modules/@babel/runtime/helpers/getPrototypeOf.js":
-/*!***************************************************************!*\
-  !*** ./node_modules/@babel/runtime/helpers/getPrototypeOf.js ***!
-  \***************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-function _getPrototypeOf(o) {
-  module.exports = _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) {
-    return o.__proto__ || Object.getPrototypeOf(o);
+async function postPage(options) {
+  return { ..._mock_data__WEBPACK_IMPORTED_MODULE_0__["page"],
+    content: {
+      raw: options.data
+    }
   };
-  return _getPrototypeOf(o);
+}
+async function putPage(options) {
+  return { ..._mock_data__WEBPACK_IMPORTED_MODULE_0__["page"],
+    content: {
+      raw: options.data
+    }
+  };
 }
 
-module.exports = _getPrototypeOf;
+async function getTaxonomies() {
+  return 'ok';
+}
 
-/***/ }),
+async function getThemes() {
+  return _mock_data__WEBPACK_IMPORTED_MODULE_0__["themes"];
+}
 
-/***/ "./node_modules/@babel/runtime/helpers/inherits.js":
-/*!*********************************************************!*\
-  !*** ./node_modules/@babel/runtime/helpers/inherits.js ***!
-  \*********************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
+async function getTypeBlock() {
+  return _mock_data__WEBPACK_IMPORTED_MODULE_0__["types"].block;
+}
 
-var setPrototypeOf = __webpack_require__(/*! ./setPrototypeOf */ "./node_modules/@babel/runtime/helpers/setPrototypeOf.js");
+async function getTypePage() {
+  return _mock_data__WEBPACK_IMPORTED_MODULE_0__["types"].page;
+}
 
-function _inherits(subClass, superClass) {
-  if (typeof superClass !== "function" && superClass !== null) {
-    throw new TypeError("Super expression must either be null or a function");
-  }
+async function getTypes() {
+  return _mock_data__WEBPACK_IMPORTED_MODULE_0__["types"];
+}
 
-  subClass.prototype = Object.create(superClass && superClass.prototype, {
-    constructor: {
-      value: subClass,
-      writable: true,
-      configurable: true
+async function getUsers() {
+  return 'ok';
+}
+
+function matchPath(options) {
+  let promise;
+  Object.keys(requests).forEach(key => {
+    let request = requests[key]; // Reset lastIndex so regex starts matching from the first character
+
+    request.regex.lastIndex = 0;
+    let matches = request.regex.exec(options.path);
+
+    if ((options.method === request.method || !options.method && request.method === 'GET') && matches && matches.length > 0) {
+      promise = request.run(options, matches).catch(() => _lib_notices__WEBPACK_IMPORTED_MODULE_3__["error"]('Could not complete request.'));
     }
   });
-  if (superClass) setPrototypeOf(subClass, superClass);
-}
 
-module.exports = _inherits;
-
-/***/ }),
-
-/***/ "./node_modules/@babel/runtime/helpers/isNativeFunction.js":
-/*!*****************************************************************!*\
-  !*** ./node_modules/@babel/runtime/helpers/isNativeFunction.js ***!
-  \*****************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-function _isNativeFunction(fn) {
-  return Function.toString.call(fn).indexOf("[native code]") !== -1;
-}
-
-module.exports = _isNativeFunction;
-
-/***/ }),
-
-/***/ "./node_modules/@babel/runtime/helpers/iterableToArray.js":
-/*!****************************************************************!*\
-  !*** ./node_modules/@babel/runtime/helpers/iterableToArray.js ***!
-  \****************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-function _iterableToArray(iter) {
-  if (Symbol.iterator in Object(iter) || Object.prototype.toString.call(iter) === "[object Arguments]") return Array.from(iter);
-}
-
-module.exports = _iterableToArray;
-
-/***/ }),
-
-/***/ "./node_modules/@babel/runtime/helpers/nonIterableSpread.js":
-/*!******************************************************************!*\
-  !*** ./node_modules/@babel/runtime/helpers/nonIterableSpread.js ***!
-  \******************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-function _nonIterableSpread() {
-  throw new TypeError("Invalid attempt to spread non-iterable instance");
-}
-
-module.exports = _nonIterableSpread;
-
-/***/ }),
-
-/***/ "./node_modules/@babel/runtime/helpers/objectSpread.js":
-/*!*************************************************************!*\
-  !*** ./node_modules/@babel/runtime/helpers/objectSpread.js ***!
-  \*************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-var defineProperty = __webpack_require__(/*! ./defineProperty */ "./node_modules/@babel/runtime/helpers/defineProperty.js");
-
-function _objectSpread(target) {
-  for (var i = 1; i < arguments.length; i++) {
-    var source = arguments[i] != null ? arguments[i] : {};
-    var ownKeys = Object.keys(source);
-
-    if (typeof Object.getOwnPropertySymbols === 'function') {
-      ownKeys = ownKeys.concat(Object.getOwnPropertySymbols(source).filter(function (sym) {
-        return Object.getOwnPropertyDescriptor(source, sym).enumerable;
+  if (!promise) {
+    promise = new Promise((resolve, reject) => {
+      return reject(new FetchError({
+        code: 'api_handler_not_found',
+        message: 'API handler not found.',
+        data: {
+          path: options.path,
+          options: options,
+          status: 404
+        }
       }));
-    }
-
-    ownKeys.forEach(function (key) {
-      defineProperty(target, key, source[key]);
+    }).catch(error => {
+      _lib_notices__WEBPACK_IMPORTED_MODULE_3__["error"](`${error.message} ${error.data.data.path}`);
     });
   }
 
-  return target;
+  return promise;
 }
 
-module.exports = _objectSpread;
+function apiFetch(options) {
+  return matchPath(options);
+}
+function configureAPI(options) {
+  routePrefix = options.prefix || '/laraberg';
+}
 
-/***/ }),
-
-/***/ "./node_modules/@babel/runtime/helpers/possibleConstructorReturn.js":
-/*!**************************************************************************!*\
-  !*** ./node_modules/@babel/runtime/helpers/possibleConstructorReturn.js ***!
-  \**************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-var _typeof = __webpack_require__(/*! ../helpers/typeof */ "./node_modules/@babel/runtime/helpers/typeof.js");
-
-var assertThisInitialized = __webpack_require__(/*! ./assertThisInitialized */ "./node_modules/@babel/runtime/helpers/assertThisInitialized.js");
-
-function _possibleConstructorReturn(self, call) {
-  if (call && (_typeof(call) === "object" || typeof call === "function")) {
-    return call;
+class FetchError extends Error {
+  constructor(object) {
+    super(object.message);
+    this.data = object;
   }
 
-  return assertThisInitialized(self);
 }
-
-module.exports = _possibleConstructorReturn;
 
 /***/ }),
 
-/***/ "./node_modules/@babel/runtime/helpers/setPrototypeOf.js":
-/*!***************************************************************!*\
-  !*** ./node_modules/@babel/runtime/helpers/setPrototypeOf.js ***!
-  \***************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
+/***/ "./js/api/mock-data.js":
+/*!*****************************!*\
+  !*** ./js/api/mock-data.js ***!
+  \*****************************/
+/*! exports provided: media, page, themes, types */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
-function _setPrototypeOf(o, p) {
-  module.exports = _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) {
-    o.__proto__ = p;
-    return o;
-  };
-
-  return _setPrototypeOf(o, p);
-}
-
-module.exports = _setPrototypeOf;
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "media", function() { return media; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "page", function() { return page; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "themes", function() { return themes; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "types", function() { return types; });
+// Mock data to get the Gutenberg editor to work
+const media = {
+  headers: {
+    get: value => {
+      if (value === 'allow') {
+        return ['POST'];
+      }
+    }
+  }
+};
+const page = {
+  content: {
+    raw: ''
+  },
+  title: '',
+  templates: '',
+  parent: 0,
+  link: `${window.location.origin}/preview`,
+  permalink_template: `${window.location.origin}/preview`,
+  preview_link: `${window.location.origin}/preview`,
+  type: 'page',
+  status: 'pending',
+  id: 0,
+  // functions
+  setContent: content => {
+    page.content = {
+      raw: content
+    };
+  }
+};
+const themes = [{
+  theme_supports: {
+    formats: ['standard', 'aside', 'image', 'video', 'quote', 'link', 'gallery', 'audio'],
+    'post-thumbnails': true
+  }
+}];
+const types = {
+  page: {
+    labels: {},
+    name: 'Page',
+    rest_base: 'pages',
+    slug: 'page',
+    supports: {
+      author: false,
+      comments: false,
+      // hide discussion-panel
+      'custom-fields': true,
+      document: true,
+      // * hide document tab
+      editor: true,
+      'media-library': false,
+      // * hide media library
+      'page-attributes': false,
+      // hide page-attributes panel
+      posts: false,
+      // * hide posts-panel
+      revisions: false,
+      'template-settings': false,
+      // * hide template-settings panel
+      thumbnail: false,
+      // featured-image panel
+      title: false,
+      // show title on editor
+      extras: false
+    },
+    viewable: false,
+    saveable: true,
+    publishable: true,
+    autosaveable: false
+  },
+  block: {
+    name: 'Blocks',
+    rest_base: 'blocks',
+    slug: 'wp_block',
+    description: '',
+    supports: {
+      title: true,
+      editor: true
+    },
+    viewable: true
+  }
+};
 
 /***/ }),
 
-/***/ "./node_modules/@babel/runtime/helpers/toConsumableArray.js":
-/*!******************************************************************!*\
-  !*** ./node_modules/@babel/runtime/helpers/toConsumableArray.js ***!
-  \******************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
+/***/ "./js/gutenberg/add-query-args.js":
+/*!****************************************!*\
+  !*** ./js/gutenberg/add-query-args.js ***!
+  \****************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
-var arrayWithoutHoles = __webpack_require__(/*! ./arrayWithoutHoles */ "./node_modules/@babel/runtime/helpers/arrayWithoutHoles.js");
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return addQueryArgs; });
+/* harmony import */ var url__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! url */ "./node_modules/url/url.js");
+/* harmony import */ var url__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(url__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var querystring__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! querystring */ "./node_modules/querystring-es3/index.js");
+/* harmony import */ var querystring__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(querystring__WEBPACK_IMPORTED_MODULE_1__);
+/**
+* External dependencies
+*/
 
-var iterableToArray = __webpack_require__(/*! ./iterableToArray */ "./node_modules/@babel/runtime/helpers/iterableToArray.js");
 
-var nonIterableSpread = __webpack_require__(/*! ./nonIterableSpread */ "./node_modules/@babel/runtime/helpers/nonIterableSpread.js");
+/**
+* Appends arguments to the query string of the url
+*
+* @param  {String} url   URL
+* @param  {Object} args  Query Args
+*
+* @return {String}       Updated URL
+*/
 
-function _toConsumableArray(arr) {
-  return arrayWithoutHoles(arr) || iterableToArray(arr) || nonIterableSpread();
+function addQueryArgs(url, args) {
+  const queryStringIndex = url.indexOf('?');
+  const query = queryStringIndex !== -1 ? url__WEBPACK_IMPORTED_MODULE_0___default()(url.substr(queryStringIndex + 1)) : {};
+  const baseUrl = queryStringIndex !== -1 ? url.substr(0, queryStringIndex) : url;
+  return baseUrl + '?' + Object(querystring__WEBPACK_IMPORTED_MODULE_1__["stringify"])({ ...query,
+    ...args
+  });
 }
-
-module.exports = _toConsumableArray;
 
 /***/ }),
 
-/***/ "./node_modules/@babel/runtime/helpers/typeof.js":
+/***/ "./js/gutenberg/init.js":
+/*!******************************!*\
+  !*** ./js/gutenberg/init.js ***!
+  \******************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return init; });
+/* harmony import */ var _api_api_fetch__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../api/api-fetch */ "./js/api/api-fetch.js");
+/* harmony import */ var _lib_configure_editor__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../lib/configure-editor */ "./js/lib/configure-editor.js");
+/* harmony import */ var _frontkom_gutenberg_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @frontkom/gutenberg-js */ "./node_modules/@frontkom/gutenberg-js/build/js/gutenberg-js.js");
+/* harmony import */ var _frontkom_gutenberg_js__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_frontkom_gutenberg_js__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _settings__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./settings */ "./js/gutenberg/settings.js");
+/* harmony import */ var _lib_element_ready__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../lib/element-ready */ "./js/lib/element-ready.js");
+
+
+
+
+ // Setup sidebar events
+
+window.customGutenberg = {
+  events: {
+    'OPEN_GENERAL_SIDEBAR': async (action, store) => {
+      // console.log('OPEN_GENERAL_SIDEBAR', action, store)
+      await Object(_lib_element_ready__WEBPACK_IMPORTED_MODULE_4__["elementReady"])('.edit-post-sidebar');
+      Object(_lib_configure_editor__WEBPACK_IMPORTED_MODULE_1__["clearSubmitFromButtons"])();
+    },
+    'CLOSE_GENERAL_SIDEBAR': async (action, store) => {// console.log('CLOSE_GENERAL_SIDEBAR', action, store)
+    }
+  }
+  /**
+   * Initialize the Gutenberg editor
+   * @param {string} target the element ID to render the gutenberg editor in
+   */
+
+};
+function init(target, options = {}) {
+  Object(_api_api_fetch__WEBPACK_IMPORTED_MODULE_0__["configureAPI"])(options);
+  window._wpLoadGutenbergEditor = new Promise(function (resolve) {
+    Object(_frontkom_gutenberg_js__WEBPACK_IMPORTED_MODULE_2__["domReady"])(async () => {
+      const larabergEditor = createEditorElement(target);
+      resolve(_frontkom_gutenberg_js__WEBPACK_IMPORTED_MODULE_2__["editPost"].initializeEditor(larabergEditor.id, 'page', 0, _settings__WEBPACK_IMPORTED_MODULE_3__["editorSettings"], _settings__WEBPACK_IMPORTED_MODULE_3__["overridePost"]));
+      await Object(_lib_element_ready__WEBPACK_IMPORTED_MODULE_4__["elementReady"])('.edit-post-layout');
+      Object(_lib_configure_editor__WEBPACK_IMPORTED_MODULE_1__["default"])(options);
+    });
+  });
+}
+/**
+ * Creates the element to render the Gutenberg editor inside of
+ * @param {string} target the id of the textarea to render the Editor instead of
+ * @return {element}
+ */
+
+function createEditorElement(target) {
+  const element = document.getElementById(target);
+  const editor = document.createElement('DIV');
+  editor.id = 'laraberg__editor';
+  editor.classList.add('laraberg__editor', 'gutenberg__editor', 'block-editor__container', 'wp-embed-responsive');
+  element.parentNode.insertBefore(editor, element);
+  element.hidden = true;
+  _settings__WEBPACK_IMPORTED_MODULE_3__["editorSettings"].target = target;
+  window.Laraberg.editor = editor;
+  return editor;
+}
+
+/***/ }),
+
+/***/ "./js/gutenberg/settings.js":
+/*!**********************************!*\
+  !*** ./js/gutenberg/settings.js ***!
+  \**********************************/
+/*! exports provided: editorSettings, overridePost */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "editorSettings", function() { return editorSettings; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "overridePost", function() { return overridePost; });
+/* harmony import */ var _add_query_args__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./add-query-args */ "./js/gutenberg/add-query-args.js");
+/* harmony import */ var _api_api_fetch__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../api/api-fetch */ "./js/api/api-fetch.js");
+
+
+window.wp = {
+  apiFetch: _api_api_fetch__WEBPACK_IMPORTED_MODULE_1__["default"],
+  url: {
+    addQueryArgs: _add_query_args__WEBPACK_IMPORTED_MODULE_0__["default"]
+  }
+};
+window.userSettings = {
+  uid: 2 // Among other things, this uid is used to identify and store editor user preferences in localStorage
+  // set your root path
+
+};
+window.wpApiSettings = {
+  root: '/' // Some editor settings
+
+};
+const editorSettings = {
+  target: null,
+  alignWide: true,
+  availableTemplates: [],
+  allowedBlockTypes: true,
+  disableCustomColors: false,
+  disablePostFormats: false,
+  mediaLibrary: false,
+  titlePlaceholder: 'Add title',
+  bodyPlaceholder: 'Write your story',
+  isRTL: false,
+  postLock: {
+    isLocked: false
+  },
+  autosaveInterval: 10,
+  canAutosave: false,
+  // to disable Editor Autosave featured (default: true)
+  canPublish: false,
+  // to disable Editor Publish featured (default: true)
+  canSave: false // to disable Editor Save featured (default: true)    };
+  // Post properties to override
+
+};
+const overridePost = {};
+
+/***/ }),
+
+/***/ "./js/laraberg.js":
+/*!************************!*\
+  !*** ./js/laraberg.js ***!
+  \************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var babel_polyfill__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! babel-polyfill */ "./node_modules/babel-polyfill/lib/index.js");
+/* harmony import */ var babel_polyfill__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(babel_polyfill__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _scss_laraberg_scss__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./../scss/laraberg.scss */ "./scss/laraberg.scss");
+/* harmony import */ var _scss_laraberg_scss__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_scss_laraberg_scss__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _gutenberg_settings__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./gutenberg/settings */ "./js/gutenberg/settings.js");
+/* harmony import */ var _lib_get_content__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./lib/get-content */ "./js/lib/get-content.js");
+/* harmony import */ var _gutenberg_init__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./gutenberg/init */ "./js/gutenberg/init.js");
+/* harmony import */ var _lib_custom_blocks__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./lib/custom-blocks */ "./js/lib/custom-blocks.js");
+
+ // Gutenberg imports
+
+
+
+
+
+const Laraberg = {
+  init: _gutenberg_init__WEBPACK_IMPORTED_MODULE_4__["default"],
+  initGutenberg: _gutenberg_init__WEBPACK_IMPORTED_MODULE_4__["default"],
+  getContent: _lib_get_content__WEBPACK_IMPORTED_MODULE_3__["default"],
+  editor: null,
+  registerCategory: _lib_custom_blocks__WEBPACK_IMPORTED_MODULE_5__["registerCategory"],
+  registerBlock: _lib_custom_blocks__WEBPACK_IMPORTED_MODULE_5__["registerBlock"]
+};
+window.Laraberg = Laraberg;
+/* harmony default export */ __webpack_exports__["default"] = (Laraberg);
+
+/***/ }),
+
+/***/ "./js/laravel-filemanager/laravel-filemanager.js":
 /*!*******************************************************!*\
-  !*** ./node_modules/@babel/runtime/helpers/typeof.js ***!
+  !*** ./js/laravel-filemanager/laravel-filemanager.js ***!
   \*******************************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
-function _typeof2(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof2 = function _typeof2(obj) { return typeof obj; }; } else { _typeof2 = function _typeof2(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof2(obj); }
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony default export */ __webpack_exports__["default"] = (function (config) {
+  const {
+    hooks,
+    element
+  } = window.wp;
+  const {
+    Component
+  } = element;
 
-function _typeof(obj) {
-  if (typeof Symbol === "function" && _typeof2(Symbol.iterator) === "symbol") {
-    module.exports = _typeof = function _typeof(obj) {
-      return _typeof2(obj);
-    };
-  } else {
-    module.exports = _typeof = function _typeof(obj) {
-      return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : _typeof2(obj);
-    };
+  class LaravelFilemanager extends Component {
+    constructor() {
+      super(...arguments);
+      this.openModal = this.openModal.bind(this);
+      this.onSelect = this.onSelect.bind(this);
+      this.state = {
+        media: []
+      };
+    }
+
+    getMediaType(path) {
+      const video = ['mp4', 'm4v', 'mov', 'wmv', 'avi', 'mpg', 'ogv', '3gp', '3g2'];
+      const audio = ['mp3', 'm4a', 'ogg', 'wav'];
+      const extension = path.split('.').slice(-1).pop();
+
+      if (video.includes(extension)) {
+        return 'video';
+      } else if (audio.includes(extension)) {
+        return 'audio';
+      } else {
+        return 'image';
+      }
+    }
+
+    onSelect(url, path) {
+      this.props.value = null;
+      const {
+        multiple,
+        onSelect
+      } = this.props;
+      const media = {
+        url: url,
+        type: this.getMediaType(path)
+      };
+
+      if (multiple) {
+        this.state.media.push(media);
+      }
+
+      onSelect(multiple ? this.state.media : media);
+    }
+
+    openModal() {
+      let options = {};
+
+      if (this.props.allowedTypes.length === 1 && this.props.allowedTypes[0] === 'image') {
+        options.type = 'image';
+      } else {
+        options.type = 'file';
+      }
+
+      this.openLFM(options, this.onSelect);
+    }
+
+    openLFM(options, cb) {
+      let routePrefix = config && config.prefix ? config.prefix : '/laravel-filemanager';
+      window.open(routePrefix + '?type=' + options.type || 'file', 'FileManager', 'width=900,height=600');
+      window.SetUrl = cb;
+    }
+
+    render() {
+      const {
+        render
+      } = this.props;
+      return render({
+        open: this.openModal
+      });
+    }
+
   }
 
-  return _typeof(obj);
-}
-
-module.exports = _typeof;
+  hooks.addFilter('editor.MediaUpload', 'core/edit-post/components/media-upload/replace-media-upload', () => LaravelFilemanager);
+});
 
 /***/ }),
 
-/***/ "./node_modules/@babel/runtime/helpers/wrapNativeSuper.js":
-/*!****************************************************************!*\
-  !*** ./node_modules/@babel/runtime/helpers/wrapNativeSuper.js ***!
-  \****************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
+/***/ "./js/lib/configure-editor.js":
+/*!************************************!*\
+  !*** ./js/lib/configure-editor.js ***!
+  \************************************/
+/*! exports provided: default, clearSubmitFromButtons */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
-var getPrototypeOf = __webpack_require__(/*! ./getPrototypeOf */ "./node_modules/@babel/runtime/helpers/getPrototypeOf.js");
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return configureEditor; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "clearSubmitFromButtons", function() { return clearSubmitFromButtons; });
+/* harmony import */ var _frontkom_gutenberg_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @frontkom/gutenberg-js */ "./node_modules/@frontkom/gutenberg-js/build/js/gutenberg-js.js");
+/* harmony import */ var _frontkom_gutenberg_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_frontkom_gutenberg_js__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _gutenberg_settings__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../gutenberg/settings */ "./js/gutenberg/settings.js");
+/* harmony import */ var _element_ready__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./element-ready */ "./js/lib/element-ready.js");
+/* harmony import */ var _laravel_filemanager_laravel_filemanager__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../laravel-filemanager/laravel-filemanager */ "./js/laravel-filemanager/laravel-filemanager.js");
 
-var setPrototypeOf = __webpack_require__(/*! ./setPrototypeOf */ "./node_modules/@babel/runtime/helpers/setPrototypeOf.js");
 
-var isNativeFunction = __webpack_require__(/*! ./isNativeFunction */ "./node_modules/@babel/runtime/helpers/isNativeFunction.js");
 
-var construct = __webpack_require__(/*! ./construct */ "./node_modules/@babel/runtime/helpers/construct.js");
 
-function _wrapNativeSuper(Class) {
-  var _cache = typeof Map === "function" ? new Map() : undefined;
+/**
+ * Configures the editor according to the provided options object
+ * @param {Object} options
+ */
 
-  module.exports = _wrapNativeSuper = function _wrapNativeSuper(Class) {
-    if (Class === null || !isNativeFunction(Class)) return Class;
+function configureEditor(options) {
+  setupSubmit(_gutenberg_settings__WEBPACK_IMPORTED_MODULE_1__["editorSettings"].target);
+  setupMedia(options);
 
-    if (typeof Class !== "function") {
-      throw new TypeError("Super expression must either be null or a function");
-    }
+  if (options.maxHeight) {
+    setMaxHeight(options.maxHeight);
+  }
 
-    if (typeof _cache !== "undefined") {
-      if (_cache.has(Class)) return _cache.get(Class);
+  if (options.minHeight) {
+    setMinHeight(options.minHeight);
+  }
 
-      _cache.set(Class, Wrapper);
-    }
+  if (options.height) {
+    setHeight(options.height);
+  }
+}
+/**
+ * Set all editor button types to 'button' to prevent submitting the form
+ */
 
-    function Wrapper() {
-      return construct(Class, arguments, getPrototypeOf(this).constructor);
-    }
+function clearSubmitFromButtons() {
+  let buttons = document.getElementById('laraberg__editor').getElementsByTagName('button');
 
-    Wrapper.prototype = Object.create(Class.prototype, {
-      constructor: {
-        value: Wrapper,
-        enumerable: false,
-        writable: true,
-        configurable: true
+  if (buttons.length > 0) {
+    Array.from(buttons).forEach(button => {
+      button.type = 'button';
+    });
+  }
+}
+/**
+ * Sets the max-height style value
+ * @param {String} maxHeight css value for max-height
+ */
+
+function setMaxHeight(maxHeight) {
+  const contentContainer = window.Laraberg.editor.querySelector('.edit-post-layout__content');
+  contentContainer.style.maxHeight = maxHeight;
+}
+/**
+ * Sets the min-height style value
+ * @param {String} minHeight css value for min-height
+ */
+
+
+function setMinHeight(minHeight) {
+  const contentContainer = window.Laraberg.editor.querySelector('.edit-post-layout__content');
+  contentContainer.style.minHeight = minHeight;
+}
+/**
+ * Sets the height style value
+ * @param {String} height css value for height
+ */
+
+
+function setHeight(height) {
+  const contentContainer = window.Laraberg.editor.querySelector('.edit-post-layout__content');
+  contentContainer.style.height = height;
+}
+/**
+ * Setup media upload capabilities according to provided options
+ * @param {Object} options the options object provided on initialization
+ */
+
+
+function setupMedia(options) {
+  removeUploadButton();
+
+  if (options.laravelFilemanager) {
+    Object(_laravel_filemanager_laravel_filemanager__WEBPACK_IMPORTED_MODULE_3__["default"])(options.laravelFilemanager);
+  } else {
+    _frontkom_gutenberg_js__WEBPACK_IMPORTED_MODULE_0__["data"].dispatch('core/blocks').removeBlockTypes('core/cover');
+    _frontkom_gutenberg_js__WEBPACK_IMPORTED_MODULE_0__["data"].dispatch('core/blocks').removeBlockTypes('core/gallery');
+    _frontkom_gutenberg_js__WEBPACK_IMPORTED_MODULE_0__["data"].dispatch('core/blocks').removeBlockTypes('core/media-text');
+  }
+}
+/**
+ * Makes sure the textarea value gets set to the editor content on submit
+ * @param {string} target the textarea to set the value of
+ */
+
+
+function setupSubmit(target) {
+  clearSubmitFromButtons();
+  const textarea = document.getElementById(target);
+
+  if (textarea.form) {
+    textarea.form.addEventListener('submit', event => {
+      textarea.value = _frontkom_gutenberg_js__WEBPACK_IMPORTED_MODULE_0__["data"].select('core/editor').getEditedPostContent(); // Clear content "dirty" state.
+
+      _frontkom_gutenberg_js__WEBPACK_IMPORTED_MODULE_0__["data"].dispatch('core/editor').savePost();
+      return true;
+    });
+  }
+}
+/**
+ * Removes the default upload button from media blocks
+ */
+
+
+function removeUploadButton() {
+  Object(_element_ready__WEBPACK_IMPORTED_MODULE_2__["elementRendered"])('.components-form-file-upload button', element => element.remove());
+}
+
+/***/ }),
+
+/***/ "./js/lib/custom-blocks.js":
+/*!*********************************!*\
+  !*** ./js/lib/custom-blocks.js ***!
+  \*********************************/
+/*! exports provided: registerBlock, registerCategory */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "registerBlock", function() { return registerBlock; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "registerCategory", function() { return registerCategory; });
+const {
+  dispatch,
+  select
+} = window.wp.data;
+const {
+  registerBlockType
+} = window.wp.blocks;
+/**
+ * Registers a custom block to the editor
+ * @param {string} name The namespaced name of the block (eg: my-module/my-block)
+ * @param {Object} block The Gutenberg block object
+ */
+
+function registerBlock(name, block) {
+  registerBlockType(name, block);
+}
+/**
+ * Adds a category to the category list
+ * @param {String} title - The title for the category (eg: My Category)
+ * @param {String} slug - The slug for the category (eg: my-category)
+ */
+
+function registerCategory(title, slug) {
+  let category = {
+    slug: slug,
+    title: title
+  };
+  const currentCategories = select('core/blocks').getCategories().filter(item => item.slug !== category.slug);
+  dispatch('core/blocks').setCategories([category, ...currentCategories]);
+}
+
+/***/ }),
+
+/***/ "./js/lib/element-ready.js":
+/*!*********************************!*\
+  !*** ./js/lib/element-ready.js ***!
+  \*********************************/
+/*! exports provided: elementReady, elementRendered, elementReadyRAF */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "elementReady", function() { return elementReady; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "elementRendered", function() { return elementRendered; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "elementReadyRAF", function() { return elementReadyRAF; });
+/**
+ * Returns a promise that resolves when an element with a selector appears on the page for the first time.
+ * Note: Use elementReadyRAF if this is too slow or unreliable.
+ * @param {String} selector querySelector string
+ */
+function elementReady(selector) {
+  return new Promise((resolve, reject) => {
+    const observer = new MutationObserver(mutations => {
+      const elements = document.querySelectorAll(selector);
+      elements.forEach(element => {
+        if (!element.ready) {
+          element.ready = true;
+          observer.disconnect();
+          resolve(element);
+        }
+      });
+    });
+    observer.observe(document.documentElement, {
+      childList: true,
+      subtree: true
+    });
+  });
+}
+/**
+ * Calls the callback function whenever an element with the selector gets rendered
+ * @param {String} selector querySelector string
+ * @param {function} callback function to fire when an element gets rendered
+ * @returns {MutationObserver} the object that checks for the elements
+ */
+
+function elementRendered(selector, callback) {
+  const renderedElements = [];
+  const observer = new MutationObserver(mutations => {
+    const elements = document.querySelectorAll(selector);
+    elements.forEach(element => {
+      if (!renderedElements.includes(element)) {
+        renderedElements.push(element);
+        callback(element);
       }
     });
-    return setPrototypeOf(Wrapper, Class);
-  };
+  });
+  observer.observe(document.documentElement, {
+    childList: true,
+    subtree: true
+  });
+  return observer;
+}
+/**
+ * Returns a promise that resolves when an element with a selector appears on the page for the first time.
+ * Functions similarly to elementReady, but instead of using mutation observers we poll on every animation frame.
+ * This means that it usually responds faster at the cost of some performance while the function is running.
+ * @param {String} selector querySelector string
+ */
 
-  return _wrapNativeSuper(Class);
+async function elementReadyRAF(selector) {
+  let element;
+
+  while (element == null) {
+    element = document.querySelector(selector);
+    await rafAsync();
+  }
+
+  return Promise.resolve(element);
 }
 
-module.exports = _wrapNativeSuper;
+function rafAsync() {
+  return new Promise(resolve => {
+    window.requestAnimationFrame(resolve);
+  });
+}
 
 /***/ }),
 
-/***/ "./node_modules/@babel/runtime/regenerator/index.js":
-/*!**********************************************************!*\
-  !*** ./node_modules/@babel/runtime/regenerator/index.js ***!
-  \**********************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
+/***/ "./js/lib/get-content.js":
+/*!*******************************!*\
+  !*** ./js/lib/get-content.js ***!
+  \*******************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! regenerator-runtime */ "./node_modules/regenerator-runtime/runtime.js");
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return getContent; });
+/* harmony import */ var _frontkom_gutenberg_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @frontkom/gutenberg-js */ "./node_modules/@frontkom/gutenberg-js/build/js/gutenberg-js.js");
+/* harmony import */ var _frontkom_gutenberg_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_frontkom_gutenberg_js__WEBPACK_IMPORTED_MODULE_0__);
 
+function getContent() {
+  _frontkom_gutenberg_js__WEBPACK_IMPORTED_MODULE_0__["data"].dispatch('core/editor').savePost();
+  return _frontkom_gutenberg_js__WEBPACK_IMPORTED_MODULE_0__["data"].select('core/editor').getEditedPostContent();
+}
+
+/***/ }),
+
+/***/ "./js/lib/notices.js":
+/*!***************************!*\
+  !*** ./js/lib/notices.js ***!
+  \***************************/
+/*! exports provided: success, info, error, warning, notice */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "success", function() { return success; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "info", function() { return info; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "error", function() { return error; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "warning", function() { return warning; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "notice", function() { return notice; });
+/**
+ * Shows a success message
+ * @param {String} message the message to display
+ */
+function success(message) {
+  notice('success', message);
+}
+/**
+ * Shows an info message
+ * @param {String} message the message to display
+ */
+
+function info(message) {
+  notice('info', message);
+}
+/**
+ * Shows an error message
+ * @param {String} message the message to display
+ */
+
+function error(message) {
+  notice('error', message);
+}
+/**
+ * Shows a warning message
+ * @param {String} message the message to display
+ */
+
+function warning(message) {
+  notice('warning', message);
+}
+function notice(status, message) {
+  if (window.wp && window.wp.data) {
+    window.wp.data.dispatch('core/notices').createNotice(status, message);
+  }
+}
 
 /***/ }),
 
@@ -2382,7 +2864,7 @@ define(String.prototype, "padRight", "".padEnd);
 "pop,reverse,shift,keys,values,entries,indexOf,every,some,forEach,map,filter,find,findIndex,includes,join,slice,concat,push,splice,unshift,sort,lastIndexOf,reduce,reduceRight,copyWithin,fill".split(",").forEach(function (key) {
   [][key] && define(Array, key, Function.call.bind([][key]));
 });
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../../webpack/buildin/global.js */ "./node_modules/webpack/buildin/global.js")))
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../../webpack/buildin/global.js */ "./node_modules/webpack/buildin/global.js?c8ba")))
 
 /***/ }),
 
@@ -13369,7 +13851,7 @@ module.exports = __webpack_require__(/*! ./modules/_core */ "./node_modules/babe
   typeof self === "object" ? self : this
 );
 
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../../../webpack/buildin/global.js */ "./node_modules/webpack/buildin/global.js")))
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../../../webpack/buildin/global.js */ "./node_modules/webpack/buildin/global.js?c8ba")))
 
 /***/ }),
 
@@ -13405,14 +13887,209 @@ function isSlowBuffer (obj) {
 
 /***/ }),
 
-/***/ "./node_modules/node-libs-browser/node_modules/punycode/punycode.js":
-/*!**************************************************************************!*\
-  !*** ./node_modules/node-libs-browser/node_modules/punycode/punycode.js ***!
-  \**************************************************************************/
+/***/ "./node_modules/process/browser.js":
+/*!*****************************************!*\
+  !*** ./node_modules/process/browser.js ***!
+  \*****************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+// shim for using process in browser
+var process = module.exports = {};
+
+// cached from whatever global is present so that test runners that stub it
+// don't break things.  But we need to wrap it in a try catch in case it is
+// wrapped in strict mode code which doesn't define any globals.  It's inside a
+// function because try/catches deoptimize in certain engines.
+
+var cachedSetTimeout;
+var cachedClearTimeout;
+
+function defaultSetTimout() {
+    throw new Error('setTimeout has not been defined');
+}
+function defaultClearTimeout () {
+    throw new Error('clearTimeout has not been defined');
+}
+(function () {
+    try {
+        if (typeof setTimeout === 'function') {
+            cachedSetTimeout = setTimeout;
+        } else {
+            cachedSetTimeout = defaultSetTimout;
+        }
+    } catch (e) {
+        cachedSetTimeout = defaultSetTimout;
+    }
+    try {
+        if (typeof clearTimeout === 'function') {
+            cachedClearTimeout = clearTimeout;
+        } else {
+            cachedClearTimeout = defaultClearTimeout;
+        }
+    } catch (e) {
+        cachedClearTimeout = defaultClearTimeout;
+    }
+} ())
+function runTimeout(fun) {
+    if (cachedSetTimeout === setTimeout) {
+        //normal enviroments in sane situations
+        return setTimeout(fun, 0);
+    }
+    // if setTimeout wasn't available but was latter defined
+    if ((cachedSetTimeout === defaultSetTimout || !cachedSetTimeout) && setTimeout) {
+        cachedSetTimeout = setTimeout;
+        return setTimeout(fun, 0);
+    }
+    try {
+        // when when somebody has screwed with setTimeout but no I.E. maddness
+        return cachedSetTimeout(fun, 0);
+    } catch(e){
+        try {
+            // When we are in I.E. but the script has been evaled so I.E. doesn't trust the global object when called normally
+            return cachedSetTimeout.call(null, fun, 0);
+        } catch(e){
+            // same as above but when it's a version of I.E. that must have the global object for 'this', hopfully our context correct otherwise it will throw a global error
+            return cachedSetTimeout.call(this, fun, 0);
+        }
+    }
+
+
+}
+function runClearTimeout(marker) {
+    if (cachedClearTimeout === clearTimeout) {
+        //normal enviroments in sane situations
+        return clearTimeout(marker);
+    }
+    // if clearTimeout wasn't available but was latter defined
+    if ((cachedClearTimeout === defaultClearTimeout || !cachedClearTimeout) && clearTimeout) {
+        cachedClearTimeout = clearTimeout;
+        return clearTimeout(marker);
+    }
+    try {
+        // when when somebody has screwed with setTimeout but no I.E. maddness
+        return cachedClearTimeout(marker);
+    } catch (e){
+        try {
+            // When we are in I.E. but the script has been evaled so I.E. doesn't  trust the global object when called normally
+            return cachedClearTimeout.call(null, marker);
+        } catch (e){
+            // same as above but when it's a version of I.E. that must have the global object for 'this', hopfully our context correct otherwise it will throw a global error.
+            // Some versions of I.E. have different rules for clearTimeout vs setTimeout
+            return cachedClearTimeout.call(this, marker);
+        }
+    }
+
+
+
+}
+var queue = [];
+var draining = false;
+var currentQueue;
+var queueIndex = -1;
+
+function cleanUpNextTick() {
+    if (!draining || !currentQueue) {
+        return;
+    }
+    draining = false;
+    if (currentQueue.length) {
+        queue = currentQueue.concat(queue);
+    } else {
+        queueIndex = -1;
+    }
+    if (queue.length) {
+        drainQueue();
+    }
+}
+
+function drainQueue() {
+    if (draining) {
+        return;
+    }
+    var timeout = runTimeout(cleanUpNextTick);
+    draining = true;
+
+    var len = queue.length;
+    while(len) {
+        currentQueue = queue;
+        queue = [];
+        while (++queueIndex < len) {
+            if (currentQueue) {
+                currentQueue[queueIndex].run();
+            }
+        }
+        queueIndex = -1;
+        len = queue.length;
+    }
+    currentQueue = null;
+    draining = false;
+    runClearTimeout(timeout);
+}
+
+process.nextTick = function (fun) {
+    var args = new Array(arguments.length - 1);
+    if (arguments.length > 1) {
+        for (var i = 1; i < arguments.length; i++) {
+            args[i - 1] = arguments[i];
+        }
+    }
+    queue.push(new Item(fun, args));
+    if (queue.length === 1 && !draining) {
+        runTimeout(drainQueue);
+    }
+};
+
+// v8 likes predictible objects
+function Item(fun, array) {
+    this.fun = fun;
+    this.array = array;
+}
+Item.prototype.run = function () {
+    this.fun.apply(null, this.array);
+};
+process.title = 'browser';
+process.browser = true;
+process.env = {};
+process.argv = [];
+process.version = ''; // empty string to avoid regexp issues
+process.versions = {};
+
+function noop() {}
+
+process.on = noop;
+process.addListener = noop;
+process.once = noop;
+process.off = noop;
+process.removeListener = noop;
+process.removeAllListeners = noop;
+process.emit = noop;
+process.prependListener = noop;
+process.prependOnceListener = noop;
+
+process.listeners = function (name) { return [] }
+
+process.binding = function (name) {
+    throw new Error('process.binding is not supported');
+};
+
+process.cwd = function () { return '/' };
+process.chdir = function (dir) {
+    throw new Error('process.chdir is not supported');
+};
+process.umask = function() { return 0; };
+
+
+/***/ }),
+
+/***/ "./node_modules/punycode/punycode.js":
+/*!************************************************************************************************************************************************************!*\
+  !*** C:/Users/rzzsa/Documents/OSPanel/domains/laraberg/plugins/reazzon/gutenberg/formwidgets/gutenberg/assets/resources/node_modules/punycode/punycode.js ***!
+  \************************************************************************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-/* WEBPACK VAR INJECTION */(function(module, global) {var __WEBPACK_AMD_DEFINE_RESULT__;/*! https://mths.be/punycode v1.4.1 by @mathias */
+/* WEBPACK VAR INJECTION */(function(module, global) {var __WEBPACK_AMD_DEFINE_RESULT__;/*! https://mths.be/punycode v1.3.2 by @mathias */
 ;(function(root) {
 
 	/** Detect free variables */
@@ -13478,7 +14155,7 @@ function isSlowBuffer (obj) {
 	 * @returns {Error} Throws a `RangeError` with the applicable error message.
 	 */
 	function error(type) {
-		throw new RangeError(errors[type]);
+		throw RangeError(errors[type]);
 	}
 
 	/**
@@ -13625,7 +14302,7 @@ function isSlowBuffer (obj) {
 
 	/**
 	 * Bias adaptation function as per section 3.4 of RFC 3492.
-	 * https://tools.ietf.org/html/rfc3492#section-3.4
+	 * http://tools.ietf.org/html/rfc3492#section-3.4
 	 * @private
 	 */
 	function adapt(delta, numPoints, firstTime) {
@@ -13900,7 +14577,7 @@ function isSlowBuffer (obj) {
 		 * @memberOf punycode
 		 * @type String
 		 */
-		'version': '1.4.1',
+		'version': '1.3.2',
 		/**
 		 * An object of methods to convert from JavaScript's internal character
 		 * representation (UCS-2) to Unicode code points, and back.
@@ -13932,209 +14609,14 @@ function isSlowBuffer (obj) {
 
 }(this));
 
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../../../webpack/buildin/module.js */ "./node_modules/webpack/buildin/module.js")(module), __webpack_require__(/*! ./../../../webpack/buildin/global.js */ "./node_modules/webpack/buildin/global.js")))
-
-/***/ }),
-
-/***/ "./node_modules/process/browser.js":
-/*!*****************************************!*\
-  !*** ./node_modules/process/browser.js ***!
-  \*****************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-// shim for using process in browser
-var process = module.exports = {};
-
-// cached from whatever global is present so that test runners that stub it
-// don't break things.  But we need to wrap it in a try catch in case it is
-// wrapped in strict mode code which doesn't define any globals.  It's inside a
-// function because try/catches deoptimize in certain engines.
-
-var cachedSetTimeout;
-var cachedClearTimeout;
-
-function defaultSetTimout() {
-    throw new Error('setTimeout has not been defined');
-}
-function defaultClearTimeout () {
-    throw new Error('clearTimeout has not been defined');
-}
-(function () {
-    try {
-        if (typeof setTimeout === 'function') {
-            cachedSetTimeout = setTimeout;
-        } else {
-            cachedSetTimeout = defaultSetTimout;
-        }
-    } catch (e) {
-        cachedSetTimeout = defaultSetTimout;
-    }
-    try {
-        if (typeof clearTimeout === 'function') {
-            cachedClearTimeout = clearTimeout;
-        } else {
-            cachedClearTimeout = defaultClearTimeout;
-        }
-    } catch (e) {
-        cachedClearTimeout = defaultClearTimeout;
-    }
-} ())
-function runTimeout(fun) {
-    if (cachedSetTimeout === setTimeout) {
-        //normal enviroments in sane situations
-        return setTimeout(fun, 0);
-    }
-    // if setTimeout wasn't available but was latter defined
-    if ((cachedSetTimeout === defaultSetTimout || !cachedSetTimeout) && setTimeout) {
-        cachedSetTimeout = setTimeout;
-        return setTimeout(fun, 0);
-    }
-    try {
-        // when when somebody has screwed with setTimeout but no I.E. maddness
-        return cachedSetTimeout(fun, 0);
-    } catch(e){
-        try {
-            // When we are in I.E. but the script has been evaled so I.E. doesn't trust the global object when called normally
-            return cachedSetTimeout.call(null, fun, 0);
-        } catch(e){
-            // same as above but when it's a version of I.E. that must have the global object for 'this', hopfully our context correct otherwise it will throw a global error
-            return cachedSetTimeout.call(this, fun, 0);
-        }
-    }
-
-
-}
-function runClearTimeout(marker) {
-    if (cachedClearTimeout === clearTimeout) {
-        //normal enviroments in sane situations
-        return clearTimeout(marker);
-    }
-    // if clearTimeout wasn't available but was latter defined
-    if ((cachedClearTimeout === defaultClearTimeout || !cachedClearTimeout) && clearTimeout) {
-        cachedClearTimeout = clearTimeout;
-        return clearTimeout(marker);
-    }
-    try {
-        // when when somebody has screwed with setTimeout but no I.E. maddness
-        return cachedClearTimeout(marker);
-    } catch (e){
-        try {
-            // When we are in I.E. but the script has been evaled so I.E. doesn't  trust the global object when called normally
-            return cachedClearTimeout.call(null, marker);
-        } catch (e){
-            // same as above but when it's a version of I.E. that must have the global object for 'this', hopfully our context correct otherwise it will throw a global error.
-            // Some versions of I.E. have different rules for clearTimeout vs setTimeout
-            return cachedClearTimeout.call(this, marker);
-        }
-    }
-
-
-
-}
-var queue = [];
-var draining = false;
-var currentQueue;
-var queueIndex = -1;
-
-function cleanUpNextTick() {
-    if (!draining || !currentQueue) {
-        return;
-    }
-    draining = false;
-    if (currentQueue.length) {
-        queue = currentQueue.concat(queue);
-    } else {
-        queueIndex = -1;
-    }
-    if (queue.length) {
-        drainQueue();
-    }
-}
-
-function drainQueue() {
-    if (draining) {
-        return;
-    }
-    var timeout = runTimeout(cleanUpNextTick);
-    draining = true;
-
-    var len = queue.length;
-    while(len) {
-        currentQueue = queue;
-        queue = [];
-        while (++queueIndex < len) {
-            if (currentQueue) {
-                currentQueue[queueIndex].run();
-            }
-        }
-        queueIndex = -1;
-        len = queue.length;
-    }
-    currentQueue = null;
-    draining = false;
-    runClearTimeout(timeout);
-}
-
-process.nextTick = function (fun) {
-    var args = new Array(arguments.length - 1);
-    if (arguments.length > 1) {
-        for (var i = 1; i < arguments.length; i++) {
-            args[i - 1] = arguments[i];
-        }
-    }
-    queue.push(new Item(fun, args));
-    if (queue.length === 1 && !draining) {
-        runTimeout(drainQueue);
-    }
-};
-
-// v8 likes predictible objects
-function Item(fun, array) {
-    this.fun = fun;
-    this.array = array;
-}
-Item.prototype.run = function () {
-    this.fun.apply(null, this.array);
-};
-process.title = 'browser';
-process.browser = true;
-process.env = {};
-process.argv = [];
-process.version = ''; // empty string to avoid regexp issues
-process.versions = {};
-
-function noop() {}
-
-process.on = noop;
-process.addListener = noop;
-process.once = noop;
-process.off = noop;
-process.removeListener = noop;
-process.removeAllListeners = noop;
-process.emit = noop;
-process.prependListener = noop;
-process.prependOnceListener = noop;
-
-process.listeners = function (name) { return [] }
-
-process.binding = function (name) {
-    throw new Error('process.binding is not supported');
-};
-
-process.cwd = function () { return '/' };
-process.chdir = function (dir) {
-    throw new Error('process.chdir is not supported');
-};
-process.umask = function() { return 0; };
-
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../webpack/buildin/module.js */ "./node_modules/webpack/buildin/module.js")(module), __webpack_require__(/*! ./../webpack/buildin/global.js */ "./node_modules/webpack/buildin/global.js?cd00")))
 
 /***/ }),
 
 /***/ "./node_modules/querystring-es3/decode.js":
-/*!************************************************!*\
-  !*** ./node_modules/querystring-es3/decode.js ***!
-  \************************************************/
+/*!*****************************************************************************************************************************************************************!*\
+  !*** C:/Users/rzzsa/Documents/OSPanel/domains/laraberg/plugins/reazzon/gutenberg/formwidgets/gutenberg/assets/resources/node_modules/querystring-es3/decode.js ***!
+  \*****************************************************************************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -14228,9 +14710,9 @@ var isArray = Array.isArray || function (xs) {
 /***/ }),
 
 /***/ "./node_modules/querystring-es3/encode.js":
-/*!************************************************!*\
-  !*** ./node_modules/querystring-es3/encode.js ***!
-  \************************************************/
+/*!*****************************************************************************************************************************************************************!*\
+  !*** C:/Users/rzzsa/Documents/OSPanel/domains/laraberg/plugins/reazzon/gutenberg/formwidgets/gutenberg/assets/resources/node_modules/querystring-es3/encode.js ***!
+  \*****************************************************************************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -14325,9 +14807,9 @@ var objectKeys = Object.keys || function (obj) {
 /***/ }),
 
 /***/ "./node_modules/querystring-es3/index.js":
-/*!***********************************************!*\
-  !*** ./node_modules/querystring-es3/index.js ***!
-  \***********************************************/
+/*!****************************************************************************************************************************************************************!*\
+  !*** C:/Users/rzzsa/Documents/OSPanel/domains/laraberg/plugins/reazzon/gutenberg/formwidgets/gutenberg/assets/resources/node_modules/querystring-es3/index.js ***!
+  \****************************************************************************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -14340,747 +14822,10 @@ exports.encode = exports.stringify = __webpack_require__(/*! ./encode */ "./node
 
 /***/ }),
 
-/***/ "./node_modules/regenerator-runtime/runtime.js":
-/*!*****************************************************!*\
-  !*** ./node_modules/regenerator-runtime/runtime.js ***!
-  \*****************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-/**
- * Copyright (c) 2014-present, Facebook, Inc.
- *
- * This source code is licensed under the MIT license found in the
- * LICENSE file in the root directory of this source tree.
- */
-
-var runtime = (function (exports) {
-  "use strict";
-
-  var Op = Object.prototype;
-  var hasOwn = Op.hasOwnProperty;
-  var undefined; // More compressible than void 0.
-  var $Symbol = typeof Symbol === "function" ? Symbol : {};
-  var iteratorSymbol = $Symbol.iterator || "@@iterator";
-  var asyncIteratorSymbol = $Symbol.asyncIterator || "@@asyncIterator";
-  var toStringTagSymbol = $Symbol.toStringTag || "@@toStringTag";
-
-  function wrap(innerFn, outerFn, self, tryLocsList) {
-    // If outerFn provided and outerFn.prototype is a Generator, then outerFn.prototype instanceof Generator.
-    var protoGenerator = outerFn && outerFn.prototype instanceof Generator ? outerFn : Generator;
-    var generator = Object.create(protoGenerator.prototype);
-    var context = new Context(tryLocsList || []);
-
-    // The ._invoke method unifies the implementations of the .next,
-    // .throw, and .return methods.
-    generator._invoke = makeInvokeMethod(innerFn, self, context);
-
-    return generator;
-  }
-  exports.wrap = wrap;
-
-  // Try/catch helper to minimize deoptimizations. Returns a completion
-  // record like context.tryEntries[i].completion. This interface could
-  // have been (and was previously) designed to take a closure to be
-  // invoked without arguments, but in all the cases we care about we
-  // already have an existing method we want to call, so there's no need
-  // to create a new function object. We can even get away with assuming
-  // the method takes exactly one argument, since that happens to be true
-  // in every case, so we don't have to touch the arguments object. The
-  // only additional allocation required is the completion record, which
-  // has a stable shape and so hopefully should be cheap to allocate.
-  function tryCatch(fn, obj, arg) {
-    try {
-      return { type: "normal", arg: fn.call(obj, arg) };
-    } catch (err) {
-      return { type: "throw", arg: err };
-    }
-  }
-
-  var GenStateSuspendedStart = "suspendedStart";
-  var GenStateSuspendedYield = "suspendedYield";
-  var GenStateExecuting = "executing";
-  var GenStateCompleted = "completed";
-
-  // Returning this object from the innerFn has the same effect as
-  // breaking out of the dispatch switch statement.
-  var ContinueSentinel = {};
-
-  // Dummy constructor functions that we use as the .constructor and
-  // .constructor.prototype properties for functions that return Generator
-  // objects. For full spec compliance, you may wish to configure your
-  // minifier not to mangle the names of these two functions.
-  function Generator() {}
-  function GeneratorFunction() {}
-  function GeneratorFunctionPrototype() {}
-
-  // This is a polyfill for %IteratorPrototype% for environments that
-  // don't natively support it.
-  var IteratorPrototype = {};
-  IteratorPrototype[iteratorSymbol] = function () {
-    return this;
-  };
-
-  var getProto = Object.getPrototypeOf;
-  var NativeIteratorPrototype = getProto && getProto(getProto(values([])));
-  if (NativeIteratorPrototype &&
-      NativeIteratorPrototype !== Op &&
-      hasOwn.call(NativeIteratorPrototype, iteratorSymbol)) {
-    // This environment has a native %IteratorPrototype%; use it instead
-    // of the polyfill.
-    IteratorPrototype = NativeIteratorPrototype;
-  }
-
-  var Gp = GeneratorFunctionPrototype.prototype =
-    Generator.prototype = Object.create(IteratorPrototype);
-  GeneratorFunction.prototype = Gp.constructor = GeneratorFunctionPrototype;
-  GeneratorFunctionPrototype.constructor = GeneratorFunction;
-  GeneratorFunctionPrototype[toStringTagSymbol] =
-    GeneratorFunction.displayName = "GeneratorFunction";
-
-  // Helper for defining the .next, .throw, and .return methods of the
-  // Iterator interface in terms of a single ._invoke method.
-  function defineIteratorMethods(prototype) {
-    ["next", "throw", "return"].forEach(function(method) {
-      prototype[method] = function(arg) {
-        return this._invoke(method, arg);
-      };
-    });
-  }
-
-  exports.isGeneratorFunction = function(genFun) {
-    var ctor = typeof genFun === "function" && genFun.constructor;
-    return ctor
-      ? ctor === GeneratorFunction ||
-        // For the native GeneratorFunction constructor, the best we can
-        // do is to check its .name property.
-        (ctor.displayName || ctor.name) === "GeneratorFunction"
-      : false;
-  };
-
-  exports.mark = function(genFun) {
-    if (Object.setPrototypeOf) {
-      Object.setPrototypeOf(genFun, GeneratorFunctionPrototype);
-    } else {
-      genFun.__proto__ = GeneratorFunctionPrototype;
-      if (!(toStringTagSymbol in genFun)) {
-        genFun[toStringTagSymbol] = "GeneratorFunction";
-      }
-    }
-    genFun.prototype = Object.create(Gp);
-    return genFun;
-  };
-
-  // Within the body of any async function, `await x` is transformed to
-  // `yield regeneratorRuntime.awrap(x)`, so that the runtime can test
-  // `hasOwn.call(value, "__await")` to determine if the yielded value is
-  // meant to be awaited.
-  exports.awrap = function(arg) {
-    return { __await: arg };
-  };
-
-  function AsyncIterator(generator) {
-    function invoke(method, arg, resolve, reject) {
-      var record = tryCatch(generator[method], generator, arg);
-      if (record.type === "throw") {
-        reject(record.arg);
-      } else {
-        var result = record.arg;
-        var value = result.value;
-        if (value &&
-            typeof value === "object" &&
-            hasOwn.call(value, "__await")) {
-          return Promise.resolve(value.__await).then(function(value) {
-            invoke("next", value, resolve, reject);
-          }, function(err) {
-            invoke("throw", err, resolve, reject);
-          });
-        }
-
-        return Promise.resolve(value).then(function(unwrapped) {
-          // When a yielded Promise is resolved, its final value becomes
-          // the .value of the Promise<{value,done}> result for the
-          // current iteration.
-          result.value = unwrapped;
-          resolve(result);
-        }, function(error) {
-          // If a rejected Promise was yielded, throw the rejection back
-          // into the async generator function so it can be handled there.
-          return invoke("throw", error, resolve, reject);
-        });
-      }
-    }
-
-    var previousPromise;
-
-    function enqueue(method, arg) {
-      function callInvokeWithMethodAndArg() {
-        return new Promise(function(resolve, reject) {
-          invoke(method, arg, resolve, reject);
-        });
-      }
-
-      return previousPromise =
-        // If enqueue has been called before, then we want to wait until
-        // all previous Promises have been resolved before calling invoke,
-        // so that results are always delivered in the correct order. If
-        // enqueue has not been called before, then it is important to
-        // call invoke immediately, without waiting on a callback to fire,
-        // so that the async generator function has the opportunity to do
-        // any necessary setup in a predictable way. This predictability
-        // is why the Promise constructor synchronously invokes its
-        // executor callback, and why async functions synchronously
-        // execute code before the first await. Since we implement simple
-        // async functions in terms of async generators, it is especially
-        // important to get this right, even though it requires care.
-        previousPromise ? previousPromise.then(
-          callInvokeWithMethodAndArg,
-          // Avoid propagating failures to Promises returned by later
-          // invocations of the iterator.
-          callInvokeWithMethodAndArg
-        ) : callInvokeWithMethodAndArg();
-    }
-
-    // Define the unified helper method that is used to implement .next,
-    // .throw, and .return (see defineIteratorMethods).
-    this._invoke = enqueue;
-  }
-
-  defineIteratorMethods(AsyncIterator.prototype);
-  AsyncIterator.prototype[asyncIteratorSymbol] = function () {
-    return this;
-  };
-  exports.AsyncIterator = AsyncIterator;
-
-  // Note that simple async functions are implemented on top of
-  // AsyncIterator objects; they just return a Promise for the value of
-  // the final result produced by the iterator.
-  exports.async = function(innerFn, outerFn, self, tryLocsList) {
-    var iter = new AsyncIterator(
-      wrap(innerFn, outerFn, self, tryLocsList)
-    );
-
-    return exports.isGeneratorFunction(outerFn)
-      ? iter // If outerFn is a generator, return the full iterator.
-      : iter.next().then(function(result) {
-          return result.done ? result.value : iter.next();
-        });
-  };
-
-  function makeInvokeMethod(innerFn, self, context) {
-    var state = GenStateSuspendedStart;
-
-    return function invoke(method, arg) {
-      if (state === GenStateExecuting) {
-        throw new Error("Generator is already running");
-      }
-
-      if (state === GenStateCompleted) {
-        if (method === "throw") {
-          throw arg;
-        }
-
-        // Be forgiving, per 25.3.3.3.3 of the spec:
-        // https://people.mozilla.org/~jorendorff/es6-draft.html#sec-generatorresume
-        return doneResult();
-      }
-
-      context.method = method;
-      context.arg = arg;
-
-      while (true) {
-        var delegate = context.delegate;
-        if (delegate) {
-          var delegateResult = maybeInvokeDelegate(delegate, context);
-          if (delegateResult) {
-            if (delegateResult === ContinueSentinel) continue;
-            return delegateResult;
-          }
-        }
-
-        if (context.method === "next") {
-          // Setting context._sent for legacy support of Babel's
-          // function.sent implementation.
-          context.sent = context._sent = context.arg;
-
-        } else if (context.method === "throw") {
-          if (state === GenStateSuspendedStart) {
-            state = GenStateCompleted;
-            throw context.arg;
-          }
-
-          context.dispatchException(context.arg);
-
-        } else if (context.method === "return") {
-          context.abrupt("return", context.arg);
-        }
-
-        state = GenStateExecuting;
-
-        var record = tryCatch(innerFn, self, context);
-        if (record.type === "normal") {
-          // If an exception is thrown from innerFn, we leave state ===
-          // GenStateExecuting and loop back for another invocation.
-          state = context.done
-            ? GenStateCompleted
-            : GenStateSuspendedYield;
-
-          if (record.arg === ContinueSentinel) {
-            continue;
-          }
-
-          return {
-            value: record.arg,
-            done: context.done
-          };
-
-        } else if (record.type === "throw") {
-          state = GenStateCompleted;
-          // Dispatch the exception by looping back around to the
-          // context.dispatchException(context.arg) call above.
-          context.method = "throw";
-          context.arg = record.arg;
-        }
-      }
-    };
-  }
-
-  // Call delegate.iterator[context.method](context.arg) and handle the
-  // result, either by returning a { value, done } result from the
-  // delegate iterator, or by modifying context.method and context.arg,
-  // setting context.delegate to null, and returning the ContinueSentinel.
-  function maybeInvokeDelegate(delegate, context) {
-    var method = delegate.iterator[context.method];
-    if (method === undefined) {
-      // A .throw or .return when the delegate iterator has no .throw
-      // method always terminates the yield* loop.
-      context.delegate = null;
-
-      if (context.method === "throw") {
-        // Note: ["return"] must be used for ES3 parsing compatibility.
-        if (delegate.iterator["return"]) {
-          // If the delegate iterator has a return method, give it a
-          // chance to clean up.
-          context.method = "return";
-          context.arg = undefined;
-          maybeInvokeDelegate(delegate, context);
-
-          if (context.method === "throw") {
-            // If maybeInvokeDelegate(context) changed context.method from
-            // "return" to "throw", let that override the TypeError below.
-            return ContinueSentinel;
-          }
-        }
-
-        context.method = "throw";
-        context.arg = new TypeError(
-          "The iterator does not provide a 'throw' method");
-      }
-
-      return ContinueSentinel;
-    }
-
-    var record = tryCatch(method, delegate.iterator, context.arg);
-
-    if (record.type === "throw") {
-      context.method = "throw";
-      context.arg = record.arg;
-      context.delegate = null;
-      return ContinueSentinel;
-    }
-
-    var info = record.arg;
-
-    if (! info) {
-      context.method = "throw";
-      context.arg = new TypeError("iterator result is not an object");
-      context.delegate = null;
-      return ContinueSentinel;
-    }
-
-    if (info.done) {
-      // Assign the result of the finished delegate to the temporary
-      // variable specified by delegate.resultName (see delegateYield).
-      context[delegate.resultName] = info.value;
-
-      // Resume execution at the desired location (see delegateYield).
-      context.next = delegate.nextLoc;
-
-      // If context.method was "throw" but the delegate handled the
-      // exception, let the outer generator proceed normally. If
-      // context.method was "next", forget context.arg since it has been
-      // "consumed" by the delegate iterator. If context.method was
-      // "return", allow the original .return call to continue in the
-      // outer generator.
-      if (context.method !== "return") {
-        context.method = "next";
-        context.arg = undefined;
-      }
-
-    } else {
-      // Re-yield the result returned by the delegate method.
-      return info;
-    }
-
-    // The delegate iterator is finished, so forget it and continue with
-    // the outer generator.
-    context.delegate = null;
-    return ContinueSentinel;
-  }
-
-  // Define Generator.prototype.{next,throw,return} in terms of the
-  // unified ._invoke helper method.
-  defineIteratorMethods(Gp);
-
-  Gp[toStringTagSymbol] = "Generator";
-
-  // A Generator should always return itself as the iterator object when the
-  // @@iterator function is called on it. Some browsers' implementations of the
-  // iterator prototype chain incorrectly implement this, causing the Generator
-  // object to not be returned from this call. This ensures that doesn't happen.
-  // See https://github.com/facebook/regenerator/issues/274 for more details.
-  Gp[iteratorSymbol] = function() {
-    return this;
-  };
-
-  Gp.toString = function() {
-    return "[object Generator]";
-  };
-
-  function pushTryEntry(locs) {
-    var entry = { tryLoc: locs[0] };
-
-    if (1 in locs) {
-      entry.catchLoc = locs[1];
-    }
-
-    if (2 in locs) {
-      entry.finallyLoc = locs[2];
-      entry.afterLoc = locs[3];
-    }
-
-    this.tryEntries.push(entry);
-  }
-
-  function resetTryEntry(entry) {
-    var record = entry.completion || {};
-    record.type = "normal";
-    delete record.arg;
-    entry.completion = record;
-  }
-
-  function Context(tryLocsList) {
-    // The root entry object (effectively a try statement without a catch
-    // or a finally block) gives us a place to store values thrown from
-    // locations where there is no enclosing try statement.
-    this.tryEntries = [{ tryLoc: "root" }];
-    tryLocsList.forEach(pushTryEntry, this);
-    this.reset(true);
-  }
-
-  exports.keys = function(object) {
-    var keys = [];
-    for (var key in object) {
-      keys.push(key);
-    }
-    keys.reverse();
-
-    // Rather than returning an object with a next method, we keep
-    // things simple and return the next function itself.
-    return function next() {
-      while (keys.length) {
-        var key = keys.pop();
-        if (key in object) {
-          next.value = key;
-          next.done = false;
-          return next;
-        }
-      }
-
-      // To avoid creating an additional object, we just hang the .value
-      // and .done properties off the next function object itself. This
-      // also ensures that the minifier will not anonymize the function.
-      next.done = true;
-      return next;
-    };
-  };
-
-  function values(iterable) {
-    if (iterable) {
-      var iteratorMethod = iterable[iteratorSymbol];
-      if (iteratorMethod) {
-        return iteratorMethod.call(iterable);
-      }
-
-      if (typeof iterable.next === "function") {
-        return iterable;
-      }
-
-      if (!isNaN(iterable.length)) {
-        var i = -1, next = function next() {
-          while (++i < iterable.length) {
-            if (hasOwn.call(iterable, i)) {
-              next.value = iterable[i];
-              next.done = false;
-              return next;
-            }
-          }
-
-          next.value = undefined;
-          next.done = true;
-
-          return next;
-        };
-
-        return next.next = next;
-      }
-    }
-
-    // Return an iterator with no values.
-    return { next: doneResult };
-  }
-  exports.values = values;
-
-  function doneResult() {
-    return { value: undefined, done: true };
-  }
-
-  Context.prototype = {
-    constructor: Context,
-
-    reset: function(skipTempReset) {
-      this.prev = 0;
-      this.next = 0;
-      // Resetting context._sent for legacy support of Babel's
-      // function.sent implementation.
-      this.sent = this._sent = undefined;
-      this.done = false;
-      this.delegate = null;
-
-      this.method = "next";
-      this.arg = undefined;
-
-      this.tryEntries.forEach(resetTryEntry);
-
-      if (!skipTempReset) {
-        for (var name in this) {
-          // Not sure about the optimal order of these conditions:
-          if (name.charAt(0) === "t" &&
-              hasOwn.call(this, name) &&
-              !isNaN(+name.slice(1))) {
-            this[name] = undefined;
-          }
-        }
-      }
-    },
-
-    stop: function() {
-      this.done = true;
-
-      var rootEntry = this.tryEntries[0];
-      var rootRecord = rootEntry.completion;
-      if (rootRecord.type === "throw") {
-        throw rootRecord.arg;
-      }
-
-      return this.rval;
-    },
-
-    dispatchException: function(exception) {
-      if (this.done) {
-        throw exception;
-      }
-
-      var context = this;
-      function handle(loc, caught) {
-        record.type = "throw";
-        record.arg = exception;
-        context.next = loc;
-
-        if (caught) {
-          // If the dispatched exception was caught by a catch block,
-          // then let that catch block handle the exception normally.
-          context.method = "next";
-          context.arg = undefined;
-        }
-
-        return !! caught;
-      }
-
-      for (var i = this.tryEntries.length - 1; i >= 0; --i) {
-        var entry = this.tryEntries[i];
-        var record = entry.completion;
-
-        if (entry.tryLoc === "root") {
-          // Exception thrown outside of any try block that could handle
-          // it, so set the completion value of the entire function to
-          // throw the exception.
-          return handle("end");
-        }
-
-        if (entry.tryLoc <= this.prev) {
-          var hasCatch = hasOwn.call(entry, "catchLoc");
-          var hasFinally = hasOwn.call(entry, "finallyLoc");
-
-          if (hasCatch && hasFinally) {
-            if (this.prev < entry.catchLoc) {
-              return handle(entry.catchLoc, true);
-            } else if (this.prev < entry.finallyLoc) {
-              return handle(entry.finallyLoc);
-            }
-
-          } else if (hasCatch) {
-            if (this.prev < entry.catchLoc) {
-              return handle(entry.catchLoc, true);
-            }
-
-          } else if (hasFinally) {
-            if (this.prev < entry.finallyLoc) {
-              return handle(entry.finallyLoc);
-            }
-
-          } else {
-            throw new Error("try statement without catch or finally");
-          }
-        }
-      }
-    },
-
-    abrupt: function(type, arg) {
-      for (var i = this.tryEntries.length - 1; i >= 0; --i) {
-        var entry = this.tryEntries[i];
-        if (entry.tryLoc <= this.prev &&
-            hasOwn.call(entry, "finallyLoc") &&
-            this.prev < entry.finallyLoc) {
-          var finallyEntry = entry;
-          break;
-        }
-      }
-
-      if (finallyEntry &&
-          (type === "break" ||
-           type === "continue") &&
-          finallyEntry.tryLoc <= arg &&
-          arg <= finallyEntry.finallyLoc) {
-        // Ignore the finally entry if control is not jumping to a
-        // location outside the try/catch block.
-        finallyEntry = null;
-      }
-
-      var record = finallyEntry ? finallyEntry.completion : {};
-      record.type = type;
-      record.arg = arg;
-
-      if (finallyEntry) {
-        this.method = "next";
-        this.next = finallyEntry.finallyLoc;
-        return ContinueSentinel;
-      }
-
-      return this.complete(record);
-    },
-
-    complete: function(record, afterLoc) {
-      if (record.type === "throw") {
-        throw record.arg;
-      }
-
-      if (record.type === "break" ||
-          record.type === "continue") {
-        this.next = record.arg;
-      } else if (record.type === "return") {
-        this.rval = this.arg = record.arg;
-        this.method = "return";
-        this.next = "end";
-      } else if (record.type === "normal" && afterLoc) {
-        this.next = afterLoc;
-      }
-
-      return ContinueSentinel;
-    },
-
-    finish: function(finallyLoc) {
-      for (var i = this.tryEntries.length - 1; i >= 0; --i) {
-        var entry = this.tryEntries[i];
-        if (entry.finallyLoc === finallyLoc) {
-          this.complete(entry.completion, entry.afterLoc);
-          resetTryEntry(entry);
-          return ContinueSentinel;
-        }
-      }
-    },
-
-    "catch": function(tryLoc) {
-      for (var i = this.tryEntries.length - 1; i >= 0; --i) {
-        var entry = this.tryEntries[i];
-        if (entry.tryLoc === tryLoc) {
-          var record = entry.completion;
-          if (record.type === "throw") {
-            var thrown = record.arg;
-            resetTryEntry(entry);
-          }
-          return thrown;
-        }
-      }
-
-      // The context.catch method must only be called with a location
-      // argument that corresponds to a known catch block.
-      throw new Error("illegal catch attempt");
-    },
-
-    delegateYield: function(iterable, resultName, nextLoc) {
-      this.delegate = {
-        iterator: values(iterable),
-        resultName: resultName,
-        nextLoc: nextLoc
-      };
-
-      if (this.method === "next") {
-        // Deliberately forget the last sent value so that we don't
-        // accidentally pass it on to the delegate.
-        this.arg = undefined;
-      }
-
-      return ContinueSentinel;
-    }
-  };
-
-  // Regardless of whether this script is executing as a CommonJS module
-  // or not, return the runtime object so that we can declare the variable
-  // regeneratorRuntime in the outer scope, which allows this module to be
-  // injected easily by `bin/regenerator --include-runtime script.js`.
-  return exports;
-
-}(
-  // If this script is executing as a CommonJS module, use module.exports
-  // as the regeneratorRuntime namespace. Otherwise create a new empty
-  // object. Either way, the resulting object will be used to initialize
-  // the regeneratorRuntime variable at the top of this file.
-   true ? module.exports : undefined
-));
-
-try {
-  regeneratorRuntime = runtime;
-} catch (accidentalStrictMode) {
-  // This module should not be running in strict mode, so the above
-  // assignment should always work unless something is misconfigured. Just
-  // in case runtime.js accidentally runs in strict mode, we can escape
-  // strict mode using a global Function call. This could conceivably fail
-  // if a Content Security Policy forbids using Function, but in that case
-  // the proper solution is to fix the accidental strict mode problem. If
-  // you've misconfigured your bundler to force strict mode and applied a
-  // CSP to forbid Function, and you're not willing to fix either of those
-  // problems, please detail your unique predicament in a GitHub issue.
-  Function("r", "regeneratorRuntime = r")(runtime);
-}
-
-
-/***/ }),
-
 /***/ "./node_modules/url/url.js":
-/*!*********************************!*\
-  !*** ./node_modules/url/url.js ***!
-  \*********************************/
+/*!**************************************************************************************************************************************************!*\
+  !*** C:/Users/rzzsa/Documents/OSPanel/domains/laraberg/plugins/reazzon/gutenberg/formwidgets/gutenberg/assets/resources/node_modules/url/url.js ***!
+  \**************************************************************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -15108,7 +14853,7 @@ try {
 
 
 
-var punycode = __webpack_require__(/*! punycode */ "./node_modules/node-libs-browser/node_modules/punycode/punycode.js");
+var punycode = __webpack_require__(/*! punycode */ "./node_modules/punycode/punycode.js");
 var util = __webpack_require__(/*! ./util */ "./node_modules/url/util.js");
 
 exports.parse = urlParse;
@@ -15822,9 +15567,9 @@ Url.prototype.parseHost = function() {
 /***/ }),
 
 /***/ "./node_modules/url/util.js":
-/*!**********************************!*\
-  !*** ./node_modules/url/util.js ***!
-  \**********************************/
+/*!***************************************************************************************************************************************************!*\
+  !*** C:/Users/rzzsa/Documents/OSPanel/domains/laraberg/plugins/reazzon/gutenberg/formwidgets/gutenberg/assets/resources/node_modules/url/util.js ***!
+  \***************************************************************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -15849,7 +15594,38 @@ module.exports = {
 
 /***/ }),
 
-/***/ "./node_modules/webpack/buildin/global.js":
+/***/ "./node_modules/webpack/buildin/global.js?c8ba":
+/*!************************************************!*\
+  !*** ./node_modules/webpack/buildin/global.js ***!
+  \************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+var g;
+
+// This works in non-strict mode
+g = (function() {
+	return this;
+})();
+
+try {
+	// This works if eval is allowed (see CSP)
+	g = g || new Function("return this")();
+} catch (e) {
+	// This works if the window reference is available
+	if (typeof window === "object") g = window;
+}
+
+// g can still be undefined, but nothing to do about it...
+// We return undefined, instead of nothing here, so it's
+// easier to handle this case. if(!global) { ...}
+
+module.exports = g;
+
+
+/***/ }),
+
+/***/ "./node_modules/webpack/buildin/global.js?cd00":
 /*!***********************************!*\
   !*** (webpack)/buildin/global.js ***!
   \***********************************/
@@ -15913,1499 +15689,10 @@ module.exports = function(module) {
 
 /***/ }),
 
-/***/ "./src/resources/js/api/api-fetch.js":
-/*!*******************************************!*\
-  !*** ./src/resources/js/api/api-fetch.js ***!
-  \*******************************************/
-/*! exports provided: postPage, putPage, default, configureAPI */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "postPage", function() { return postPage; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "putPage", function() { return putPage; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return apiFetch; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "configureAPI", function() { return configureAPI; });
-/* harmony import */ var _babel_runtime_helpers_objectSpread__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/helpers/objectSpread */ "./node_modules/@babel/runtime/helpers/objectSpread.js");
-/* harmony import */ var _babel_runtime_helpers_objectSpread__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_objectSpread__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
-/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _babel_runtime_helpers_classCallCheck__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @babel/runtime/helpers/classCallCheck */ "./node_modules/@babel/runtime/helpers/classCallCheck.js");
-/* harmony import */ var _babel_runtime_helpers_classCallCheck__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_classCallCheck__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var _babel_runtime_helpers_possibleConstructorReturn__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @babel/runtime/helpers/possibleConstructorReturn */ "./node_modules/@babel/runtime/helpers/possibleConstructorReturn.js");
-/* harmony import */ var _babel_runtime_helpers_possibleConstructorReturn__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_possibleConstructorReturn__WEBPACK_IMPORTED_MODULE_3__);
-/* harmony import */ var _babel_runtime_helpers_getPrototypeOf__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @babel/runtime/helpers/getPrototypeOf */ "./node_modules/@babel/runtime/helpers/getPrototypeOf.js");
-/* harmony import */ var _babel_runtime_helpers_getPrototypeOf__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_getPrototypeOf__WEBPACK_IMPORTED_MODULE_4__);
-/* harmony import */ var _babel_runtime_helpers_inherits__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @babel/runtime/helpers/inherits */ "./node_modules/@babel/runtime/helpers/inherits.js");
-/* harmony import */ var _babel_runtime_helpers_inherits__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_inherits__WEBPACK_IMPORTED_MODULE_5__);
-/* harmony import */ var _babel_runtime_helpers_wrapNativeSuper__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @babel/runtime/helpers/wrapNativeSuper */ "./node_modules/@babel/runtime/helpers/wrapNativeSuper.js");
-/* harmony import */ var _babel_runtime_helpers_wrapNativeSuper__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_wrapNativeSuper__WEBPACK_IMPORTED_MODULE_6__);
-/* harmony import */ var _babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @babel/runtime/helpers/asyncToGenerator */ "./node_modules/@babel/runtime/helpers/asyncToGenerator.js");
-/* harmony import */ var _babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_7__);
-/* harmony import */ var _mock_data__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./mock-data */ "./src/resources/js/api/mock-data.js");
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_9___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_9__);
-/* harmony import */ var _gutenberg_settings__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../gutenberg/settings */ "./src/resources/js/gutenberg/settings.js");
-/* harmony import */ var _lib_notices__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ../lib/notices */ "./src/resources/js/lib/notices.js");
-
-
-
-
-
-
-
-
-
-
-
-
-var routePrefix;
-var requests = {
-  getBlock: {
-    method: 'GET',
-    regex: /\/wp\/v2\/blocks\/(\d*)/g,
-    run: getBlock
-  },
-  getBlocks: {
-    method: 'GET',
-    regex: /\/wp\/v2\/blocks($|[?].*)/g,
-    run: getBlocks
-  },
-  postBlocks: {
-    method: 'POST',
-    regex: /\/wp\/v2\/blocks.*/g,
-    run: postBlocks
-  },
-  putBlock: {
-    method: 'PUT',
-    regex: /\/wp\/v2\/blocks\/(\d*)/g,
-    run: putBlock
-  },
-  deleteBlock: {
-    method: 'DELETE',
-    regex: /\/wp\/v2\/blocks\/(\d*)/g,
-    run: deleteBlock
-  },
-  getEmbed: {
-    method: 'GET',
-    regex: /\/oembed\/1\.0\/proxy\?(.*)/g,
-    run: getEmbed
-  },
-  optionsMedia: {
-    method: 'OPTIONS',
-    regex: /\/wp\/v2\/media/g,
-    run: optionsMedia
-  },
-  getPage: {
-    method: 'GET',
-    regex: /\/wp\/v2\/pages\/(\d*)/g,
-    run: getPage
-  },
-  putPage: {
-    method: 'PUT',
-    regex: /\/wp\/v2\/pages\/(\d*)/g,
-    run: putPage
-  },
-  getTaxonomies: {
-    method: 'GET',
-    regex: /\/wp\/v2\/taxonomies\?(.*)/g,
-    run: getTaxonomies
-  },
-  getThemes: {
-    method: 'GET',
-    regex: /\/wp\/v2\/themes/g,
-    run: getThemes
-  },
-  getTypeBlock: {
-    method: 'GET',
-    regex: /\/wp\/v2\/types\/wp_block/g,
-    run: getTypeBlock
-  },
-  getTypePage: {
-    method: 'GET',
-    regex: /\/wp\/v2\/types\/page/g,
-    run: getTypePage
-  },
-  getTypes: {
-    method: 'GET',
-    regex: /\/wp\/v2\/types\?(.*)/g,
-    run: getTypes
-  },
-  getUsers: {
-    method: 'GET',
-    regex: /\/wp\/v2\/users\/\?(.*)/g,
-    run: getUsers
-  }
-};
-
-function getBlock(_x, _x2) {
-  return _getBlock.apply(this, arguments);
-}
-
-function _getBlock() {
-  _getBlock = _babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_7___default()(
-  /*#__PURE__*/
-  _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1___default.a.mark(function _callee(options, matches) {
-    var id, response;
-    return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1___default.a.wrap(function _callee$(_context) {
-      while (1) {
-        switch (_context.prev = _context.next) {
-          case 0:
-            id = matches[1];
-            _context.next = 3;
-            return axios__WEBPACK_IMPORTED_MODULE_9___default.a.get("".concat(routePrefix, "/blocks/").concat(id));
-
-          case 3:
-            response = _context.sent;
-            return _context.abrupt("return", response.data);
-
-          case 5:
-          case "end":
-            return _context.stop();
-        }
-      }
-    }, _callee, this);
-  }));
-  return _getBlock.apply(this, arguments);
-}
-
-function getBlocks() {
-  return _getBlocks.apply(this, arguments);
-}
-
-function _getBlocks() {
-  _getBlocks = _babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_7___default()(
-  /*#__PURE__*/
-  _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1___default.a.mark(function _callee2() {
-    var response;
-    return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1___default.a.wrap(function _callee2$(_context2) {
-      while (1) {
-        switch (_context2.prev = _context2.next) {
-          case 0:
-            _context2.next = 2;
-            return axios__WEBPACK_IMPORTED_MODULE_9___default.a.get("".concat(routePrefix, "/blocks"));
-
-          case 2:
-            response = _context2.sent;
-            return _context2.abrupt("return", response.data);
-
-          case 4:
-          case "end":
-            return _context2.stop();
-        }
-      }
-    }, _callee2, this);
-  }));
-  return _getBlocks.apply(this, arguments);
-}
-
-function postBlocks(_x3) {
-  return _postBlocks.apply(this, arguments);
-}
-
-function _postBlocks() {
-  _postBlocks = _babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_7___default()(
-  /*#__PURE__*/
-  _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1___default.a.mark(function _callee3(options) {
-    var response;
-    return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1___default.a.wrap(function _callee3$(_context3) {
-      while (1) {
-        switch (_context3.prev = _context3.next) {
-          case 0:
-            _context3.next = 2;
-            return axios__WEBPACK_IMPORTED_MODULE_9___default.a.post("".concat(routePrefix, "/blocks"), options.data);
-
-          case 2:
-            response = _context3.sent;
-            return _context3.abrupt("return", response.data);
-
-          case 4:
-          case "end":
-            return _context3.stop();
-        }
-      }
-    }, _callee3, this);
-  }));
-  return _postBlocks.apply(this, arguments);
-}
-
-function putBlock(_x4, _x5) {
-  return _putBlock.apply(this, arguments);
-}
-
-function _putBlock() {
-  _putBlock = _babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_7___default()(
-  /*#__PURE__*/
-  _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1___default.a.mark(function _callee4(options, matches) {
-    var id, response;
-    return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1___default.a.wrap(function _callee4$(_context4) {
-      while (1) {
-        switch (_context4.prev = _context4.next) {
-          case 0:
-            id = matches[1];
-            _context4.next = 3;
-            return axios__WEBPACK_IMPORTED_MODULE_9___default.a.put("".concat(routePrefix, "/blocks/").concat(id), options.data);
-
-          case 3:
-            response = _context4.sent;
-            return _context4.abrupt("return", response.data);
-
-          case 5:
-          case "end":
-            return _context4.stop();
-        }
-      }
-    }, _callee4, this);
-  }));
-  return _putBlock.apply(this, arguments);
-}
-
-function deleteBlock(_x6, _x7) {
-  return _deleteBlock.apply(this, arguments);
-}
-
-function _deleteBlock() {
-  _deleteBlock = _babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_7___default()(
-  /*#__PURE__*/
-  _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1___default.a.mark(function _callee5(options, matches) {
-    var id, response;
-    return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1___default.a.wrap(function _callee5$(_context5) {
-      while (1) {
-        switch (_context5.prev = _context5.next) {
-          case 0:
-            id = matches[1];
-            _context5.next = 3;
-            return axios__WEBPACK_IMPORTED_MODULE_9___default.a.delete("".concat(routePrefix, "/blocks/").concat(id));
-
-          case 3:
-            response = _context5.sent;
-            return _context5.abrupt("return", response.data);
-
-          case 5:
-          case "end":
-            return _context5.stop();
-        }
-      }
-    }, _callee5, this);
-  }));
-  return _deleteBlock.apply(this, arguments);
-}
-
-function getEmbed(_x8, _x9) {
-  return _getEmbed.apply(this, arguments);
-}
-
-function _getEmbed() {
-  _getEmbed = _babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_7___default()(
-  /*#__PURE__*/
-  _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1___default.a.mark(function _callee6(options, matches) {
-    var response;
-    return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1___default.a.wrap(function _callee6$(_context6) {
-      while (1) {
-        switch (_context6.prev = _context6.next) {
-          case 0:
-            _context6.next = 2;
-            return axios__WEBPACK_IMPORTED_MODULE_9___default.a.get("".concat(routePrefix, "/oembed?").concat(matches[1]));
-
-          case 2:
-            response = _context6.sent;
-            return _context6.abrupt("return", response.data);
-
-          case 4:
-          case "end":
-            return _context6.stop();
-        }
-      }
-    }, _callee6, this);
-  }));
-  return _getEmbed.apply(this, arguments);
-}
-
-function optionsMedia() {
-  return _optionsMedia.apply(this, arguments);
-}
-
-function _optionsMedia() {
-  _optionsMedia = _babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_7___default()(
-  /*#__PURE__*/
-  _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1___default.a.mark(function _callee7() {
-    return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1___default.a.wrap(function _callee7$(_context7) {
-      while (1) {
-        switch (_context7.prev = _context7.next) {
-          case 0:
-            return _context7.abrupt("return", _mock_data__WEBPACK_IMPORTED_MODULE_8__["media"]);
-
-          case 1:
-          case "end":
-            return _context7.stop();
-        }
-      }
-    }, _callee7, this);
-  }));
-  return _optionsMedia.apply(this, arguments);
-}
-
-function getPage() {
-  return _getPage.apply(this, arguments);
-}
-
-function _getPage() {
-  _getPage = _babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_7___default()(
-  /*#__PURE__*/
-  _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1___default.a.mark(function _callee8() {
-    var content;
-    return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1___default.a.wrap(function _callee8$(_context8) {
-      while (1) {
-        switch (_context8.prev = _context8.next) {
-          case 0:
-            content = document.getElementById(_gutenberg_settings__WEBPACK_IMPORTED_MODULE_10__["editorSettings"].target).value || '';
-            return _context8.abrupt("return", _babel_runtime_helpers_objectSpread__WEBPACK_IMPORTED_MODULE_0___default()({}, _mock_data__WEBPACK_IMPORTED_MODULE_8__["page"], {
-              content: {
-                raw: content
-              }
-            }));
-
-          case 2:
-          case "end":
-            return _context8.stop();
-        }
-      }
-    }, _callee8, this);
-  }));
-  return _getPage.apply(this, arguments);
-}
-
-function postPage(_x10) {
-  return _postPage.apply(this, arguments);
-}
-
-function _postPage() {
-  _postPage = _babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_7___default()(
-  /*#__PURE__*/
-  _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1___default.a.mark(function _callee9(options) {
-    return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1___default.a.wrap(function _callee9$(_context9) {
-      while (1) {
-        switch (_context9.prev = _context9.next) {
-          case 0:
-            return _context9.abrupt("return", _babel_runtime_helpers_objectSpread__WEBPACK_IMPORTED_MODULE_0___default()({}, _mock_data__WEBPACK_IMPORTED_MODULE_8__["page"], {
-              content: {
-                raw: options.data
-              }
-            }));
-
-          case 1:
-          case "end":
-            return _context9.stop();
-        }
-      }
-    }, _callee9, this);
-  }));
-  return _postPage.apply(this, arguments);
-}
-
-function putPage(_x11) {
-  return _putPage.apply(this, arguments);
-}
-
-function _putPage() {
-  _putPage = _babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_7___default()(
-  /*#__PURE__*/
-  _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1___default.a.mark(function _callee10(options) {
-    return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1___default.a.wrap(function _callee10$(_context10) {
-      while (1) {
-        switch (_context10.prev = _context10.next) {
-          case 0:
-            return _context10.abrupt("return", _babel_runtime_helpers_objectSpread__WEBPACK_IMPORTED_MODULE_0___default()({}, _mock_data__WEBPACK_IMPORTED_MODULE_8__["page"], {
-              content: {
-                raw: options.data
-              }
-            }));
-
-          case 1:
-          case "end":
-            return _context10.stop();
-        }
-      }
-    }, _callee10, this);
-  }));
-  return _putPage.apply(this, arguments);
-}
-
-function getTaxonomies() {
-  return _getTaxonomies.apply(this, arguments);
-}
-
-function _getTaxonomies() {
-  _getTaxonomies = _babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_7___default()(
-  /*#__PURE__*/
-  _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1___default.a.mark(function _callee11() {
-    return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1___default.a.wrap(function _callee11$(_context11) {
-      while (1) {
-        switch (_context11.prev = _context11.next) {
-          case 0:
-            return _context11.abrupt("return", 'ok');
-
-          case 1:
-          case "end":
-            return _context11.stop();
-        }
-      }
-    }, _callee11, this);
-  }));
-  return _getTaxonomies.apply(this, arguments);
-}
-
-function getThemes() {
-  return _getThemes.apply(this, arguments);
-}
-
-function _getThemes() {
-  _getThemes = _babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_7___default()(
-  /*#__PURE__*/
-  _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1___default.a.mark(function _callee12() {
-    return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1___default.a.wrap(function _callee12$(_context12) {
-      while (1) {
-        switch (_context12.prev = _context12.next) {
-          case 0:
-            return _context12.abrupt("return", _mock_data__WEBPACK_IMPORTED_MODULE_8__["themes"]);
-
-          case 1:
-          case "end":
-            return _context12.stop();
-        }
-      }
-    }, _callee12, this);
-  }));
-  return _getThemes.apply(this, arguments);
-}
-
-function getTypeBlock() {
-  return _getTypeBlock.apply(this, arguments);
-}
-
-function _getTypeBlock() {
-  _getTypeBlock = _babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_7___default()(
-  /*#__PURE__*/
-  _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1___default.a.mark(function _callee13() {
-    return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1___default.a.wrap(function _callee13$(_context13) {
-      while (1) {
-        switch (_context13.prev = _context13.next) {
-          case 0:
-            return _context13.abrupt("return", _mock_data__WEBPACK_IMPORTED_MODULE_8__["types"].block);
-
-          case 1:
-          case "end":
-            return _context13.stop();
-        }
-      }
-    }, _callee13, this);
-  }));
-  return _getTypeBlock.apply(this, arguments);
-}
-
-function getTypePage() {
-  return _getTypePage.apply(this, arguments);
-}
-
-function _getTypePage() {
-  _getTypePage = _babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_7___default()(
-  /*#__PURE__*/
-  _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1___default.a.mark(function _callee14() {
-    return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1___default.a.wrap(function _callee14$(_context14) {
-      while (1) {
-        switch (_context14.prev = _context14.next) {
-          case 0:
-            return _context14.abrupt("return", _mock_data__WEBPACK_IMPORTED_MODULE_8__["types"].page);
-
-          case 1:
-          case "end":
-            return _context14.stop();
-        }
-      }
-    }, _callee14, this);
-  }));
-  return _getTypePage.apply(this, arguments);
-}
-
-function getTypes() {
-  return _getTypes.apply(this, arguments);
-}
-
-function _getTypes() {
-  _getTypes = _babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_7___default()(
-  /*#__PURE__*/
-  _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1___default.a.mark(function _callee15() {
-    return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1___default.a.wrap(function _callee15$(_context15) {
-      while (1) {
-        switch (_context15.prev = _context15.next) {
-          case 0:
-            return _context15.abrupt("return", _mock_data__WEBPACK_IMPORTED_MODULE_8__["types"]);
-
-          case 1:
-          case "end":
-            return _context15.stop();
-        }
-      }
-    }, _callee15, this);
-  }));
-  return _getTypes.apply(this, arguments);
-}
-
-function getUsers() {
-  return _getUsers.apply(this, arguments);
-}
-
-function _getUsers() {
-  _getUsers = _babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_7___default()(
-  /*#__PURE__*/
-  _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1___default.a.mark(function _callee16() {
-    return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1___default.a.wrap(function _callee16$(_context16) {
-      while (1) {
-        switch (_context16.prev = _context16.next) {
-          case 0:
-            return _context16.abrupt("return", 'ok');
-
-          case 1:
-          case "end":
-            return _context16.stop();
-        }
-      }
-    }, _callee16, this);
-  }));
-  return _getUsers.apply(this, arguments);
-}
-
-function matchPath(options) {
-  var promise;
-  Object.keys(requests).forEach(function (key) {
-    var request = requests[key]; // Reset lastIndex so regex starts matching from the first character
-
-    request.regex.lastIndex = 0;
-    var matches = request.regex.exec(options.path);
-
-    if ((options.method === request.method || !options.method && request.method === 'GET') && matches && matches.length > 0) {
-      promise = request.run(options, matches).catch(function () {
-        return _lib_notices__WEBPACK_IMPORTED_MODULE_11__["error"]('Could not complete request.');
-      });
-    }
-  });
-
-  if (!promise) {
-    promise = new Promise(function (resolve, reject) {
-      return reject(new FetchError({
-        code: 'api_handler_not_found',
-        message: 'API handler not found.',
-        data: {
-          path: options.path,
-          options: options,
-          status: 404
-        }
-      }));
-    }).catch(function (error) {
-      _lib_notices__WEBPACK_IMPORTED_MODULE_11__["error"]("".concat(error.message, " ").concat(error.data.data.path));
-    });
-  }
-
-  return promise;
-}
-
-function apiFetch(options) {
-  return matchPath(options);
-}
-function configureAPI(options) {
-  routePrefix = options.prefix || '/laraberg';
-}
-
-var FetchError =
-/*#__PURE__*/
-function (_Error) {
-  _babel_runtime_helpers_inherits__WEBPACK_IMPORTED_MODULE_5___default()(FetchError, _Error);
-
-  function FetchError(object) {
-    var _this;
-
-    _babel_runtime_helpers_classCallCheck__WEBPACK_IMPORTED_MODULE_2___default()(this, FetchError);
-
-    _this = _babel_runtime_helpers_possibleConstructorReturn__WEBPACK_IMPORTED_MODULE_3___default()(this, _babel_runtime_helpers_getPrototypeOf__WEBPACK_IMPORTED_MODULE_4___default()(FetchError).call(this, object.message));
-    _this.data = object;
-    return _this;
-  }
-
-  return FetchError;
-}(_babel_runtime_helpers_wrapNativeSuper__WEBPACK_IMPORTED_MODULE_6___default()(Error));
-
-/***/ }),
-
-/***/ "./src/resources/js/api/mock-data.js":
-/*!*******************************************!*\
-  !*** ./src/resources/js/api/mock-data.js ***!
-  \*******************************************/
-/*! exports provided: media, page, themes, types */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "media", function() { return media; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "page", function() { return page; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "themes", function() { return themes; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "types", function() { return types; });
-// Mock data to get the Gutenberg editor to work
-var media = {
-  headers: {
-    get: function get(value) {
-      if (value === 'allow') {
-        return ['POST'];
-      }
-    }
-  }
-};
-var page = {
-  content: {
-    raw: ''
-  },
-  title: '',
-  templates: '',
-  parent: 0,
-  link: "".concat(window.location.origin, "/preview"),
-  permalink_template: "".concat(window.location.origin, "/preview"),
-  preview_link: "".concat(window.location.origin, "/preview"),
-  type: 'page',
-  status: 'pending',
-  id: 0,
-  // functions
-  setContent: function setContent(content) {
-    page.content = {
-      raw: content
-    };
-  }
-};
-var themes = [{
-  theme_supports: {
-    formats: ['standard', 'aside', 'image', 'video', 'quote', 'link', 'gallery', 'audio'],
-    'post-thumbnails': true
-  }
-}];
-var types = {
-  page: {
-    labels: {},
-    name: 'Page',
-    rest_base: 'pages',
-    slug: 'page',
-    supports: {
-      author: false,
-      comments: false,
-      // hide discussion-panel
-      'custom-fields': true,
-      document: true,
-      // * hide document tab
-      editor: true,
-      'media-library': false,
-      // * hide media library
-      'page-attributes': false,
-      // hide page-attributes panel
-      posts: false,
-      // * hide posts-panel
-      revisions: false,
-      'template-settings': false,
-      // * hide template-settings panel
-      thumbnail: false,
-      // featured-image panel
-      title: false,
-      // show title on editor
-      extras: false
-    },
-    viewable: false,
-    saveable: true,
-    publishable: true,
-    autosaveable: false
-  },
-  block: {
-    name: 'Blocks',
-    rest_base: 'blocks',
-    slug: 'wp_block',
-    description: '',
-    supports: {
-      title: true,
-      editor: true
-    },
-    viewable: true
-  }
-};
-
-/***/ }),
-
-/***/ "./src/resources/js/gutenberg/add-query-args.js":
-/*!******************************************************!*\
-  !*** ./src/resources/js/gutenberg/add-query-args.js ***!
-  \******************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return addQueryArgs; });
-/* harmony import */ var _babel_runtime_helpers_objectSpread__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/helpers/objectSpread */ "./node_modules/@babel/runtime/helpers/objectSpread.js");
-/* harmony import */ var _babel_runtime_helpers_objectSpread__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_objectSpread__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var url__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! url */ "./node_modules/url/url.js");
-/* harmony import */ var url__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(url__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var querystring__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! querystring */ "./node_modules/querystring-es3/index.js");
-/* harmony import */ var querystring__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(querystring__WEBPACK_IMPORTED_MODULE_2__);
-
-
-/**
-* External dependencies
-*/
-
-
-/**
-* Appends arguments to the query string of the url
-*
-* @param  {String} url   URL
-* @param  {Object} args  Query Args
-*
-* @return {String}       Updated URL
-*/
-
-function addQueryArgs(url, args) {
-  var queryStringIndex = url.indexOf('?');
-  var query = queryStringIndex !== -1 ? url__WEBPACK_IMPORTED_MODULE_1___default()(url.substr(queryStringIndex + 1)) : {};
-  var baseUrl = queryStringIndex !== -1 ? url.substr(0, queryStringIndex) : url;
-  return baseUrl + '?' + Object(querystring__WEBPACK_IMPORTED_MODULE_2__["stringify"])(_babel_runtime_helpers_objectSpread__WEBPACK_IMPORTED_MODULE_0___default()({}, query, args));
-}
-
-/***/ }),
-
-/***/ "./src/resources/js/gutenberg/init.js":
-/*!********************************************!*\
-  !*** ./src/resources/js/gutenberg/init.js ***!
-  \********************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return init; });
-/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
-/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @babel/runtime/helpers/asyncToGenerator */ "./node_modules/@babel/runtime/helpers/asyncToGenerator.js");
-/* harmony import */ var _babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _api_api_fetch__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../api/api-fetch */ "./src/resources/js/api/api-fetch.js");
-/* harmony import */ var _lib_configure_editor__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../lib/configure-editor */ "./src/resources/js/lib/configure-editor.js");
-/* harmony import */ var _frontkom_gutenberg_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @frontkom/gutenberg-js */ "./node_modules/@frontkom/gutenberg-js/build/js/gutenberg-js.js");
-/* harmony import */ var _frontkom_gutenberg_js__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_frontkom_gutenberg_js__WEBPACK_IMPORTED_MODULE_4__);
-/* harmony import */ var _settings__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./settings */ "./src/resources/js/gutenberg/settings.js");
-/* harmony import */ var _lib_element_ready__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../lib/element-ready */ "./src/resources/js/lib/element-ready.js");
-
-
-
-
-
-
- // Setup sidebar events
-
-window.customGutenberg = {
-  events: {
-    'OPEN_GENERAL_SIDEBAR': function () {
-      var _OPEN_GENERAL_SIDEBAR = _babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_1___default()(
-      /*#__PURE__*/
-      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee(action, store) {
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
-          while (1) {
-            switch (_context.prev = _context.next) {
-              case 0:
-                _context.next = 2;
-                return Object(_lib_element_ready__WEBPACK_IMPORTED_MODULE_6__["elementReady"])('.edit-post-sidebar');
-
-              case 2:
-                Object(_lib_configure_editor__WEBPACK_IMPORTED_MODULE_3__["clearSubmitFromButtons"])();
-
-              case 3:
-              case "end":
-                return _context.stop();
-            }
-          }
-        }, _callee, this);
-      }));
-
-      function OPEN_GENERAL_SIDEBAR(_x, _x2) {
-        return _OPEN_GENERAL_SIDEBAR.apply(this, arguments);
-      }
-
-      return OPEN_GENERAL_SIDEBAR;
-    }(),
-    'CLOSE_GENERAL_SIDEBAR': function () {
-      var _CLOSE_GENERAL_SIDEBAR = _babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_1___default()(
-      /*#__PURE__*/
-      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2(action, store) {
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
-          while (1) {
-            switch (_context2.prev = _context2.next) {
-              case 0:
-              case "end":
-                return _context2.stop();
-            }
-          }
-        }, _callee2, this);
-      }));
-
-      function CLOSE_GENERAL_SIDEBAR(_x3, _x4) {
-        return _CLOSE_GENERAL_SIDEBAR.apply(this, arguments);
-      }
-
-      return CLOSE_GENERAL_SIDEBAR;
-    }()
-  }
-  /**
-   * Initialize the Gutenberg editor
-   * @param {string} target the element ID to render the gutenberg editor in
-   */
-
-};
-function init(target) {
-  var options = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
-  Object(_api_api_fetch__WEBPACK_IMPORTED_MODULE_2__["configureAPI"])(options);
-  window._wpLoadGutenbergEditor = new Promise(function (resolve) {
-    Object(_frontkom_gutenberg_js__WEBPACK_IMPORTED_MODULE_4__["domReady"])(
-    /*#__PURE__*/
-    _babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_1___default()(
-    /*#__PURE__*/
-    _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3() {
-      var larabergEditor;
-      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee3$(_context3) {
-        while (1) {
-          switch (_context3.prev = _context3.next) {
-            case 0:
-              larabergEditor = createEditorElement(target);
-              resolve(_frontkom_gutenberg_js__WEBPACK_IMPORTED_MODULE_4__["editPost"].initializeEditor(larabergEditor.id, 'page', 0, _settings__WEBPACK_IMPORTED_MODULE_5__["editorSettings"], _settings__WEBPACK_IMPORTED_MODULE_5__["overridePost"]));
-              _context3.next = 4;
-              return Object(_lib_element_ready__WEBPACK_IMPORTED_MODULE_6__["elementReady"])('.edit-post-layout');
-
-            case 4:
-              Object(_lib_configure_editor__WEBPACK_IMPORTED_MODULE_3__["default"])(options);
-
-            case 5:
-            case "end":
-              return _context3.stop();
-          }
-        }
-      }, _callee3, this);
-    })));
-  });
-}
-/**
- * Creates the element to render the Gutenberg editor inside of
- * @param {string} target the id of the textarea to render the Editor instead of
- * @return {element}
- */
-
-function createEditorElement(target) {
-  var element = document.getElementById(target);
-  var editor = document.createElement('DIV');
-  editor.id = 'laraberg__editor';
-  editor.classList.add('laraberg__editor', 'gutenberg__editor', 'block-editor__container', 'wp-embed-responsive');
-  element.parentNode.insertBefore(editor, element);
-  element.hidden = true;
-  _settings__WEBPACK_IMPORTED_MODULE_5__["editorSettings"].target = target;
-  window.Laraberg.editor = editor;
-  return editor;
-}
-
-/***/ }),
-
-/***/ "./src/resources/js/gutenberg/settings.js":
-/*!************************************************!*\
-  !*** ./src/resources/js/gutenberg/settings.js ***!
-  \************************************************/
-/*! exports provided: editorSettings, overridePost */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "editorSettings", function() { return editorSettings; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "overridePost", function() { return overridePost; });
-/* harmony import */ var _add_query_args__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./add-query-args */ "./src/resources/js/gutenberg/add-query-args.js");
-/* harmony import */ var _api_api_fetch__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../api/api-fetch */ "./src/resources/js/api/api-fetch.js");
-
-
-window.wp = {
-  apiFetch: _api_api_fetch__WEBPACK_IMPORTED_MODULE_1__["default"],
-  url: {
-    addQueryArgs: _add_query_args__WEBPACK_IMPORTED_MODULE_0__["default"]
-  }
-};
-window.userSettings = {
-  uid: 2 // Among other things, this uid is used to identify and store editor user preferences in localStorage
-  // set your root path
-
-};
-window.wpApiSettings = {
-  root: '/' // Some editor settings
-
-};
-var editorSettings = {
-  target: null,
-  alignWide: true,
-  availableTemplates: [],
-  allowedBlockTypes: true,
-  disableCustomColors: false,
-  disablePostFormats: false,
-  mediaLibrary: false,
-  titlePlaceholder: 'Add title',
-  bodyPlaceholder: 'Write your story',
-  isRTL: false,
-  postLock: {
-    isLocked: false
-  },
-  autosaveInterval: 10,
-  canAutosave: false,
-  // to disable Editor Autosave featured (default: true)
-  canPublish: false,
-  // to disable Editor Publish featured (default: true)
-  canSave: false // to disable Editor Save featured (default: true)    };
-  // Post properties to override
-
-};
-var overridePost = {};
-
-/***/ }),
-
-/***/ "./src/resources/js/laraberg.js":
-/*!**************************************!*\
-  !*** ./src/resources/js/laraberg.js ***!
-  \**************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var babel_polyfill__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! babel-polyfill */ "./node_modules/babel-polyfill/lib/index.js");
-/* harmony import */ var babel_polyfill__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(babel_polyfill__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _scss_laraberg_scss__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./../scss/laraberg.scss */ "./src/resources/scss/laraberg.scss");
-/* harmony import */ var _scss_laraberg_scss__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_scss_laraberg_scss__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _gutenberg_settings__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./gutenberg/settings */ "./src/resources/js/gutenberg/settings.js");
-/* harmony import */ var _lib_get_content__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./lib/get-content */ "./src/resources/js/lib/get-content.js");
-/* harmony import */ var _gutenberg_init__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./gutenberg/init */ "./src/resources/js/gutenberg/init.js");
-/* harmony import */ var _lib_custom_blocks__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./lib/custom-blocks */ "./src/resources/js/lib/custom-blocks.js");
-
- // Gutenberg imports
-
-
-
-
-
-var Laraberg = {
-  init: _gutenberg_init__WEBPACK_IMPORTED_MODULE_4__["default"],
-  initGutenberg: _gutenberg_init__WEBPACK_IMPORTED_MODULE_4__["default"],
-  getContent: _lib_get_content__WEBPACK_IMPORTED_MODULE_3__["default"],
-  editor: null,
-  registerCategory: _lib_custom_blocks__WEBPACK_IMPORTED_MODULE_5__["registerCategory"],
-  registerBlock: _lib_custom_blocks__WEBPACK_IMPORTED_MODULE_5__["registerBlock"]
-};
-window.Laraberg = Laraberg;
-/* harmony default export */ __webpack_exports__["default"] = (Laraberg);
-
-/***/ }),
-
-/***/ "./src/resources/js/laravel-filemanager/laravel-filemanager.js":
-/*!*********************************************************************!*\
-  !*** ./src/resources/js/laravel-filemanager/laravel-filemanager.js ***!
-  \*********************************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _babel_runtime_helpers_classCallCheck__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/helpers/classCallCheck */ "./node_modules/@babel/runtime/helpers/classCallCheck.js");
-/* harmony import */ var _babel_runtime_helpers_classCallCheck__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_classCallCheck__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @babel/runtime/helpers/createClass */ "./node_modules/@babel/runtime/helpers/createClass.js");
-/* harmony import */ var _babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _babel_runtime_helpers_possibleConstructorReturn__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @babel/runtime/helpers/possibleConstructorReturn */ "./node_modules/@babel/runtime/helpers/possibleConstructorReturn.js");
-/* harmony import */ var _babel_runtime_helpers_possibleConstructorReturn__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_possibleConstructorReturn__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var _babel_runtime_helpers_getPrototypeOf__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @babel/runtime/helpers/getPrototypeOf */ "./node_modules/@babel/runtime/helpers/getPrototypeOf.js");
-/* harmony import */ var _babel_runtime_helpers_getPrototypeOf__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_getPrototypeOf__WEBPACK_IMPORTED_MODULE_3__);
-/* harmony import */ var _babel_runtime_helpers_inherits__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @babel/runtime/helpers/inherits */ "./node_modules/@babel/runtime/helpers/inherits.js");
-/* harmony import */ var _babel_runtime_helpers_inherits__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_inherits__WEBPACK_IMPORTED_MODULE_4__);
-/* harmony import */ var _babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @babel/runtime/helpers/assertThisInitialized */ "./node_modules/@babel/runtime/helpers/assertThisInitialized.js");
-/* harmony import */ var _babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_5__);
-
-
-
-
-
-
-/* harmony default export */ __webpack_exports__["default"] = (function (config) {
-  var _window$wp = window.wp,
-      hooks = _window$wp.hooks,
-      element = _window$wp.element;
-  var Component = element.Component;
-
-  var LaravelFilemanager =
-  /*#__PURE__*/
-  function (_Component) {
-    _babel_runtime_helpers_inherits__WEBPACK_IMPORTED_MODULE_4___default()(LaravelFilemanager, _Component);
-
-    function LaravelFilemanager() {
-      var _this;
-
-      _babel_runtime_helpers_classCallCheck__WEBPACK_IMPORTED_MODULE_0___default()(this, LaravelFilemanager);
-
-      _this = _babel_runtime_helpers_possibleConstructorReturn__WEBPACK_IMPORTED_MODULE_2___default()(this, _babel_runtime_helpers_getPrototypeOf__WEBPACK_IMPORTED_MODULE_3___default()(LaravelFilemanager).apply(this, arguments));
-      _this.openModal = _this.openModal.bind(_babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_5___default()(_babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_5___default()(_this)));
-      _this.onSelect = _this.onSelect.bind(_babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_5___default()(_babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_5___default()(_this)));
-      _this.state = {
-        media: []
-      };
-      return _this;
-    }
-
-    _babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_1___default()(LaravelFilemanager, [{
-      key: "getMediaType",
-      value: function getMediaType(path) {
-        var video = ['mp4', 'm4v', 'mov', 'wmv', 'avi', 'mpg', 'ogv', '3gp', '3g2'];
-        var audio = ['mp3', 'm4a', 'ogg', 'wav'];
-        var extension = path.split('.').slice(-1).pop();
-
-        if (video.includes(extension)) {
-          return 'video';
-        } else if (audio.includes(extension)) {
-          return 'audio';
-        } else {
-          return 'image';
-        }
-      }
-    }, {
-      key: "onSelect",
-      value: function onSelect(url, path) {
-        this.props.value = null;
-        var _this$props = this.props,
-            multiple = _this$props.multiple,
-            onSelect = _this$props.onSelect;
-        var media = {
-          url: url,
-          type: this.getMediaType(path)
-        };
-
-        if (multiple) {
-          this.state.media.push(media);
-        }
-
-        onSelect(multiple ? this.state.media : media);
-      }
-    }, {
-      key: "openModal",
-      value: function openModal() {
-        var options = {};
-
-        if (this.props.allowedTypes.length === 1 && this.props.allowedTypes[0] === 'image') {
-          options.type = 'image';
-        } else {
-          options.type = 'file';
-        }
-
-        this.openLFM(options, this.onSelect);
-      }
-    }, {
-      key: "openLFM",
-      value: function openLFM(options, cb) {
-        var routePrefix = config && config.prefix ? config.prefix : '/laravel-filemanager';
-        window.open(routePrefix + '?type=' + options.type || 'file', 'FileManager', 'width=900,height=600');
-        window.SetUrl = cb;
-      }
-    }, {
-      key: "render",
-      value: function render() {
-        var render = this.props.render;
-        return render({
-          open: this.openModal
-        });
-      }
-    }]);
-
-    return LaravelFilemanager;
-  }(Component);
-
-  hooks.addFilter('editor.MediaUpload', 'core/edit-post/components/media-upload/replace-media-upload', function () {
-    return LaravelFilemanager;
-  });
-});
-
-/***/ }),
-
-/***/ "./src/resources/js/lib/configure-editor.js":
-/*!**************************************************!*\
-  !*** ./src/resources/js/lib/configure-editor.js ***!
-  \**************************************************/
-/*! exports provided: default, clearSubmitFromButtons */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return configureEditor; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "clearSubmitFromButtons", function() { return clearSubmitFromButtons; });
-/* harmony import */ var _frontkom_gutenberg_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @frontkom/gutenberg-js */ "./node_modules/@frontkom/gutenberg-js/build/js/gutenberg-js.js");
-/* harmony import */ var _frontkom_gutenberg_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_frontkom_gutenberg_js__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _gutenberg_settings__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../gutenberg/settings */ "./src/resources/js/gutenberg/settings.js");
-/* harmony import */ var _element_ready__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./element-ready */ "./src/resources/js/lib/element-ready.js");
-/* harmony import */ var _laravel_filemanager_laravel_filemanager__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../laravel-filemanager/laravel-filemanager */ "./src/resources/js/laravel-filemanager/laravel-filemanager.js");
-
-
-
-
-/**
- * Configures the editor according to the provided options object
- * @param {Object} options
- */
-
-function configureEditor(options) {
-  setupSubmit(_gutenberg_settings__WEBPACK_IMPORTED_MODULE_1__["editorSettings"].target);
-  setupMedia(options);
-
-  if (options.maxHeight) {
-    setMaxHeight(options.maxHeight);
-  }
-
-  if (options.minHeight) {
-    setMinHeight(options.minHeight);
-  }
-
-  if (options.height) {
-    setHeight(options.height);
-  }
-}
-/**
- * Set all editor button types to 'button' to prevent submitting the form
- */
-
-function clearSubmitFromButtons() {
-  var buttons = document.getElementById('laraberg__editor').getElementsByTagName('button');
-
-  if (buttons.length > 0) {
-    Array.from(buttons).forEach(function (button) {
-      button.type = 'button';
-    });
-  }
-}
-/**
- * Sets the max-height style value
- * @param {String} maxHeight css value for max-height
- */
-
-function setMaxHeight(maxHeight) {
-  var contentContainer = window.Laraberg.editor.querySelector('.edit-post-layout__content');
-  contentContainer.style.maxHeight = maxHeight;
-}
-/**
- * Sets the min-height style value
- * @param {String} minHeight css value for min-height
- */
-
-
-function setMinHeight(minHeight) {
-  var contentContainer = window.Laraberg.editor.querySelector('.edit-post-layout__content');
-  contentContainer.style.minHeight = minHeight;
-}
-/**
- * Sets the height style value
- * @param {String} height css value for height
- */
-
-
-function setHeight(height) {
-  var contentContainer = window.Laraberg.editor.querySelector('.edit-post-layout__content');
-  contentContainer.style.height = height;
-}
-/**
- * Setup media upload capabilities according to provided options
- * @param {Object} options the options object provided on initialization
- */
-
-
-function setupMedia(options) {
-  removeUploadButton();
-
-  if (options.laravelFilemanager) {
-    Object(_laravel_filemanager_laravel_filemanager__WEBPACK_IMPORTED_MODULE_3__["default"])(options.laravelFilemanager);
-  } else {
-    _frontkom_gutenberg_js__WEBPACK_IMPORTED_MODULE_0__["data"].dispatch('core/blocks').removeBlockTypes('core/cover');
-    _frontkom_gutenberg_js__WEBPACK_IMPORTED_MODULE_0__["data"].dispatch('core/blocks').removeBlockTypes('core/gallery');
-    _frontkom_gutenberg_js__WEBPACK_IMPORTED_MODULE_0__["data"].dispatch('core/blocks').removeBlockTypes('core/media-text');
-  }
-}
-/**
- * Makes sure the textarea value gets set to the editor content on submit
- * @param {string} target the textarea to set the value of
- */
-
-
-function setupSubmit(target) {
-  clearSubmitFromButtons();
-  var textarea = document.getElementById(target);
-
-  if (textarea.form) {
-    textarea.form.addEventListener('submit', function (event) {
-      textarea.value = _frontkom_gutenberg_js__WEBPACK_IMPORTED_MODULE_0__["data"].select('core/editor').getEditedPostContent(); // Clear content "dirty" state.
-
-      _frontkom_gutenberg_js__WEBPACK_IMPORTED_MODULE_0__["data"].dispatch('core/editor').savePost();
-      return true;
-    });
-  }
-}
-/**
- * Removes the default upload button from media blocks
- */
-
-
-function removeUploadButton() {
-  Object(_element_ready__WEBPACK_IMPORTED_MODULE_2__["elementRendered"])('.components-form-file-upload button', function (element) {
-    return element.remove();
-  });
-}
-
-/***/ }),
-
-/***/ "./src/resources/js/lib/custom-blocks.js":
-/*!***********************************************!*\
-  !*** ./src/resources/js/lib/custom-blocks.js ***!
-  \***********************************************/
-/*! exports provided: registerBlock, registerCategory */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "registerBlock", function() { return registerBlock; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "registerCategory", function() { return registerCategory; });
-/* harmony import */ var _babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/helpers/toConsumableArray */ "./node_modules/@babel/runtime/helpers/toConsumableArray.js");
-/* harmony import */ var _babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_0__);
-
-var _window$wp$data = window.wp.data,
-    dispatch = _window$wp$data.dispatch,
-    select = _window$wp$data.select;
-var registerBlockType = window.wp.blocks.registerBlockType;
-/**
- * Registers a custom block to the editor
- * @param {string} name The namespaced name of the block (eg: my-module/my-block)
- * @param {Object} block The Gutenberg block object
- */
-
-function registerBlock(name, block) {
-  registerBlockType(name, block);
-}
-/**
- * Adds a category to the category list
- * @param {String} title - The title for the category (eg: My Category)
- * @param {String} slug - The slug for the category (eg: my-category)
- */
-
-function registerCategory(title, slug) {
-  var category = {
-    slug: slug,
-    title: title
-  };
-  var currentCategories = select('core/blocks').getCategories().filter(function (item) {
-    return item.slug !== category.slug;
-  });
-  dispatch('core/blocks').setCategories([category].concat(_babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_0___default()(currentCategories)));
-}
-
-/***/ }),
-
-/***/ "./src/resources/js/lib/element-ready.js":
-/*!***********************************************!*\
-  !*** ./src/resources/js/lib/element-ready.js ***!
-  \***********************************************/
-/*! exports provided: elementReady, elementRendered, elementReadyRAF */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "elementReady", function() { return elementReady; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "elementRendered", function() { return elementRendered; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "elementReadyRAF", function() { return elementReadyRAF; });
-/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
-/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @babel/runtime/helpers/asyncToGenerator */ "./node_modules/@babel/runtime/helpers/asyncToGenerator.js");
-/* harmony import */ var _babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_1__);
-
-
-
-/**
- * Returns a promise that resolves when an element with a selector appears on the page for the first time.
- * Note: Use elementReadyRAF if this is too slow or unreliable.
- * @param {String} selector querySelector string
- */
-function elementReady(selector) {
-  return new Promise(function (resolve, reject) {
-    var observer = new MutationObserver(function (mutations) {
-      var elements = document.querySelectorAll(selector);
-      elements.forEach(function (element) {
-        if (!element.ready) {
-          element.ready = true;
-          observer.disconnect();
-          resolve(element);
-        }
-      });
-    });
-    observer.observe(document.documentElement, {
-      childList: true,
-      subtree: true
-    });
-  });
-}
-/**
- * Calls the callback function whenever an element with the selector gets rendered
- * @param {String} selector querySelector string
- * @param {function} callback function to fire when an element gets rendered
- * @returns {MutationObserver} the object that checks for the elements
- */
-
-function elementRendered(selector, callback) {
-  var renderedElements = [];
-  var observer = new MutationObserver(function (mutations) {
-    var elements = document.querySelectorAll(selector);
-    elements.forEach(function (element) {
-      if (!renderedElements.includes(element)) {
-        renderedElements.push(element);
-        callback(element);
-      }
-    });
-  });
-  observer.observe(document.documentElement, {
-    childList: true,
-    subtree: true
-  });
-  return observer;
-}
-/**
- * Returns a promise that resolves when an element with a selector appears on the page for the first time.
- * Functions similarly to elementReady, but instead of using mutation observers we poll on every animation frame.
- * This means that it usually responds faster at the cost of some performance while the function is running.
- * @param {String} selector querySelector string
- */
-
-function elementReadyRAF(_x) {
-  return _elementReadyRAF.apply(this, arguments);
-}
-
-function _elementReadyRAF() {
-  _elementReadyRAF = _babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_1___default()(
-  /*#__PURE__*/
-  _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee(selector) {
-    var element;
-    return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
-      while (1) {
-        switch (_context.prev = _context.next) {
-          case 0:
-            if (!(element == null)) {
-              _context.next = 6;
-              break;
-            }
-
-            element = document.querySelector(selector);
-            _context.next = 4;
-            return rafAsync();
-
-          case 4:
-            _context.next = 0;
-            break;
-
-          case 6:
-            return _context.abrupt("return", Promise.resolve(element));
-
-          case 7:
-          case "end":
-            return _context.stop();
-        }
-      }
-    }, _callee, this);
-  }));
-  return _elementReadyRAF.apply(this, arguments);
-}
-
-function rafAsync() {
-  return new Promise(function (resolve) {
-    window.requestAnimationFrame(resolve);
-  });
-}
-
-/***/ }),
-
-/***/ "./src/resources/js/lib/get-content.js":
-/*!*********************************************!*\
-  !*** ./src/resources/js/lib/get-content.js ***!
-  \*********************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return getContent; });
-/* harmony import */ var _frontkom_gutenberg_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @frontkom/gutenberg-js */ "./node_modules/@frontkom/gutenberg-js/build/js/gutenberg-js.js");
-/* harmony import */ var _frontkom_gutenberg_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_frontkom_gutenberg_js__WEBPACK_IMPORTED_MODULE_0__);
-
-function getContent() {
-  _frontkom_gutenberg_js__WEBPACK_IMPORTED_MODULE_0__["data"].dispatch('core/editor').savePost();
-  return _frontkom_gutenberg_js__WEBPACK_IMPORTED_MODULE_0__["data"].select('core/editor').getEditedPostContent();
-}
-
-/***/ }),
-
-/***/ "./src/resources/js/lib/notices.js":
-/*!*****************************************!*\
-  !*** ./src/resources/js/lib/notices.js ***!
-  \*****************************************/
-/*! exports provided: success, info, error, warning, notice */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "success", function() { return success; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "info", function() { return info; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "error", function() { return error; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "warning", function() { return warning; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "notice", function() { return notice; });
-/**
- * Shows a success message
- * @param {String} message the message to display
- */
-function success(message) {
-  notice('success', message);
-}
-/**
- * Shows an info message
- * @param {String} message the message to display
- */
-
-function info(message) {
-  notice('info', message);
-}
-/**
- * Shows an error message
- * @param {String} message the message to display
- */
-
-function error(message) {
-  notice('error', message);
-}
-/**
- * Shows a warning message
- * @param {String} message the message to display
- */
-
-function warning(message) {
-  notice('warning', message);
-}
-function notice(status, message) {
-  if (window.wp && window.wp.data) {
-    window.wp.data.dispatch('core/notices').createNotice(status, message);
-  }
-}
-
-/***/ }),
-
-/***/ "./src/resources/scss/laraberg.scss":
-/*!******************************************!*\
-  !*** ./src/resources/scss/laraberg.scss ***!
-  \******************************************/
+/***/ "./scss/laraberg.scss":
+/*!****************************!*\
+  !*** ./scss/laraberg.scss ***!
+  \****************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
