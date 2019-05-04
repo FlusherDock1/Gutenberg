@@ -2,7 +2,6 @@
     "minimum-stability": "dev",
     "prefer-stable" : true,
     "require": {
-        "embed/embed": "^3.3",
-        "van-ons/laraberg": "*"
+        "embed/embed": "^3.3"
     }
 }
