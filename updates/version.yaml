@@ -1,3 +1,4 @@
+1.0.7: Native media manager Support
 1.0.6:
   - Changing blocks model title to string, updating Laraberg to public 0.3 beta version
   - update_blocks_table.php
