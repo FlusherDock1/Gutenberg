@@ -1,4 +1,5 @@
 /vendor
+/formwidgets/gutenberg/assets/resources/node_modules
 
 composer.lock
 .DS_Store
