@@ -14,7 +14,7 @@ class BlockController extends ApplicationController
     public function store(Request $request)
     {
         $block = new Block();
-        $block->title = $request->title;
+        $block->raw_title = $request->title;
         $block->status = $request->status;
         $block->setContent($request->content);
         $block->updateSlug();
@@ -37,7 +37,7 @@ class BlockController extends ApplicationController
         if (!$block) {
             return $this->notFound();
         }
-        $block->title = $request->title;
+        $block->raw_title = $request->title;
         $block->status = $request->status;
         $block->setContent($request->content);
         $block->updateSlug();

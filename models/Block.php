@@ -16,18 +16,16 @@ class Block extends Model
     public $table = 'reazzon_gutenberg_blocks';
 
     /**
-     * Jsonable fields
+     * Add array attributes that do not have a corresponding column in your database
      */
-    public $jsonable = [
-        'title'
-    ];
+    protected $appends = ['content', 'title'];
 
     /**
      * Updates slug according to title
      */
     public function updateSlug()
     {
-        $this->slug = SlugHelper::slugify($this->title['raw']);
+        $this->slug = SlugHelper::slugify($this->raw_title);
     }
 
     /**
@@ -72,11 +70,13 @@ class Block extends Model
     }
 
     /**
-     * Transforms title to wordpress title object
-     * @param string $title
+     * Returns a content object similar to WordPress
+     * @return Array
      */
-    public function setTitleAttribute($title)
+    public function getTitleAttribute()
     {
-        $this->attributes['title'] = json_encode(['raw' => $title]);
+        return [
+            'raw' => $this->raw_title,
+        ];
     }
 }

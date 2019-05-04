@@ -1,0 +1,81 @@
+
+@import '~@frontkom/gutenberg-js/build/css/block-library/style.css';
+@import '~@frontkom/gutenberg-js/build/css/style.css';
+@import './wordpress.scss';
+@import './wordpress-overrides.scss';
+
+.laraberg__editor {
+  width: 100%;
+  overflow: hidden;
+  border: 1px solid #e2e4e7;
+
+  .components-notice-list {
+    position: sticky;
+  }
+
+  .edit-post-header {
+    z-index: 100;
+  }
+  
+  .edit-post-sidebar {
+    position: absolute;
+  }
+
+  iframe {
+    border: 0;
+    max-width: 100%;
+  }
+}
+
+.gutenberg__content {
+  padding-left: 46px;
+  padding-right: 46px;
+  padding-top: 23px;
+
+  .alignleft {
+    float: left;
+    margin-right: 1rem;
+  }
+
+  .alignright {
+    float: right;
+    margin-left: 1rem;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    margin-bottom: 24px;
+  }
+}
+
+.wp-embed-responsive .wp-block-embed.wp-embed-aspect-1-1 .wp-block-embed__wrapper iframe, 
+.wp-embed-responsive .wp-block-embed.wp-embed-aspect-1-2 .wp-block-embed__wrapper iframe, 
+.wp-embed-responsive .wp-block-embed.wp-embed-aspect-16-9 .wp-block-embed__wrapper iframe, 
+.wp-embed-responsive .wp-block-embed.wp-embed-aspect-18-9 .wp-block-embed__wrapper iframe, 
+.wp-embed-responsive .wp-block-embed.wp-embed-aspect-21-9 .wp-block-embed__wrapper iframe, 
+.wp-embed-responsive .wp-block-embed.wp-embed-aspect-4-3 .wp-block-embed__wrapper iframe, 
+.wp-embed-responsive .wp-block-embed.wp-embed-aspect-9-16 .wp-block-embed__wrapper iframe {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.wp-embed-responsive .wp-block-embed.wp-embed-aspect-1-1 .wp-block-embed__wrapper::before, 
+.wp-embed-responsive .wp-block-embed.wp-embed-aspect-1-2 .wp-block-embed__wrapper::before, 
+.wp-embed-responsive .wp-block-embed.wp-embed-aspect-16-9 .wp-block-embed__wrapper::before, 
+.wp-embed-responsive .wp-block-embed.wp-embed-aspect-18-9 .wp-block-embed__wrapper::before, 
+.wp-embed-responsive .wp-block-embed.wp-embed-aspect-21-9 .wp-block-embed__wrapper::before, 
+.wp-embed-responsive .wp-block-embed.wp-embed-aspect-4-3 .wp-block-embed__wrapper::before, 
+.wp-embed-responsive .wp-block-embed.wp-embed-aspect-9-16 .wp-block-embed__wrapper::before {
+  content: "";
+  display: block;
+  padding-top: 50%;
+}

@@ -233,6 +233,33 @@ module.exports = _construct;
 
 /***/ }),
 
+/***/ "./node_modules/@babel/runtime/helpers/createClass.js":
+/*!************************************************************!*\
+  !*** ./node_modules/@babel/runtime/helpers/createClass.js ***!
+  \************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+function _defineProperties(target, props) {
+  for (var i = 0; i < props.length; i++) {
+    var descriptor = props[i];
+    descriptor.enumerable = descriptor.enumerable || false;
+    descriptor.configurable = true;
+    if ("value" in descriptor) descriptor.writable = true;
+    Object.defineProperty(target, descriptor.key, descriptor);
+  }
+}
+
+function _createClass(Constructor, protoProps, staticProps) {
+  if (protoProps) _defineProperties(Constructor.prototype, protoProps);
+  if (staticProps) _defineProperties(Constructor, staticProps);
+  return Constructor;
+}
+
+module.exports = _createClass;
+
+/***/ }),
+
 /***/ "./node_modules/@babel/runtime/helpers/defineProperty.js":
 /*!***************************************************************!*\
   !*** ./node_modules/@babel/runtime/helpers/defineProperty.js ***!
@@ -533,7 +560,7 @@ module.exports = _wrapNativeSuper;
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! regenerator-runtime */ "./node_modules/regenerator-runtime/runtime-module.js");
+module.exports = __webpack_require__(/*! regenerator-runtime */ "./node_modules/regenerator-runtime/runtime.js");
 
 
 /***/ }),
@@ -14313,10 +14340,10 @@ exports.encode = exports.stringify = __webpack_require__(/*! ./encode */ "./node
 
 /***/ }),
 
-/***/ "./node_modules/regenerator-runtime/runtime-module.js":
-/*!************************************************************!*\
-  !*** ./node_modules/regenerator-runtime/runtime-module.js ***!
-  \************************************************************/
+/***/ "./node_modules/regenerator-runtime/runtime.js":
+/*!*****************************************************!*\
+  !*** ./node_modules/regenerator-runtime/runtime.js ***!
+  \*****************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -14327,55 +14354,7 @@ exports.encode = exports.stringify = __webpack_require__(/*! ./encode */ "./node
  * LICENSE file in the root directory of this source tree.
  */
 
-// This method of obtaining a reference to the global object needs to be
-// kept identical to the way it is obtained in runtime.js
-var g = (function() {
-  return this || (typeof self === "object" && self);
-})() || Function("return this")();
-
-// Use `getOwnPropertyNames` because not all browsers support calling
-// `hasOwnProperty` on the global `self` object in a worker. See #183.
-var hadRuntime = g.regeneratorRuntime &&
-  Object.getOwnPropertyNames(g).indexOf("regeneratorRuntime") >= 0;
-
-// Save the old regeneratorRuntime in case it needs to be restored later.
-var oldRuntime = hadRuntime && g.regeneratorRuntime;
-
-// Force reevalutation of runtime.js.
-g.regeneratorRuntime = undefined;
-
-module.exports = __webpack_require__(/*! ./runtime */ "./node_modules/regenerator-runtime/runtime.js");
-
-if (hadRuntime) {
-  // Restore the original runtime.
-  g.regeneratorRuntime = oldRuntime;
-} else {
-  // Remove the global property added by runtime.js.
-  try {
-    delete g.regeneratorRuntime;
-  } catch(e) {
-    g.regeneratorRuntime = undefined;
-  }
-}
-
-
-/***/ }),
-
-/***/ "./node_modules/regenerator-runtime/runtime.js":
-/*!*****************************************************!*\
-  !*** ./node_modules/regenerator-runtime/runtime.js ***!
-  \*****************************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-/**
- * Copyright (c) 2014-present, Facebook, Inc.
- *
- * This source code is licensed under the MIT license found in the
- * LICENSE file in the root directory of this source tree.
- */
-
-!(function(global) {
+var runtime = (function (exports) {
   "use strict";
 
   var Op = Object.prototype;
@@ -14385,23 +14364,6 @@ if (hadRuntime) {
   var iteratorSymbol = $Symbol.iterator || "@@iterator";
   var asyncIteratorSymbol = $Symbol.asyncIterator || "@@asyncIterator";
   var toStringTagSymbol = $Symbol.toStringTag || "@@toStringTag";
-
-  var inModule = typeof module === "object";
-  var runtime = global.regeneratorRuntime;
-  if (runtime) {
-    if (inModule) {
-      // If regeneratorRuntime is defined globally and we're in a module,
-      // make the exports object identical to regeneratorRuntime.
-      module.exports = runtime;
-    }
-    // Don't bother evaluating the rest of this file if the runtime was
-    // already defined globally.
-    return;
-  }
-
-  // Define the runtime globally (as expected by generated code) as either
-  // module.exports (if we're in a module) or a new, empty object.
-  runtime = global.regeneratorRuntime = inModule ? module.exports : {};
 
   function wrap(innerFn, outerFn, self, tryLocsList) {
     // If outerFn provided and outerFn.prototype is a Generator, then outerFn.prototype instanceof Generator.
@@ -14415,7 +14377,7 @@ if (hadRuntime) {
 
     return generator;
   }
-  runtime.wrap = wrap;
+  exports.wrap = wrap;
 
   // Try/catch helper to minimize deoptimizations. Returns a completion
   // record like context.tryEntries[i].completion. This interface could
@@ -14486,7 +14448,7 @@ if (hadRuntime) {
     });
   }
 
-  runtime.isGeneratorFunction = function(genFun) {
+  exports.isGeneratorFunction = function(genFun) {
     var ctor = typeof genFun === "function" && genFun.constructor;
     return ctor
       ? ctor === GeneratorFunction ||
@@ -14496,7 +14458,7 @@ if (hadRuntime) {
       : false;
   };
 
-  runtime.mark = function(genFun) {
+  exports.mark = function(genFun) {
     if (Object.setPrototypeOf) {
       Object.setPrototypeOf(genFun, GeneratorFunctionPrototype);
     } else {
@@ -14513,7 +14475,7 @@ if (hadRuntime) {
   // `yield regeneratorRuntime.awrap(x)`, so that the runtime can test
   // `hasOwn.call(value, "__await")` to determine if the yielded value is
   // meant to be awaited.
-  runtime.awrap = function(arg) {
+  exports.awrap = function(arg) {
     return { __await: arg };
   };
 
@@ -14588,17 +14550,17 @@ if (hadRuntime) {
   AsyncIterator.prototype[asyncIteratorSymbol] = function () {
     return this;
   };
-  runtime.AsyncIterator = AsyncIterator;
+  exports.AsyncIterator = AsyncIterator;
 
   // Note that simple async functions are implemented on top of
   // AsyncIterator objects; they just return a Promise for the value of
   // the final result produced by the iterator.
-  runtime.async = function(innerFn, outerFn, self, tryLocsList) {
+  exports.async = function(innerFn, outerFn, self, tryLocsList) {
     var iter = new AsyncIterator(
       wrap(innerFn, outerFn, self, tryLocsList)
     );
 
-    return runtime.isGeneratorFunction(outerFn)
+    return exports.isGeneratorFunction(outerFn)
       ? iter // If outerFn is a generator, return the full iterator.
       : iter.next().then(function(result) {
           return result.done ? result.value : iter.next();
@@ -14695,7 +14657,8 @@ if (hadRuntime) {
       context.delegate = null;
 
       if (context.method === "throw") {
-        if (delegate.iterator.return) {
+        // Note: ["return"] must be used for ES3 parsing compatibility.
+        if (delegate.iterator["return"]) {
           // If the delegate iterator has a return method, give it a
           // chance to clean up.
           context.method = "return";
@@ -14815,7 +14778,7 @@ if (hadRuntime) {
     this.reset(true);
   }
 
-  runtime.keys = function(object) {
+  exports.keys = function(object) {
     var keys = [];
     for (var key in object) {
       keys.push(key);
@@ -14876,7 +14839,7 @@ if (hadRuntime) {
     // Return an iterator with no values.
     return { next: doneResult };
   }
-  runtime.values = values;
+  exports.values = values;
 
   function doneResult() {
     return { value: undefined, done: true };
@@ -15081,14 +15044,35 @@ if (hadRuntime) {
       return ContinueSentinel;
     }
   };
-})(
-  // In sloppy mode, unbound `this` refers to the global object, fallback to
-  // Function constructor if we're in global strict mode. That is sadly a form
-  // of indirect eval which violates Content Security Policy.
-  (function() {
-    return this || (typeof self === "object" && self);
-  })() || Function("return this")()
-);
+
+  // Regardless of whether this script is executing as a CommonJS module
+  // or not, return the runtime object so that we can declare the variable
+  // regeneratorRuntime in the outer scope, which allows this module to be
+  // injected easily by `bin/regenerator --include-runtime script.js`.
+  return exports;
+
+}(
+  // If this script is executing as a CommonJS module, use module.exports
+  // as the regeneratorRuntime namespace. Otherwise create a new empty
+  // object. Either way, the resulting object will be used to initialize
+  // the regeneratorRuntime variable at the top of this file.
+   true ? module.exports : undefined
+));
+
+try {
+  regeneratorRuntime = runtime;
+} catch (accidentalStrictMode) {
+  // This module should not be running in strict mode, so the above
+  // assignment should always work unless something is misconfigured. Just
+  // in case runtime.js accidentally runs in strict mode, we can escape
+  // strict mode using a global Function call. This could conceivably fail
+  // if a Content Security Policy forbids using Function, but in that case
+  // the proper solution is to fix the accidental strict mode problem. If
+  // you've misconfigured your bundler to force strict mode and applied a
+  // CSP to forbid Function, and you're not willing to fix either of those
+  // problems, please detail your unique predicament in a GitHub issue.
+  Function("r", "regeneratorRuntime = r")(runtime);
+}
 
 
 /***/ }),
@@ -15929,52 +15913,11 @@ module.exports = function(module) {
 
 /***/ }),
 
-/***/ "./src/resources/js/gutenberg/add-query-args.js":
-/*!******************************************************!*\
-  !*** ./src/resources/js/gutenberg/add-query-args.js ***!
-  \******************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return addQueryArgs; });
-/* harmony import */ var _babel_runtime_helpers_objectSpread__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/helpers/objectSpread */ "./node_modules/@babel/runtime/helpers/objectSpread.js");
-/* harmony import */ var _babel_runtime_helpers_objectSpread__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_objectSpread__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var url__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! url */ "./node_modules/url/url.js");
-/* harmony import */ var url__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(url__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var querystring__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! querystring */ "./node_modules/querystring-es3/index.js");
-/* harmony import */ var querystring__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(querystring__WEBPACK_IMPORTED_MODULE_2__);
-
-
-/**
-* External dependencies
-*/
-
-
-/**
-* Appends arguments to the query string of the url
-*
-* @param  {String} url   URL
-* @param  {Object} args  Query Args
-*
-* @return {String}       Updated URL
-*/
-
-function addQueryArgs(url, args) {
-  var queryStringIndex = url.indexOf('?');
-  var query = queryStringIndex !== -1 ? url__WEBPACK_IMPORTED_MODULE_1___default()(url.substr(queryStringIndex + 1)) : {};
-  var baseUrl = queryStringIndex !== -1 ? url.substr(0, queryStringIndex) : url;
-  return baseUrl + '?' + Object(querystring__WEBPACK_IMPORTED_MODULE_2__["stringify"])(_babel_runtime_helpers_objectSpread__WEBPACK_IMPORTED_MODULE_0___default()({}, query, args));
-}
-
-/***/ }),
-
-/***/ "./src/resources/js/gutenberg/api-fetch.js":
-/*!*************************************************!*\
-  !*** ./src/resources/js/gutenberg/api-fetch.js ***!
-  \*************************************************/
-/*! exports provided: postPage, putPage, default */
+/***/ "./src/resources/js/api/api-fetch.js":
+/*!*******************************************!*\
+  !*** ./src/resources/js/api/api-fetch.js ***!
+  \*******************************************/
+/*! exports provided: postPage, putPage, default, configureAPI */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -15982,6 +15925,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "postPage", function() { return postPage; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "putPage", function() { return putPage; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return apiFetch; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "configureAPI", function() { return configureAPI; });
 /* harmony import */ var _babel_runtime_helpers_objectSpread__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/helpers/objectSpread */ "./node_modules/@babel/runtime/helpers/objectSpread.js");
 /* harmony import */ var _babel_runtime_helpers_objectSpread__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_objectSpread__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
@@ -15998,10 +15942,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _babel_runtime_helpers_wrapNativeSuper__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_wrapNativeSuper__WEBPACK_IMPORTED_MODULE_6__);
 /* harmony import */ var _babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @babel/runtime/helpers/asyncToGenerator */ "./node_modules/@babel/runtime/helpers/asyncToGenerator.js");
 /* harmony import */ var _babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_7__);
-/* harmony import */ var _mock_data__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./mock-data */ "./src/resources/js/gutenberg/mock-data.js");
+/* harmony import */ var _mock_data__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./mock-data */ "./src/resources/js/api/mock-data.js");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_9___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_9__);
-/* harmony import */ var _settings__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./settings */ "./src/resources/js/gutenberg/settings.js");
+/* harmony import */ var _gutenberg_settings__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../gutenberg/settings */ "./src/resources/js/gutenberg/settings.js");
+/* harmony import */ var _lib_notices__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ../lib/notices */ "./src/resources/js/lib/notices.js");
 
 
 
@@ -16013,6 +15958,8 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+
+var routePrefix;
 var requests = {
   getBlock: {
     method: 'GET',
@@ -16083,6 +16030,11 @@ var requests = {
     method: 'GET',
     regex: /\/wp\/v2\/types\?(.*)/g,
     run: getTypes
+  },
+  getUsers: {
+    method: 'GET',
+    regex: /\/wp\/v2\/users\/\?(.*)/g,
+    run: getUsers
   }
 };
 
@@ -16101,7 +16053,7 @@ function _getBlock() {
           case 0:
             id = matches[1];
             _context.next = 3;
-            return axios__WEBPACK_IMPORTED_MODULE_9___default.a.get("/laraberg/blocks/".concat(id));
+            return axios__WEBPACK_IMPORTED_MODULE_9___default.a.get("".concat(routePrefix, "/blocks/").concat(id));
 
           case 3:
             response = _context.sent;
@@ -16131,7 +16083,7 @@ function _getBlocks() {
         switch (_context2.prev = _context2.next) {
           case 0:
             _context2.next = 2;
-            return axios__WEBPACK_IMPORTED_MODULE_9___default.a.get('/laraberg/blocks');
+            return axios__WEBPACK_IMPORTED_MODULE_9___default.a.get("".concat(routePrefix, "/blocks"));
 
           case 2:
             response = _context2.sent;
@@ -16161,7 +16113,7 @@ function _postBlocks() {
         switch (_context3.prev = _context3.next) {
           case 0:
             _context3.next = 2;
-            return axios__WEBPACK_IMPORTED_MODULE_9___default.a.post('/laraberg/blocks', options.data);
+            return axios__WEBPACK_IMPORTED_MODULE_9___default.a.post("".concat(routePrefix, "/blocks"), options.data);
 
           case 2:
             response = _context3.sent;
@@ -16192,7 +16144,7 @@ function _putBlock() {
           case 0:
             id = matches[1];
             _context4.next = 3;
-            return axios__WEBPACK_IMPORTED_MODULE_9___default.a.put("/laraberg/blocks/".concat(id), options.data);
+            return axios__WEBPACK_IMPORTED_MODULE_9___default.a.put("".concat(routePrefix, "/blocks/").concat(id), options.data);
 
           case 3:
             response = _context4.sent;
@@ -16223,7 +16175,7 @@ function _deleteBlock() {
           case 0:
             id = matches[1];
             _context5.next = 3;
-            return axios__WEBPACK_IMPORTED_MODULE_9___default.a.delete("/laraberg/blocks/".concat(id));
+            return axios__WEBPACK_IMPORTED_MODULE_9___default.a.delete("".concat(routePrefix, "/blocks/").concat(id));
 
           case 3:
             response = _context5.sent;
@@ -16253,7 +16205,7 @@ function _getEmbed() {
         switch (_context6.prev = _context6.next) {
           case 0:
             _context6.next = 2;
-            return axios__WEBPACK_IMPORTED_MODULE_9___default.a.get("/laraberg/oembed?".concat(matches[1]));
+            return axios__WEBPACK_IMPORTED_MODULE_9___default.a.get("".concat(routePrefix, "/oembed?").concat(matches[1]));
 
           case 2:
             response = _context6.sent;
@@ -16281,7 +16233,7 @@ function _optionsMedia() {
       while (1) {
         switch (_context7.prev = _context7.next) {
           case 0:
-            return _context7.abrupt("return", _mock_data__WEBPACK_IMPORTED_MODULE_8__["mediaResponse"]);
+            return _context7.abrupt("return", _mock_data__WEBPACK_IMPORTED_MODULE_8__["media"]);
 
           case 1:
           case "end":
@@ -16306,8 +16258,8 @@ function _getPage() {
       while (1) {
         switch (_context8.prev = _context8.next) {
           case 0:
-            content = document.getElementById(_settings__WEBPACK_IMPORTED_MODULE_10__["editorSettings"].target).value || '';
-            return _context8.abrupt("return", _babel_runtime_helpers_objectSpread__WEBPACK_IMPORTED_MODULE_0___default()({}, _mock_data__WEBPACK_IMPORTED_MODULE_8__["pageData"], {
+            content = document.getElementById(_gutenberg_settings__WEBPACK_IMPORTED_MODULE_10__["editorSettings"].target).value || '';
+            return _context8.abrupt("return", _babel_runtime_helpers_objectSpread__WEBPACK_IMPORTED_MODULE_0___default()({}, _mock_data__WEBPACK_IMPORTED_MODULE_8__["page"], {
               content: {
                 raw: content
               }
@@ -16335,7 +16287,7 @@ function _postPage() {
       while (1) {
         switch (_context9.prev = _context9.next) {
           case 0:
-            return _context9.abrupt("return", _babel_runtime_helpers_objectSpread__WEBPACK_IMPORTED_MODULE_0___default()({}, _mock_data__WEBPACK_IMPORTED_MODULE_8__["pageData"], {
+            return _context9.abrupt("return", _babel_runtime_helpers_objectSpread__WEBPACK_IMPORTED_MODULE_0___default()({}, _mock_data__WEBPACK_IMPORTED_MODULE_8__["page"], {
               content: {
                 raw: options.data
               }
@@ -16363,7 +16315,7 @@ function _putPage() {
       while (1) {
         switch (_context10.prev = _context10.next) {
           case 0:
-            return _context10.abrupt("return", _babel_runtime_helpers_objectSpread__WEBPACK_IMPORTED_MODULE_0___default()({}, _mock_data__WEBPACK_IMPORTED_MODULE_8__["pageData"], {
+            return _context10.abrupt("return", _babel_runtime_helpers_objectSpread__WEBPACK_IMPORTED_MODULE_0___default()({}, _mock_data__WEBPACK_IMPORTED_MODULE_8__["page"], {
               content: {
                 raw: options.data
               }
@@ -16415,7 +16367,7 @@ function _getThemes() {
       while (1) {
         switch (_context12.prev = _context12.next) {
           case 0:
-            return _context12.abrupt("return", _mock_data__WEBPACK_IMPORTED_MODULE_8__["themesData"]);
+            return _context12.abrupt("return", _mock_data__WEBPACK_IMPORTED_MODULE_8__["themes"]);
 
           case 1:
           case "end":
@@ -16499,6 +16451,30 @@ function _getTypes() {
   return _getTypes.apply(this, arguments);
 }
 
+function getUsers() {
+  return _getUsers.apply(this, arguments);
+}
+
+function _getUsers() {
+  _getUsers = _babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_7___default()(
+  /*#__PURE__*/
+  _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1___default.a.mark(function _callee16() {
+    return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1___default.a.wrap(function _callee16$(_context16) {
+      while (1) {
+        switch (_context16.prev = _context16.next) {
+          case 0:
+            return _context16.abrupt("return", 'ok');
+
+          case 1:
+          case "end":
+            return _context16.stop();
+        }
+      }
+    }, _callee16, this);
+  }));
+  return _getUsers.apply(this, arguments);
+}
+
 function matchPath(options) {
   var promise;
   Object.keys(requests).forEach(function (key) {
@@ -16508,8 +16484,8 @@ function matchPath(options) {
     var matches = request.regex.exec(options.path);
 
     if ((options.method === request.method || !options.method && request.method === 'GET') && matches && matches.length > 0) {
-      promise = request.run(options, matches).catch(function (error) {
-        return console.log(error.response);
+      promise = request.run(options, matches).catch(function () {
+        return _lib_notices__WEBPACK_IMPORTED_MODULE_11__["error"]('Could not complete request.');
       });
     }
   });
@@ -16526,7 +16502,7 @@ function matchPath(options) {
         }
       }));
     }).catch(function (error) {
-      console.log(error.data);
+      _lib_notices__WEBPACK_IMPORTED_MODULE_11__["error"]("".concat(error.message, " ").concat(error.data.data.path));
     });
   }
 
@@ -16534,8 +16510,10 @@ function matchPath(options) {
 }
 
 function apiFetch(options) {
-  console.log('APIFetch', options);
   return matchPath(options);
+}
+function configureAPI(options) {
+  routePrefix = options.prefix || '/laraberg';
 }
 
 var FetchError =
@@ -16558,10 +16536,505 @@ function (_Error) {
 
 /***/ }),
 
-/***/ "./src/resources/js/gutenberg/configure-editor.js":
-/*!********************************************************!*\
-  !*** ./src/resources/js/gutenberg/configure-editor.js ***!
-  \********************************************************/
+/***/ "./src/resources/js/api/mock-data.js":
+/*!*******************************************!*\
+  !*** ./src/resources/js/api/mock-data.js ***!
+  \*******************************************/
+/*! exports provided: media, page, themes, types */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "media", function() { return media; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "page", function() { return page; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "themes", function() { return themes; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "types", function() { return types; });
+// Mock data to get the Gutenberg editor to work
+var media = {
+  headers: {
+    get: function get(value) {
+      if (value === 'allow') {
+        return ['POST'];
+      }
+    }
+  }
+};
+var page = {
+  content: {
+    raw: ''
+  },
+  title: '',
+  templates: '',
+  parent: 0,
+  link: "".concat(window.location.origin, "/preview"),
+  permalink_template: "".concat(window.location.origin, "/preview"),
+  preview_link: "".concat(window.location.origin, "/preview"),
+  type: 'page',
+  status: 'pending',
+  id: 0,
+  // functions
+  setContent: function setContent(content) {
+    page.content = {
+      raw: content
+    };
+  }
+};
+var themes = [{
+  theme_supports: {
+    formats: ['standard', 'aside', 'image', 'video', 'quote', 'link', 'gallery', 'audio'],
+    'post-thumbnails': true
+  }
+}];
+var types = {
+  page: {
+    labels: {},
+    name: 'Page',
+    rest_base: 'pages',
+    slug: 'page',
+    supports: {
+      author: false,
+      comments: false,
+      // hide discussion-panel
+      'custom-fields': true,
+      document: true,
+      // * hide document tab
+      editor: true,
+      'media-library': false,
+      // * hide media library
+      'page-attributes': false,
+      // hide page-attributes panel
+      posts: false,
+      // * hide posts-panel
+      revisions: false,
+      'template-settings': false,
+      // * hide template-settings panel
+      thumbnail: false,
+      // featured-image panel
+      title: false,
+      // show title on editor
+      extras: false
+    },
+    viewable: false,
+    saveable: true,
+    publishable: true,
+    autosaveable: false
+  },
+  block: {
+    name: 'Blocks',
+    rest_base: 'blocks',
+    slug: 'wp_block',
+    description: '',
+    supports: {
+      title: true,
+      editor: true
+    },
+    viewable: true
+  }
+};
+
+/***/ }),
+
+/***/ "./src/resources/js/gutenberg/add-query-args.js":
+/*!******************************************************!*\
+  !*** ./src/resources/js/gutenberg/add-query-args.js ***!
+  \******************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return addQueryArgs; });
+/* harmony import */ var _babel_runtime_helpers_objectSpread__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/helpers/objectSpread */ "./node_modules/@babel/runtime/helpers/objectSpread.js");
+/* harmony import */ var _babel_runtime_helpers_objectSpread__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_objectSpread__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var url__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! url */ "./node_modules/url/url.js");
+/* harmony import */ var url__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(url__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var querystring__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! querystring */ "./node_modules/querystring-es3/index.js");
+/* harmony import */ var querystring__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(querystring__WEBPACK_IMPORTED_MODULE_2__);
+
+
+/**
+* External dependencies
+*/
+
+
+/**
+* Appends arguments to the query string of the url
+*
+* @param  {String} url   URL
+* @param  {Object} args  Query Args
+*
+* @return {String}       Updated URL
+*/
+
+function addQueryArgs(url, args) {
+  var queryStringIndex = url.indexOf('?');
+  var query = queryStringIndex !== -1 ? url__WEBPACK_IMPORTED_MODULE_1___default()(url.substr(queryStringIndex + 1)) : {};
+  var baseUrl = queryStringIndex !== -1 ? url.substr(0, queryStringIndex) : url;
+  return baseUrl + '?' + Object(querystring__WEBPACK_IMPORTED_MODULE_2__["stringify"])(_babel_runtime_helpers_objectSpread__WEBPACK_IMPORTED_MODULE_0___default()({}, query, args));
+}
+
+/***/ }),
+
+/***/ "./src/resources/js/gutenberg/init.js":
+/*!********************************************!*\
+  !*** ./src/resources/js/gutenberg/init.js ***!
+  \********************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return init; });
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @babel/runtime/helpers/asyncToGenerator */ "./node_modules/@babel/runtime/helpers/asyncToGenerator.js");
+/* harmony import */ var _babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _api_api_fetch__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../api/api-fetch */ "./src/resources/js/api/api-fetch.js");
+/* harmony import */ var _lib_configure_editor__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../lib/configure-editor */ "./src/resources/js/lib/configure-editor.js");
+/* harmony import */ var _frontkom_gutenberg_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @frontkom/gutenberg-js */ "./node_modules/@frontkom/gutenberg-js/build/js/gutenberg-js.js");
+/* harmony import */ var _frontkom_gutenberg_js__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_frontkom_gutenberg_js__WEBPACK_IMPORTED_MODULE_4__);
+/* harmony import */ var _settings__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./settings */ "./src/resources/js/gutenberg/settings.js");
+/* harmony import */ var _lib_element_ready__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../lib/element-ready */ "./src/resources/js/lib/element-ready.js");
+
+
+
+
+
+
+ // Setup sidebar events
+
+window.customGutenberg = {
+  events: {
+    'OPEN_GENERAL_SIDEBAR': function () {
+      var _OPEN_GENERAL_SIDEBAR = _babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_1___default()(
+      /*#__PURE__*/
+      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee(action, store) {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                _context.next = 2;
+                return Object(_lib_element_ready__WEBPACK_IMPORTED_MODULE_6__["elementReady"])('.edit-post-sidebar');
+
+              case 2:
+                Object(_lib_configure_editor__WEBPACK_IMPORTED_MODULE_3__["clearSubmitFromButtons"])();
+
+              case 3:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee, this);
+      }));
+
+      function OPEN_GENERAL_SIDEBAR(_x, _x2) {
+        return _OPEN_GENERAL_SIDEBAR.apply(this, arguments);
+      }
+
+      return OPEN_GENERAL_SIDEBAR;
+    }(),
+    'CLOSE_GENERAL_SIDEBAR': function () {
+      var _CLOSE_GENERAL_SIDEBAR = _babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_1___default()(
+      /*#__PURE__*/
+      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2(action, store) {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
+          while (1) {
+            switch (_context2.prev = _context2.next) {
+              case 0:
+              case "end":
+                return _context2.stop();
+            }
+          }
+        }, _callee2, this);
+      }));
+
+      function CLOSE_GENERAL_SIDEBAR(_x3, _x4) {
+        return _CLOSE_GENERAL_SIDEBAR.apply(this, arguments);
+      }
+
+      return CLOSE_GENERAL_SIDEBAR;
+    }()
+  }
+  /**
+   * Initialize the Gutenberg editor
+   * @param {string} target the element ID to render the gutenberg editor in
+   */
+
+};
+function init(target) {
+  var options = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+  Object(_api_api_fetch__WEBPACK_IMPORTED_MODULE_2__["configureAPI"])(options);
+  window._wpLoadGutenbergEditor = new Promise(function (resolve) {
+    Object(_frontkom_gutenberg_js__WEBPACK_IMPORTED_MODULE_4__["domReady"])(
+    /*#__PURE__*/
+    _babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_1___default()(
+    /*#__PURE__*/
+    _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3() {
+      var larabergEditor;
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee3$(_context3) {
+        while (1) {
+          switch (_context3.prev = _context3.next) {
+            case 0:
+              larabergEditor = createEditorElement(target);
+              resolve(_frontkom_gutenberg_js__WEBPACK_IMPORTED_MODULE_4__["editPost"].initializeEditor(larabergEditor.id, 'page', 0, _settings__WEBPACK_IMPORTED_MODULE_5__["editorSettings"], _settings__WEBPACK_IMPORTED_MODULE_5__["overridePost"]));
+              _context3.next = 4;
+              return Object(_lib_element_ready__WEBPACK_IMPORTED_MODULE_6__["elementReady"])('.edit-post-layout');
+
+            case 4:
+              Object(_lib_configure_editor__WEBPACK_IMPORTED_MODULE_3__["default"])(options);
+
+            case 5:
+            case "end":
+              return _context3.stop();
+          }
+        }
+      }, _callee3, this);
+    })));
+  });
+}
+/**
+ * Creates the element to render the Gutenberg editor inside of
+ * @param {string} target the id of the textarea to render the Editor instead of
+ * @return {element}
+ */
+
+function createEditorElement(target) {
+  var element = document.getElementById(target);
+  var editor = document.createElement('DIV');
+  editor.id = 'laraberg__editor';
+  editor.classList.add('laraberg__editor', 'gutenberg__editor', 'block-editor__container', 'wp-embed-responsive');
+  element.parentNode.insertBefore(editor, element);
+  element.hidden = true;
+  _settings__WEBPACK_IMPORTED_MODULE_5__["editorSettings"].target = target;
+  window.Laraberg.editor = editor;
+  return editor;
+}
+
+/***/ }),
+
+/***/ "./src/resources/js/gutenberg/settings.js":
+/*!************************************************!*\
+  !*** ./src/resources/js/gutenberg/settings.js ***!
+  \************************************************/
+/*! exports provided: editorSettings, overridePost */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "editorSettings", function() { return editorSettings; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "overridePost", function() { return overridePost; });
+/* harmony import */ var _add_query_args__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./add-query-args */ "./src/resources/js/gutenberg/add-query-args.js");
+/* harmony import */ var _api_api_fetch__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../api/api-fetch */ "./src/resources/js/api/api-fetch.js");
+
+
+window.wp = {
+  apiFetch: _api_api_fetch__WEBPACK_IMPORTED_MODULE_1__["default"],
+  url: {
+    addQueryArgs: _add_query_args__WEBPACK_IMPORTED_MODULE_0__["default"]
+  }
+};
+window.userSettings = {
+  uid: 2 // Among other things, this uid is used to identify and store editor user preferences in localStorage
+  // set your root path
+
+};
+window.wpApiSettings = {
+  root: '/' // Some editor settings
+
+};
+var editorSettings = {
+  target: null,
+  alignWide: true,
+  availableTemplates: [],
+  allowedBlockTypes: true,
+  disableCustomColors: false,
+  disablePostFormats: false,
+  mediaLibrary: false,
+  titlePlaceholder: 'Add title',
+  bodyPlaceholder: 'Write your story',
+  isRTL: false,
+  postLock: {
+    isLocked: false
+  },
+  autosaveInterval: 10,
+  canAutosave: false,
+  // to disable Editor Autosave featured (default: true)
+  canPublish: false,
+  // to disable Editor Publish featured (default: true)
+  canSave: false // to disable Editor Save featured (default: true)    };
+  // Post properties to override
+
+};
+var overridePost = {};
+
+/***/ }),
+
+/***/ "./src/resources/js/laraberg.js":
+/*!**************************************!*\
+  !*** ./src/resources/js/laraberg.js ***!
+  \**************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var babel_polyfill__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! babel-polyfill */ "./node_modules/babel-polyfill/lib/index.js");
+/* harmony import */ var babel_polyfill__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(babel_polyfill__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _scss_laraberg_scss__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./../scss/laraberg.scss */ "./src/resources/scss/laraberg.scss");
+/* harmony import */ var _scss_laraberg_scss__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_scss_laraberg_scss__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _gutenberg_settings__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./gutenberg/settings */ "./src/resources/js/gutenberg/settings.js");
+/* harmony import */ var _lib_get_content__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./lib/get-content */ "./src/resources/js/lib/get-content.js");
+/* harmony import */ var _gutenberg_init__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./gutenberg/init */ "./src/resources/js/gutenberg/init.js");
+/* harmony import */ var _lib_custom_blocks__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./lib/custom-blocks */ "./src/resources/js/lib/custom-blocks.js");
+
+ // Gutenberg imports
+
+
+
+
+
+var Laraberg = {
+  init: _gutenberg_init__WEBPACK_IMPORTED_MODULE_4__["default"],
+  initGutenberg: _gutenberg_init__WEBPACK_IMPORTED_MODULE_4__["default"],
+  getContent: _lib_get_content__WEBPACK_IMPORTED_MODULE_3__["default"],
+  editor: null,
+  registerCategory: _lib_custom_blocks__WEBPACK_IMPORTED_MODULE_5__["registerCategory"],
+  registerBlock: _lib_custom_blocks__WEBPACK_IMPORTED_MODULE_5__["registerBlock"]
+};
+window.Laraberg = Laraberg;
+/* harmony default export */ __webpack_exports__["default"] = (Laraberg);
+
+/***/ }),
+
+/***/ "./src/resources/js/laravel-filemanager/laravel-filemanager.js":
+/*!*********************************************************************!*\
+  !*** ./src/resources/js/laravel-filemanager/laravel-filemanager.js ***!
+  \*********************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _babel_runtime_helpers_classCallCheck__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/helpers/classCallCheck */ "./node_modules/@babel/runtime/helpers/classCallCheck.js");
+/* harmony import */ var _babel_runtime_helpers_classCallCheck__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_classCallCheck__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @babel/runtime/helpers/createClass */ "./node_modules/@babel/runtime/helpers/createClass.js");
+/* harmony import */ var _babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _babel_runtime_helpers_possibleConstructorReturn__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @babel/runtime/helpers/possibleConstructorReturn */ "./node_modules/@babel/runtime/helpers/possibleConstructorReturn.js");
+/* harmony import */ var _babel_runtime_helpers_possibleConstructorReturn__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_possibleConstructorReturn__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _babel_runtime_helpers_getPrototypeOf__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @babel/runtime/helpers/getPrototypeOf */ "./node_modules/@babel/runtime/helpers/getPrototypeOf.js");
+/* harmony import */ var _babel_runtime_helpers_getPrototypeOf__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_getPrototypeOf__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var _babel_runtime_helpers_inherits__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @babel/runtime/helpers/inherits */ "./node_modules/@babel/runtime/helpers/inherits.js");
+/* harmony import */ var _babel_runtime_helpers_inherits__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_inherits__WEBPACK_IMPORTED_MODULE_4__);
+/* harmony import */ var _babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @babel/runtime/helpers/assertThisInitialized */ "./node_modules/@babel/runtime/helpers/assertThisInitialized.js");
+/* harmony import */ var _babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_5__);
+
+
+
+
+
+
+/* harmony default export */ __webpack_exports__["default"] = (function (config) {
+  var _window$wp = window.wp,
+      hooks = _window$wp.hooks,
+      element = _window$wp.element;
+  var Component = element.Component;
+
+  var LaravelFilemanager =
+  /*#__PURE__*/
+  function (_Component) {
+    _babel_runtime_helpers_inherits__WEBPACK_IMPORTED_MODULE_4___default()(LaravelFilemanager, _Component);
+
+    function LaravelFilemanager() {
+      var _this;
+
+      _babel_runtime_helpers_classCallCheck__WEBPACK_IMPORTED_MODULE_0___default()(this, LaravelFilemanager);
+
+      _this = _babel_runtime_helpers_possibleConstructorReturn__WEBPACK_IMPORTED_MODULE_2___default()(this, _babel_runtime_helpers_getPrototypeOf__WEBPACK_IMPORTED_MODULE_3___default()(LaravelFilemanager).apply(this, arguments));
+      _this.openModal = _this.openModal.bind(_babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_5___default()(_babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_5___default()(_this)));
+      _this.onSelect = _this.onSelect.bind(_babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_5___default()(_babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_5___default()(_this)));
+      _this.state = {
+        media: []
+      };
+      return _this;
+    }
+
+    _babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_1___default()(LaravelFilemanager, [{
+      key: "getMediaType",
+      value: function getMediaType(path) {
+        var video = ['mp4', 'm4v', 'mov', 'wmv', 'avi', 'mpg', 'ogv', '3gp', '3g2'];
+        var audio = ['mp3', 'm4a', 'ogg', 'wav'];
+        var extension = path.split('.').slice(-1).pop();
+
+        if (video.includes(extension)) {
+          return 'video';
+        } else if (audio.includes(extension)) {
+          return 'audio';
+        } else {
+          return 'image';
+        }
+      }
+    }, {
+      key: "onSelect",
+      value: function onSelect(url, path) {
+        this.props.value = null;
+        var _this$props = this.props,
+            multiple = _this$props.multiple,
+            onSelect = _this$props.onSelect;
+        var media = {
+          url: url,
+          type: this.getMediaType(path)
+        };
+
+        if (multiple) {
+          this.state.media.push(media);
+        }
+
+        onSelect(multiple ? this.state.media : media);
+      }
+    }, {
+      key: "openModal",
+      value: function openModal() {
+        var options = {};
+
+        if (this.props.allowedTypes.length === 1 && this.props.allowedTypes[0] === 'image') {
+          options.type = 'image';
+        } else {
+          options.type = 'file';
+        }
+
+        this.openLFM(options, this.onSelect);
+      }
+    }, {
+      key: "openLFM",
+      value: function openLFM(options, cb) {
+        var routePrefix = config && config.prefix ? config.prefix : '/laravel-filemanager';
+        window.open(routePrefix + '?type=' + options.type || 'file', 'FileManager', 'width=900,height=600');
+        window.SetUrl = cb;
+      }
+    }, {
+      key: "render",
+      value: function render() {
+        var render = this.props.render;
+        return render({
+          open: this.openModal
+        });
+      }
+    }]);
+
+    return LaravelFilemanager;
+  }(Component);
+
+  hooks.addFilter('editor.MediaUpload', 'core/edit-post/components/media-upload/replace-media-upload', function () {
+    return LaravelFilemanager;
+  });
+});
+
+/***/ }),
+
+/***/ "./src/resources/js/lib/configure-editor.js":
+/*!**************************************************!*\
+  !*** ./src/resources/js/lib/configure-editor.js ***!
+  \**************************************************/
 /*! exports provided: default, clearSubmitFromButtons */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -16571,9 +17044,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "clearSubmitFromButtons", function() { return clearSubmitFromButtons; });
 /* harmony import */ var _frontkom_gutenberg_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @frontkom/gutenberg-js */ "./node_modules/@frontkom/gutenberg-js/build/js/gutenberg-js.js");
 /* harmony import */ var _frontkom_gutenberg_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_frontkom_gutenberg_js__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _settings__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./settings */ "./src/resources/js/gutenberg/settings.js");
-/* harmony import */ var _element_ready__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./element-ready */ "./src/resources/js/gutenberg/element-ready.js");
-/* harmony import */ var _laravel_filemanager__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./laravel-filemanager */ "./src/resources/js/gutenberg/laravel-filemanager.js");
+/* harmony import */ var _gutenberg_settings__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../gutenberg/settings */ "./src/resources/js/gutenberg/settings.js");
+/* harmony import */ var _element_ready__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./element-ready */ "./src/resources/js/lib/element-ready.js");
+/* harmony import */ var _laravel_filemanager_laravel_filemanager__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../laravel-filemanager/laravel-filemanager */ "./src/resources/js/laravel-filemanager/laravel-filemanager.js");
 
 
 
@@ -16584,7 +17057,7 @@ __webpack_require__.r(__webpack_exports__);
  */
 
 function configureEditor(options) {
-  setupSubmit(_settings__WEBPACK_IMPORTED_MODULE_1__["editorSettings"].target);
+  setupSubmit(_gutenberg_settings__WEBPACK_IMPORTED_MODULE_1__["editorSettings"].target);
   setupMedia(options);
 
   if (options.maxHeight) {
@@ -16651,7 +17124,11 @@ function setupMedia(options) {
   removeUploadButton();
 
   if (options.laravelFilemanager) {
-    Object(_laravel_filemanager__WEBPACK_IMPORTED_MODULE_3__["default"])(options.laravelFilemanager);
+    Object(_laravel_filemanager_laravel_filemanager__WEBPACK_IMPORTED_MODULE_3__["default"])(options.laravelFilemanager);
+  } else {
+    _frontkom_gutenberg_js__WEBPACK_IMPORTED_MODULE_0__["data"].dispatch('core/blocks').removeBlockTypes('core/cover');
+    _frontkom_gutenberg_js__WEBPACK_IMPORTED_MODULE_0__["data"].dispatch('core/blocks').removeBlockTypes('core/gallery');
+    _frontkom_gutenberg_js__WEBPACK_IMPORTED_MODULE_0__["data"].dispatch('core/blocks').removeBlockTypes('core/media-text');
   }
 }
 /**
@@ -16662,8 +17139,8 @@ function setupMedia(options) {
 
 function setupSubmit(target) {
   clearSubmitFromButtons();
-  var textarea = document.getElementById(target)
-  
+  var textarea = document.getElementById(target);
+
   if (textarea.form) {
     textarea.form.addEventListener('submit', function (event) {
       textarea.value = _frontkom_gutenberg_js__WEBPACK_IMPORTED_MODULE_0__["data"].select('core/editor').getEditedPostContent(); // Clear content "dirty" state.
@@ -16686,10 +17163,10 @@ function removeUploadButton() {
 
 /***/ }),
 
-/***/ "./src/resources/js/gutenberg/custom-blocks.js":
-/*!*****************************************************!*\
-  !*** ./src/resources/js/gutenberg/custom-blocks.js ***!
-  \*****************************************************/
+/***/ "./src/resources/js/lib/custom-blocks.js":
+/*!***********************************************!*\
+  !*** ./src/resources/js/lib/custom-blocks.js ***!
+  \***********************************************/
 /*! exports provided: registerBlock, registerCategory */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -16732,10 +17209,10 @@ function registerCategory(title, slug) {
 
 /***/ }),
 
-/***/ "./src/resources/js/gutenberg/element-ready.js":
-/*!*****************************************************!*\
-  !*** ./src/resources/js/gutenberg/element-ready.js ***!
-  \*****************************************************/
+/***/ "./src/resources/js/lib/element-ready.js":
+/*!***********************************************!*\
+  !*** ./src/resources/js/lib/element-ready.js ***!
+  \***********************************************/
 /*! exports provided: elementReady, elementRendered, elementReadyRAF */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -16852,10 +17329,10 @@ function rafAsync() {
 
 /***/ }),
 
-/***/ "./src/resources/js/gutenberg/get-content.js":
-/*!***************************************************!*\
-  !*** ./src/resources/js/gutenberg/get-content.js ***!
-  \***************************************************/
+/***/ "./src/resources/js/lib/get-content.js":
+/*!*********************************************!*\
+  !*** ./src/resources/js/lib/get-content.js ***!
+  \*********************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -16872,496 +17349,56 @@ function getContent() {
 
 /***/ }),
 
-/***/ "./src/resources/js/gutenberg/init-gutenberg.js":
-/*!******************************************************!*\
-  !*** ./src/resources/js/gutenberg/init-gutenberg.js ***!
-  \******************************************************/
-/*! exports provided: default */
+/***/ "./src/resources/js/lib/notices.js":
+/*!*****************************************!*\
+  !*** ./src/resources/js/lib/notices.js ***!
+  \*****************************************/
+/*! exports provided: success, info, error, warning, notice */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return initGutenberg; });
-/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
-/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @babel/runtime/helpers/asyncToGenerator */ "./node_modules/@babel/runtime/helpers/asyncToGenerator.js");
-/* harmony import */ var _babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _configure_editor__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./configure-editor */ "./src/resources/js/gutenberg/configure-editor.js");
-/* harmony import */ var _frontkom_gutenberg_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @frontkom/gutenberg-js */ "./node_modules/@frontkom/gutenberg-js/build/js/gutenberg-js.js");
-/* harmony import */ var _frontkom_gutenberg_js__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_frontkom_gutenberg_js__WEBPACK_IMPORTED_MODULE_3__);
-/* harmony import */ var _settings__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./settings */ "./src/resources/js/gutenberg/settings.js");
-/* harmony import */ var _element_ready__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./element-ready */ "./src/resources/js/gutenberg/element-ready.js");
-/* harmony import */ var _mock_data__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./mock-data */ "./src/resources/js/gutenberg/mock-data.js");
-
-
-
-
-
-
- // Setup sidebar events
-
-window.customGutenberg = {
-  events: {
-    'OPEN_GENERAL_SIDEBAR': function () {
-      var _OPEN_GENERAL_SIDEBAR = _babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_1___default()(
-      /*#__PURE__*/
-      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee(action, store) {
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
-          while (1) {
-            switch (_context.prev = _context.next) {
-              case 0:
-                _context.next = 2;
-                return Object(_element_ready__WEBPACK_IMPORTED_MODULE_5__["elementReady"])('.edit-post-sidebar');
-
-              case 2:
-                Object(_configure_editor__WEBPACK_IMPORTED_MODULE_2__["clearSubmitFromButtons"])();
-
-              case 3:
-              case "end":
-                return _context.stop();
-            }
-          }
-        }, _callee, this);
-      }));
-
-      function OPEN_GENERAL_SIDEBAR(_x, _x2) {
-        return _OPEN_GENERAL_SIDEBAR.apply(this, arguments);
-      }
-
-      return OPEN_GENERAL_SIDEBAR;
-    }(),
-    'CLOSE_GENERAL_SIDEBAR': function () {
-      var _CLOSE_GENERAL_SIDEBAR = _babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_1___default()(
-      /*#__PURE__*/
-      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2(action, store) {
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
-          while (1) {
-            switch (_context2.prev = _context2.next) {
-              case 0:
-              case "end":
-                return _context2.stop();
-            }
-          }
-        }, _callee2, this);
-      }));
-
-      function CLOSE_GENERAL_SIDEBAR(_x3, _x4) {
-        return _CLOSE_GENERAL_SIDEBAR.apply(this, arguments);
-      }
-
-      return CLOSE_GENERAL_SIDEBAR;
-    }()
-  }
-  /**
-   * Initialize the Gutenberg editor
-   * @param {string} target the element ID to render the gutenberg editor in
-   */
-
-};
-function initGutenberg(target, options) {
-  if (!options) {
-    options = {};
-  } // Initializing the editor!
-
-
-  window._wpLoadGutenbergEditor = new Promise(function (resolve) {
-    Object(_frontkom_gutenberg_js__WEBPACK_IMPORTED_MODULE_3__["domReady"])(
-    /*#__PURE__*/
-    _babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_1___default()(
-    /*#__PURE__*/
-    _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3() {
-      var element, larabergEditor;
-      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee3$(_context3) {
-        while (1) {
-          switch (_context3.prev = _context3.next) {
-            case 0:
-              element = document.getElementById(target);
-              _settings__WEBPACK_IMPORTED_MODULE_4__["editorSettings"].target = target; // Set editor content to element's value
-
-              if (element.value.length > 0) {
-                _mock_data__WEBPACK_IMPORTED_MODULE_6__["pageData"].setContent(element.value);
-              } // Create Gutenberg container element and insert at place of target
-
-
-              larabergEditor = document.createElement('DIV');
-              larabergEditor.id = 'laraberg__editor';
-              larabergEditor.classList.add('laraberg__editor', 'gutenberg__editor', 'block-editor__container', 'wp-embed-responsive');
-              element.parentNode.insertBefore(larabergEditor, element);
-              element.hidden = true;
-              window.Laraberg.editor = larabergEditor;
-              resolve(_frontkom_gutenberg_js__WEBPACK_IMPORTED_MODULE_3__["editPost"].initializeEditor('laraberg__editor', 'page', 0, _settings__WEBPACK_IMPORTED_MODULE_4__["editorSettings"], _settings__WEBPACK_IMPORTED_MODULE_4__["overridePost"]));
-              _context3.next = 12;
-              return Object(_element_ready__WEBPACK_IMPORTED_MODULE_5__["elementReady"])('.edit-post-layout');
-
-            case 12:
-              Object(_configure_editor__WEBPACK_IMPORTED_MODULE_2__["default"])(options);
-
-            case 13:
-            case "end":
-              return _context3.stop();
-          }
-        }
-      }, _callee3, this);
-    })));
-  });
-}
-
-/***/ }),
-
-/***/ "./src/resources/js/gutenberg/laravel-filemanager.js":
-/*!***********************************************************!*\
-  !*** ./src/resources/js/gutenberg/laravel-filemanager.js ***!
-  \***********************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return setupLaravelFilemanager; });
-/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
-/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @babel/runtime/helpers/asyncToGenerator */ "./node_modules/@babel/runtime/helpers/asyncToGenerator.js");
-/* harmony import */ var _babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _element_ready__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./element-ready */ "./src/resources/js/gutenberg/element-ready.js");
-
-
-
-var lfmOptions;
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "success", function() { return success; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "info", function() { return info; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "error", function() { return error; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "warning", function() { return warning; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "notice", function() { return notice; });
 /**
- * Insert the 'File Manager' button whenever a mediablock appears
+ * Shows a success message
+ * @param {String} message the message to display
  */
-
-function setupLaravelFilemanager(_x) {
-  return _setupLaravelFilemanager.apply(this, arguments);
+function success(message) {
+  notice('success', message);
 }
 /**
- * Event listener for the File Manager button
- * @param {Event} event
+ * Shows an info message
+ * @param {String} message the message to display
  */
 
-function _setupLaravelFilemanager() {
-  _setupLaravelFilemanager = _babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_1___default()(
-  /*#__PURE__*/
-  _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee(options) {
-    return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
-      while (1) {
-        switch (_context.prev = _context.next) {
-          case 0:
-            lfmOptions = options;
-            Object(_element_ready__WEBPACK_IMPORTED_MODULE_2__["elementRendered"])('.editor-media-placeholder', function (mediaEditor) {
-              var lfmButton = document.createElement('button');
-              lfmButton.innerHTML = 'File Manager';
-              lfmButton.classList.add('components-button', 'editor-media-placeholder__button', 'is-button', 'is-default', 'is-large');
-              lfmButton.type = 'button';
-              lfmButton.addEventListener('click', lfmListener);
-              var fileUpload = mediaEditor.querySelector('.components-form-file-upload');
-              fileUpload.parentNode.insertBefore(lfmButton, fileUpload.nextSibling);
-            });
-
-          case 2:
-          case "end":
-            return _context.stop();
-        }
-      }
-    }, _callee, this);
-  }));
-  return _setupLaravelFilemanager.apply(this, arguments);
-}
-
-function lfmListener(event) {
-  var block = event.target.parentNode.parentNode.parentNode;
-  var options = {};
-
-  if (block.querySelector('.wp-block-image') !== null) {
-    options.type = 'Images';
-  } else {
-    options.type = 'Files';
-  }
-
-  if (lfmOptions.prefix) {
-    options.prefix = lfmOptions.prefix;
-  }
-
-  openFilemanager(options, function (url, path) {
-    insertMedia(block, url);
-  });
+function info(message) {
+  notice('info', message);
 }
 /**
- * Opens a window with Laravel Filemanager
- * @param {Object} options
- * @param {function} cb
+ * Shows an error message
+ * @param {String} message the message to display
  */
 
-
-function openFilemanager(options, cb) {
-  var routePrefix = options && options.prefix ? options.prefix : '/laravel-filemanager';
-  window.open(X_OCTOBER_MEDIA_MANAGER_QUICK_UPLOAD);
-  window.SetUrl = cb;
+function error(message) {
+  notice('error', message);
 }
 /**
- * Inserts the media object into the media block
- * This is done by putting the URL into the 'Insert from URL' field and submitting the field
- * @param {Element} block the media block to insert the media into
- * @param {*} url the URL of the media
+ * Shows a warning message
+ * @param {String} message the message to display
  */
 
-
-function insertMedia(_x2, _x3) {
-  return _insertMedia.apply(this, arguments);
+function warning(message) {
+  notice('warning', message);
 }
-/**
- * Fires an event for the provided element
- * @param {Element} el the element to fire the event on
- * @param {String} etype the event type, eg: 'change', 'click', etc...
- */
-
-
-function _insertMedia() {
-  _insertMedia = _babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_1___default()(
-  /*#__PURE__*/
-  _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2(block, url) {
-    var urlButton, formSelector, urlForm, urlInput, submitButton;
-    return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
-      while (1) {
-        switch (_context2.prev = _context2.next) {
-          case 0:
-            urlButton = block.querySelector('.editor-media-placeholder__url-input-container').querySelector('button');
-            urlButton.click();
-            formSelector = '.editor-media-placeholder__url-input-form';
-            _context2.next = 5;
-            return Object(_element_ready__WEBPACK_IMPORTED_MODULE_2__["elementReadyRAF"])(formSelector);
-
-          case 5:
-            urlForm = document.querySelector(formSelector);
-            urlInput = urlForm.querySelector('input');
-            urlInput.value = url; // For some reason we can not click() the submitButton
-            // if we do not add a space and fire the change event on the input
-
-            urlInput.value += ' ';
-            fireEvent(urlInput, 'change');
-            submitButton = urlForm.querySelector('button');
-            submitButton.click();
-
-          case 12:
-          case "end":
-            return _context2.stop();
-        }
-      }
-    }, _callee2, this);
-  }));
-  return _insertMedia.apply(this, arguments);
-}
-
-function fireEvent(el, etype) {
-  if (el.fireEvent) {
-    el.fireEvent('on' + etype);
-  } else {
-    var evObj = document.createEvent('Events');
-    evObj.initEvent(etype, true, false);
-    el.dispatchEvent(evObj);
+function notice(status, message) {
+  if (window.wp && window.wp.data) {
+    window.wp.data.dispatch('core/notices').createNotice(status, message);
   }
 }
-
-/***/ }),
-
-/***/ "./src/resources/js/gutenberg/mock-data.js":
-/*!*************************************************!*\
-  !*** ./src/resources/js/gutenberg/mock-data.js ***!
-  \*************************************************/
-/*! exports provided: mediaResponse, pageData, themesData, types */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "mediaResponse", function() { return mediaResponse; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "pageData", function() { return pageData; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "themesData", function() { return themesData; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "types", function() { return types; });
-// Mock data to get the Gutenberg editor to work
-var mediaResponse = {
-  headers: {
-    get: function get(value) {
-      if (value === 'allow') {
-        return ['POST'];
-      }
-    }
-  }
-};
-var pageData = {
-  content: {
-    raw: ''
-  },
-  title: '',
-  templates: '',
-  parent: 0,
-  link: "".concat(window.location.origin, "/preview"),
-  permalink_template: "".concat(window.location.origin, "/preview"),
-  preview_link: "".concat(window.location.origin, "/preview"),
-  type: 'page',
-  status: 'pending',
-  id: 0,
-  // functions
-  setContent: function setContent(content) {
-    pageData.content = {
-      raw: content
-    };
-  }
-};
-var themesData = [{
-  theme_supports: {
-    formats: ['standard', 'aside', 'image', 'video', 'quote', 'link', 'gallery', 'audio'],
-    'post-thumbnails': true
-  }
-}];
-var types = {
-  page: {
-    labels: {},
-    name: 'Page',
-    rest_base: 'pages',
-    slug: 'page',
-    supports: {
-      author: false,
-      comments: false,
-      // hide discussion-panel
-      'custom-fields': true,
-      document: true,
-      // * hide document tab
-      editor: true,
-      'media-library': false,
-      // * hide media library
-      'page-attributes': false,
-      // hide page-attributes panel
-      posts: false,
-      // * hide posts-panel
-      revisions: false,
-      'template-settings': false,
-      // * hide template-settings panel
-      thumbnail: false,
-      // featured-image panel
-      title: false,
-      // show title on editor
-      extras: false
-    },
-    viewable: false,
-    saveable: true,
-    publishable: true,
-    autosaveable: false
-  },
-  block: {
-    name: 'Blocks',
-    rest_base: 'blocks',
-    slug: 'wp_block',
-    description: '',
-    supports: {
-      title: true,
-      editor: true
-    },
-    viewable: true
-  }
-};
-
-/***/ }),
-
-/***/ "./src/resources/js/gutenberg/settings.js":
-/*!************************************************!*\
-  !*** ./src/resources/js/gutenberg/settings.js ***!
-  \************************************************/
-/*! exports provided: editorSettings, overridePost */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "editorSettings", function() { return editorSettings; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "overridePost", function() { return overridePost; });
-/* harmony import */ var _add_query_args__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./add-query-args */ "./src/resources/js/gutenberg/add-query-args.js");
-/* harmony import */ var _api_fetch__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./api-fetch */ "./src/resources/js/gutenberg/api-fetch.js");
-// import React from 'react'
-// import ReactDOM from 'react-dom'
-// import moment from 'moment'
-// import jQuery from 'jquery'
-
- // Make React, ReactDOM moment and jQuery available in DOM
-// window.React = React
-// window.ReactDOM = ReactDOM
-// window.moment = moment
-// window.jQuery = jQuery
-// window.$ = jQuery
-
-window.wp = {
-  apiFetch: _api_fetch__WEBPACK_IMPORTED_MODULE_1__["default"],
-  url: {
-    addQueryArgs: _add_query_args__WEBPACK_IMPORTED_MODULE_0__["default"]
-  }
-};
-window.userSettings = {
-  uid: 2 // Among other things, this uid is used to identify and store editor user preferences in localStorage
-  // set your root path
-
-};
-window.wpApiSettings = {
-  root: '/' // Some editor settings
-
-};
-var editorSettings = {
-  target: null,
-  alignWide: true,
-  availableTemplates: [],
-  allowedBlockTypes: true,
-  disableCustomColors: false,
-  disablePostFormats: false,
-  mediaLibrary: false,
-  titlePlaceholder: 'Add title',
-  bodyPlaceholder: 'Write your story',
-  isRTL: false,
-  postLock: {
-    isLocked: false
-  },
-  autosaveInterval: 10,
-  canAutosave: false,
-  // to disable Editor Autosave featured (default: true)
-  canPublish: false,
-  // to disable Editor Publish featured (default: true)
-  canSave: false // to disable Editor Save featured (default: true)    };
-  // Post properties to override
-
-};
-var overridePost = {};
-
-/***/ }),
-
-/***/ "./src/resources/js/laraberg.js":
-/*!**************************************!*\
-  !*** ./src/resources/js/laraberg.js ***!
-  \**************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var babel_polyfill__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! babel-polyfill */ "./node_modules/babel-polyfill/lib/index.js");
-/* harmony import */ var babel_polyfill__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(babel_polyfill__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _scss_laraberg_scss__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./../scss/laraberg.scss */ "./src/resources/scss/laraberg.scss");
-/* harmony import */ var _scss_laraberg_scss__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_scss_laraberg_scss__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _gutenberg_settings__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./gutenberg/settings */ "./src/resources/js/gutenberg/settings.js");
-/* harmony import */ var _gutenberg_get_content__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./gutenberg/get-content */ "./src/resources/js/gutenberg/get-content.js");
-/* harmony import */ var _gutenberg_init_gutenberg__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./gutenberg/init-gutenberg */ "./src/resources/js/gutenberg/init-gutenberg.js");
-/* harmony import */ var _gutenberg_custom_blocks__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./gutenberg/custom-blocks */ "./src/resources/js/gutenberg/custom-blocks.js");
-
- // Gutenberg imports
-
-
-
-
-
-var Laraberg = {
-  initGutenberg: _gutenberg_init_gutenberg__WEBPACK_IMPORTED_MODULE_4__["default"],
-  getContent: _gutenberg_get_content__WEBPACK_IMPORTED_MODULE_3__["default"],
-  editor: null,
-  registerCategory: _gutenberg_custom_blocks__WEBPACK_IMPORTED_MODULE_5__["registerCategory"],
-  registerBlock: _gutenberg_custom_blocks__WEBPACK_IMPORTED_MODULE_5__["registerBlock"]
-};
-window.Laraberg = Laraberg;
-/* harmony default export */ __webpack_exports__["default"] = (Laraberg);
 
 /***/ }),
 

@@ -9614,6 +9614,9 @@ body.block-editor-page {
       outline-width: 0; }
     .gutenberg__editor .edit-post-visual-editor .editor-block-list__layout .editor-default-block-appender__content {
       font-family: inherit; }
+  .gutenberg__editor .components-color-palette__item:focus:after {
+    top: -3px;
+    left: -3px; }
 @charset "UTF-8";
 html {
   font-family: sans-serif;
@@ -20538,6 +20541,9 @@ body.toolbar-tray-open.toolbar-vertical.toolbar-fixed {
   width: 100%;
   overflow: hidden;
   border: 1px solid #e2e4e7; }
+  .laraberg__editor .components-notice-list {
+    position: -webkit-sticky;
+    position: sticky; }
   .laraberg__editor .edit-post-header {
     z-index: 100; }
   .laraberg__editor .edit-post-sidebar {
