@@ -20583,6 +20583,9 @@ body.toolbar-tray-open.toolbar-vertical.toolbar-fixed {
     border: 0;
     max-width: 100%; }
 
+.editor-inserter__manage-reusable-blocks {
+  display: none; }
+
 .gutenberg__content {
   padding-left: 46px;
   padding-right: 46px;

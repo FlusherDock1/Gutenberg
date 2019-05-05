@@ -1,6 +1,6 @@
 <?php namespace ReaZzon\Gutenberg\Classes;
 
-// use Request;
+use Request;
 use ReaZzon\Gutenberg\Models\Block;
 
 class BlockController extends ApplicationController
@@ -14,9 +14,9 @@ class BlockController extends ApplicationController
     public function store(Request $request)
     {
         $block = new Block();
-        $block->raw_title = $request->title;
-        $block->status = $request->status;
-        $block->setContent($request->content);
+        $block->raw_title = $request::get('title');
+        $block->status = $request::get('status');
+        $block->setContent($request::get('content'));
         $block->updateSlug();
         $block->save();
         return $this->ok($block->toJson(), 201);
@@ -37,9 +37,9 @@ class BlockController extends ApplicationController
         if (!$block) {
             return $this->notFound();
         }
-        $block->raw_title = $request->title;
-        $block->status = $request->status;
-        $block->setContent($request->content);
+        $block->raw_title = $request::get('title');
+        $block->status = $request::get('status');
+        $block->setContent($request::get('content'));
         $block->updateSlug();
         $block->save();
         return $this->ok($block);
