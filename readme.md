@@ -14,6 +14,7 @@ Integration of Laraberg by [VanOns\Laraberg](https://github.com/VanOns/laraberg)
 All current block are from standart [Gutenberg.js](https://github.com/front/gutenberg-js) package. None of them are custom or from Laraberg. You can find all this blocks at [Gutenberg playground](https://testgutenberg.com/) and test them there.
  
 **Working:**
+- Code preview and all standart features such as: custom styles, block settings, reusable blocks.
 - Common blocks
     - Paragraph - (All text formating also works).
     - Image
@@ -40,18 +41,12 @@ All current block are from standart [Gutenberg.js](https://github.com/front/gute
     - Separator
     - Spacer
 - Embeds
-    - All embeds _(only by links)_
-- Code preview and all standart features such as: custom styles, block settings – are also working.
+    - All embeds
 
 **Not working:**
 - Inline elements
-    - Inline image _(Because of gutenberg.js bug, i will investigate it later)_
-- Layout elements
-    - Page break _(Standart WordPress feature. Will be removed in next updates)_
-    - More _(Standart WordPress feature. Will be removed in next updates)_
-- Widgets
-    - All of them not working _(They are standart WordPress widgets. They will be removed in next updates)_
-
+    - Inline image _(Because of gutenberg.js bug, i will investigate it later, currently in work)_
+    
 **In work:**
 - ~~Mediauploader with native OctoberCMS Medialibrary~~ **DONE in 1.0.7 update** 
 - ~~Reusable blocks aren't working~~ **DONE in 1.0.8 update**
