@@ -27,8 +27,16 @@
   }
 }
 
+.gutenberg__editor .edit-post-layout__content{
+  overflow-y: unset;
+}
+
 .editor-inserter__manage-reusable-blocks{
   display: none;
+}
+
+.gutenberg__editor .components-notice-list{
+  top: 56px;
 }
 
 .gutenberg__content {
