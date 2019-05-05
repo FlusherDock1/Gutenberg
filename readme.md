@@ -45,7 +45,7 @@ All current block are from standart [Gutenberg.js](https://github.com/front/gute
 
 **Not working:**
 - Inline elements
-    - Inline image _(Because of gutenberg.js bug, i will investigate it later, currently in work)_
+    - Inline image _(Because of gutenberg.js bug, currently in work)_
     
 **In work:**
 - ~~Mediauploader with native OctoberCMS Medialibrary~~ **DONE in 1.0.7 update** 
