@@ -1,6 +1,6 @@
 import { configureAPI } from '../api/api-fetch'
 import configureEditor, { clearSubmitFromButtons } from '../lib/configure-editor'
-import { domReady, editPost } from '@frontkom/gutenberg-js'
+import { domReady, data, editPost } from '@frontkom/gutenberg-js'
 import { editorSettings, overridePost } from './settings'
 import { elementReady } from '../lib/element-ready'
 
@@ -28,6 +28,7 @@ export default function init (target, options = {}) {
     domReady(async () => {
       const larabergEditor = createEditorElement(target)
       resolve(editPost.initializeEditor(larabergEditor.id, 'page', 0, editorSettings, overridePost))
+      removeWpStock()
       await elementReady('.edit-post-layout')
       configureEditor(options)
     })
@@ -46,9 +47,24 @@ function createEditorElement (target) {
   editor.classList.add('laraberg__editor', 'gutenberg__editor', 'block-editor__container', 'wp-embed-responsive')
   element.parentNode.insertBefore(editor, element)
   element.hidden = true
-
   editorSettings.target = target
   window.Laraberg.editor = editor
 
   return editor
+}
+
+/**
+ * Removes stock WP widgets category and other wp blocks.
+ */
+function removeWpStock () {
+  // Removing Widgets category
+  const currentCategories = data.select('core/blocks').getCategories().filter(item => item.slug !== "widgets")
+  data.dispatch('core/blocks').setCategories([...currentCategories])
+
+  // Removing stock WP blocks, that aren't working outside of WP.
+  data.dispatch('core/blocks').removeBlockTypes([
+    'core/nextpage',
+    'core/more',
+    'core/freeform'
+  ])
 }

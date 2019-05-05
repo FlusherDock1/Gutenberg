@@ -1,5 +1,5 @@
 # Gutenberg for OctoberCMS
-**MEDIAUPLOADER UPDATE IS LIVE**
+**MEDIAUPLOADER AND REUSABLE BLOCKS UPDATES IS LIVE**
 
 Gutenberg is a rich-text visual editor from WordPress, with the features of bulidng content with blocks. With Gutenberg, you can create truly unique content for your website by simply dragging and dropping blocks.
 
@@ -55,7 +55,8 @@ All current block are from standart [Gutenberg.js](https://github.com/front/gute
 **In work:**
 - ~~Mediauploader with native OctoberCMS Medialibrary~~ **DONE in 1.0.7 update** 
 - ~~Reusable blocks aren't working~~ **DONE in 1.0.8 update**
-- Removing WP widgets 
+- ~~Removing WP widgets~~ **DONE in 1.0.9 update**
+- Inline image incorrect behavior
 
 I will be happy if you help me with any form of custom functions implementation. Please sumbit your PR in [plugin Github Repository](https://github.com/FlusherDock1/Gutenberg).
 

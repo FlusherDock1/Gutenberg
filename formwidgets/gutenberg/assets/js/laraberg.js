@@ -502,6 +502,7 @@ function init(target, options = {}) {
     Object(_frontkom_gutenberg_js__WEBPACK_IMPORTED_MODULE_2__["domReady"])(async () => {
       const larabergEditor = createEditorElement(target);
       resolve(_frontkom_gutenberg_js__WEBPACK_IMPORTED_MODULE_2__["editPost"].initializeEditor(larabergEditor.id, 'page', 0, _settings__WEBPACK_IMPORTED_MODULE_3__["editorSettings"], _settings__WEBPACK_IMPORTED_MODULE_3__["overridePost"]));
+      removeWpStock();
       await Object(_lib_element_ready__WEBPACK_IMPORTED_MODULE_4__["elementReady"])('.edit-post-layout');
       Object(_lib_configure_editor__WEBPACK_IMPORTED_MODULE_1__["default"])(options);
     });
@@ -523,6 +524,18 @@ function createEditorElement(target) {
   _settings__WEBPACK_IMPORTED_MODULE_3__["editorSettings"].target = target;
   window.Laraberg.editor = editor;
   return editor;
+}
+/**
+ * Removes stock WP widgets category and other wp blocks.
+ */
+
+
+function removeWpStock() {
+  // Removing Widgets category
+  const currentCategories = _frontkom_gutenberg_js__WEBPACK_IMPORTED_MODULE_2__["data"].select('core/blocks').getCategories().filter(item => item.slug !== "widgets");
+  _frontkom_gutenberg_js__WEBPACK_IMPORTED_MODULE_2__["data"].dispatch('core/blocks').setCategories([...currentCategories]); // Removing stock WP blocks, that aren't working outside of WP.
+
+  _frontkom_gutenberg_js__WEBPACK_IMPORTED_MODULE_2__["data"].dispatch('core/blocks').removeBlockTypes(['core/nextpage', 'core/more', 'core/freeform']);
 }
 
 /***/ }),
