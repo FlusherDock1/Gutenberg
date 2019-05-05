@@ -704,12 +704,7 @@ __webpack_require__.r(__webpack_exports__);
           media.hide();
         }
       });
-    } // openLFM (options, cb) {
-    //   let routePrefix = (config && config.prefix) ? config.prefix : '/laravel-filemanager'
-    //   window.open(routePrefix + '?type=' + options.type || 'file', 'FileManager', 'width=900,height=600')
-    //   window.SetUrl = cb
-    // }
-
+    }
 
     render() {
       const {

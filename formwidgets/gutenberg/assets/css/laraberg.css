@@ -20571,7 +20571,6 @@ body.toolbar-tray-open.toolbar-vertical.toolbar-fixed {
 
 .laraberg__editor {
   width: 100%;
-  overflow: hidden;
   border: 1px solid #e2e4e7; }
   .laraberg__editor .components-notice-list {
     position: -webkit-sticky;
