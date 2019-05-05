@@ -1,3 +1,4 @@
+1.0.8: Reusable blocks are now fully working
 1.0.7: Native media manager Support
 1.0.6:
   - Changing blocks model title to string, updating Laraberg to public 0.3 beta version
