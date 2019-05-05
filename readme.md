@@ -1,4 +1,5 @@
 # Gutenberg for OctoberCMS
+** MEDIAUPLOADER UPDATE IS LIVE **
 
 Gutenberg is a rich-text visual editor from WordPress, with the features of bulidng content with blocks. With Gutenberg, you can create truly unique content for your website by simply dragging and dropping blocks.
 
@@ -15,12 +16,15 @@ All current block are from standart [Gutenberg.js](https://github.com/front/gute
 **Working:**
 - Common blocks
     - Paragraph - (All text formating also works).
-    - Image _(only by link, file upload not working)_
+    - Image
     - Heading
-    - Audio _(only by link, file upload not working)_
+    - Audio
+    - Gallery
+    - Cover
+    - File
     - List
     - Quote
-    - Video _(only by link, file upload not working)_
+    - Video
 - Formatting
     - Code
     - Preformatted
@@ -30,6 +34,7 @@ All current block are from standart [Gutenberg.js](https://github.com/front/gute
     - Table
     - Verse
 - Layout elements
+    - Media & text
     - Columns
     - Button
     - Separator
@@ -40,22 +45,18 @@ All current block are from standart [Gutenberg.js](https://github.com/front/gute
 
 **Not working:**
 - Inline elements
-    - Inline image _(Because of not implemented native Mediauploader)_
-- Common blocks
-    - Gallery _(Because of not implemented native Mediauploader)_
-    - Cover _(Because of not implemented native Mediauploader)_
-    - File _(Because of not implemented native Mediauploader)_
+    - Inline image _(Because of gutenberg.js bug, i will investigate it later)_
 - Layout elements
-    - Media & text _(Because of not implemented native Mediauploader)_
     - Page break _(Standart WordPress feature. Will be removed in next updates)_
     - More _(Standart WordPress feature. Will be removed in next updates)_
 - Widgets
     - All of them not working _(They are standart WordPress widgets. They will be removed in next updates)_
 
 **In work:**
-- Mediauploader with native OctoberCMS Medialibrary
+- ~~Mediauploader with native OctoberCMS Medialibrary~~ **DONE in 1.0.7 update** 
+- Removing WP widgets 
 
-I will be happy if you help me with medialibrary implementation. Please sumbit your PR in [plugin Github Repository](https://github.com/FlusherDock1/Gutenberg).
+I will be happy if you help me with any form of custom functions implementation. Please sumbit your PR in [plugin Github Repository](https://github.com/FlusherDock1/Gutenberg).
 
 ---
 ## Installation
