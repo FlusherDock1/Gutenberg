@@ -1,5 +1,5 @@
 # Gutenberg for OctoberCMS
-** MEDIAUPLOADER UPDATE IS LIVE **
+**MEDIAUPLOADER UPDATE IS LIVE**
 
 Gutenberg is a rich-text visual editor from WordPress, with the features of bulidng content with blocks. With Gutenberg, you can create truly unique content for your website by simply dragging and dropping blocks.
 
