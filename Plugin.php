@@ -19,7 +19,7 @@ class Plugin extends PluginBase
         return [
             'name'        => 'reazzon.gutenberg::lang.plugin.name',
             'description' => 'reazzon.gutenberg::lang.plugin.description',
-            'author'      => 'ReaZzon, VanOns',
+            'author'      => 'Nick Khaetsky',
             'icon'        => 'icon-pencil-square-o'
         ];
     }
