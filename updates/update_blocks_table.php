@@ -4,7 +4,7 @@ use Schema;
 use October\Rain\Database\Schema\Blueprint;
 use October\Rain\Database\Updates\Migration;
 
-class CreateBlocksTable extends Migration
+class UpdateBlocksTable extends Migration
 {
     public function up()
     {
