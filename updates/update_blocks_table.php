@@ -17,7 +17,7 @@ class UpdateBlocksTable extends Migration
     public function down()
     {
         Schema::table('reazzon_gutenberg_blocks', function(Blueprint $table) {
-            $table->text('title')->nullable()->change();
+            $table->text('raw_title')->nullable()->change();
             $table->renameColumn('raw_title', 'title');
         });
     }
