@@ -1,6 +1,8 @@
 # Gutenberg for OctoberCMS
 **MEDIAUPLOADER AND REUSABLE BLOCKS UPDATES IS LIVE**
 
+**RAINLAB.BLOG INTEGRATION SUPPORT READY**
+
 Gutenberg is a rich-text visual editor from WordPress, with the features of bulidng content with blocks. With Gutenberg, you can create truly unique content for your website by simply dragging and dropping blocks.
 
 You can test it online here [Gutenberg playground](https://testgutenberg.com/).
@@ -13,6 +15,13 @@ Integration of Laraberg by [VanOns\Laraberg](https://github.com/VanOns/laraberg)
 
 All current block are from standart [Gutenberg.js](https://github.com/front/gutenberg-js) package. None of them are custom or from Laraberg. You can find all this blocks at [Gutenberg playground](https://testgutenberg.com/) and test them there.
  
+**Working integrations:**
+- [RainLab.Blog](https://octobercms.com/plugin/rainlab-blog)
+
+**Coming Soon integrations:**
+- [Lovata.GoodNews](https://octobercms.com/plugin/lovata-goodnews)
+- [RainLab.StaticPages](https://octobercms.com/plugin/rainlab-pages)
+
 **Working:**
 - Code preview and all standart features such as: custom styles, block settings, reusable blocks.
 - Common blocks
@@ -51,9 +60,17 @@ All current block are from standart [Gutenberg.js](https://github.com/front/gute
 - ~~Mediauploader with native OctoberCMS Medialibrary~~ **DONE in 1.0.7 update** 
 - ~~Reusable blocks aren't working~~ **DONE in 1.0.8 update**
 - ~~Removing WP widgets~~ **DONE in 1.0.9 update**
-- Inline image incorrect behavior
+- ~~RainLab.Blog integration~~ **DONE in 1.1.0 update**
+- Lovata.GoodNews integration
+- RainLab.StaticPages integration
 
-I will be happy if you help me with any form of custom functions implementation. Please sumbit your PR in [plugin Github Repository](https://github.com/FlusherDock1/Gutenberg).
+**Later work:**
+- Inline image incorrect behavior (Gutenberg.js bug, need updates from them)
+- Multiple instances of Gutenberg on one page (Gutenberg.js bug, need updates from them)
+
+I will be happy if you help me with any form of custom functions implementation. 
+
+Please sumbit your PR in [plugin Github Repository](https://github.com/FlusherDock1/Gutenberg).
 
 ---
 ## Installation

@@ -7,6 +7,19 @@ use Backend\Classes\FormWidgetBase;
  */
 class Gutenberg extends FormWidgetBase
 {
+    //
+    // Configurable properties
+    //
+
+    /**
+     * @var int Minimal height of rich editor. 0 = 100%
+     */
+    public $minheight = 350;
+
+    //
+    // Object properties
+    //
+
     /**
      * @inheritDoc
      */
@@ -17,6 +30,10 @@ class Gutenberg extends FormWidgetBase
      */
     public function init()
     {
+        $this->fillFromConfig([
+            'minheight'
+        ]);
+
         if ($this->formField->disabled) {
             $this->readOnly = true;
         }
@@ -36,9 +53,10 @@ class Gutenberg extends FormWidgetBase
      */
     public function prepareVars()
     {
-        $this->vars['name'] = $this->formField->getName();
-        $this->vars['value'] = $this->getLoadValue();
-        $this->vars['model'] = $this->model;
+        $this->vars['name']      = $this->formField->getName();
+        $this->vars['value']     = $this->getLoadValue();
+        $this->vars['model']     = $this->model;
+        $this->vars['minheight'] = $this->minheight;
     }
 
     /**

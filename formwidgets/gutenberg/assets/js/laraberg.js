@@ -540,6 +540,103 @@ function removeWpStock() {
 
 /***/ }),
 
+/***/ "./js/gutenberg/remove.js":
+/*!********************************!*\
+  !*** ./js/gutenberg/remove.js ***!
+  \********************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return remove; });
+/* harmony import */ var _api_api_fetch__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../api/api-fetch */ "./js/api/api-fetch.js");
+/* harmony import */ var _lib_configure_editor__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../lib/configure-editor */ "./js/lib/configure-editor.js");
+/* harmony import */ var _frontkom_gutenberg_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @frontkom/gutenberg-js */ "./node_modules/@frontkom/gutenberg-js/build/js/gutenberg-js.js");
+/* harmony import */ var _frontkom_gutenberg_js__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_frontkom_gutenberg_js__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _settings__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./settings */ "./js/gutenberg/settings.js");
+/* harmony import */ var _lib_element_ready__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../lib/element-ready */ "./js/lib/element-ready.js");
+
+
+
+
+ // Setup sidebar events
+
+window.customGutenberg = {
+  events: {
+    'OPEN_GENERAL_SIDEBAR': async (action, store) => {
+      // console.log('OPEN_GENERAL_SIDEBAR', action, store)
+      await Object(_lib_element_ready__WEBPACK_IMPORTED_MODULE_4__["elementReady"])('.edit-post-sidebar');
+      Object(_lib_configure_editor__WEBPACK_IMPORTED_MODULE_1__["clearSubmitFromButtons"])();
+    },
+    'CLOSE_GENERAL_SIDEBAR': async (action, store) => {// console.log('CLOSE_GENERAL_SIDEBAR', action, store)
+    }
+  }
+  /**
+   * Remove Gutenberg editor from page
+   */
+
+};
+function remove(target, options = {}) {
+  window.Laraberg.editor.remove();
+  delete window.Laraberg.editor;
+  Object(_api_api_fetch__WEBPACK_IMPORTED_MODULE_0__["configureAPI"])(options);
+  console.log('starting');
+  console.log(target);
+  window._wpLoadGutenbergEditor = new Promise(function (resolve) {
+    Object(_frontkom_gutenberg_js__WEBPACK_IMPORTED_MODULE_2__["domReady"])(() => {
+      const larabergEditor = createEditorElement(target);
+      console.log(target);
+      resolve(_frontkom_gutenberg_js__WEBPACK_IMPORTED_MODULE_2__["editPost"].reinitializeEditor('page', 0, larabergEditor, _settings__WEBPACK_IMPORTED_MODULE_3__["editorSettings"], _settings__WEBPACK_IMPORTED_MODULE_3__["overridePost"]));
+      console.log(target);
+      removeWpStock();
+      setNewContent();
+      Object(_lib_element_ready__WEBPACK_IMPORTED_MODULE_4__["elementReady"])('.edit-post-layout');
+      Object(_lib_configure_editor__WEBPACK_IMPORTED_MODULE_1__["default"])(options);
+    });
+  });
+  console.log('ended');
+}
+/**
+ * Creates the element to render the Gutenberg editor inside of
+ * @param {string} target the id of the textarea to render the Editor instead of
+ * @return {element}
+ */
+
+function createEditorElement(target) {
+  console.log(target);
+  const element = document.getElementById(target);
+  const editor = document.createElement('DIV');
+  editor.id = 'laraberg__editor';
+  editor.classList.add('laraberg__editor', 'gutenberg__editor', 'block-editor__container', 'wp-embed-responsive');
+  element.parentNode.insertBefore(editor, element);
+  element.hidden = true;
+  _settings__WEBPACK_IMPORTED_MODULE_3__["editorSettings"].target = target;
+  window.Laraberg.editor = editor;
+  console.log(target);
+  return editor;
+}
+/**
+ * Removes stock WP widgets category and other wp blocks.
+ */
+
+
+function removeWpStock() {
+  // Removing Widgets category
+  const currentCategories = _frontkom_gutenberg_js__WEBPACK_IMPORTED_MODULE_2__["data"].select('core/blocks').getCategories().filter(item => item.slug !== "widgets");
+  _frontkom_gutenberg_js__WEBPACK_IMPORTED_MODULE_2__["data"].dispatch('core/blocks').setCategories([...currentCategories]); // Removing stock WP blocks, that aren't working outside of WP.
+
+  _frontkom_gutenberg_js__WEBPACK_IMPORTED_MODULE_2__["data"].dispatch('core/blocks').removeBlockTypes(['core/nextpage', 'core/more', 'core/freeform']);
+}
+
+function setNewContent() {
+  console.log('setting new content');
+  console.log(_frontkom_gutenberg_js__WEBPACK_IMPORTED_MODULE_2__["data"].dispatch('core/editor'));
+  _frontkom_gutenberg_js__WEBPACK_IMPORTED_MODULE_2__["data"].dispatch('core/editor').removeBlocks();
+}
+
+/***/ }),
+
 /***/ "./js/gutenberg/settings.js":
 /*!**********************************!*\
   !*** ./js/gutenberg/settings.js ***!
@@ -613,9 +710,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _gutenberg_settings__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./gutenberg/settings */ "./js/gutenberg/settings.js");
 /* harmony import */ var _lib_get_content__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./lib/get-content */ "./js/lib/get-content.js");
 /* harmony import */ var _gutenberg_init__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./gutenberg/init */ "./js/gutenberg/init.js");
-/* harmony import */ var _lib_custom_blocks__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./lib/custom-blocks */ "./js/lib/custom-blocks.js");
+/* harmony import */ var _gutenberg_remove__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./gutenberg/remove */ "./js/gutenberg/remove.js");
+/* harmony import */ var _lib_custom_blocks__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./lib/custom-blocks */ "./js/lib/custom-blocks.js");
 
  // Gutenberg imports
+
 
 
 
@@ -626,8 +725,9 @@ const Laraberg = {
   initGutenberg: _gutenberg_init__WEBPACK_IMPORTED_MODULE_4__["default"],
   getContent: _lib_get_content__WEBPACK_IMPORTED_MODULE_3__["default"],
   editor: null,
-  registerCategory: _lib_custom_blocks__WEBPACK_IMPORTED_MODULE_5__["registerCategory"],
-  registerBlock: _lib_custom_blocks__WEBPACK_IMPORTED_MODULE_5__["registerBlock"]
+  registerCategory: _lib_custom_blocks__WEBPACK_IMPORTED_MODULE_6__["registerCategory"],
+  registerBlock: _lib_custom_blocks__WEBPACK_IMPORTED_MODULE_6__["registerBlock"],
+  remove: _gutenberg_remove__WEBPACK_IMPORTED_MODULE_5__["default"]
 };
 window.Laraberg = Laraberg;
 /* harmony default export */ __webpack_exports__["default"] = (Laraberg);

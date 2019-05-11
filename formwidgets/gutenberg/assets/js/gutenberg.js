@@ -31,31 +31,51 @@
     Gutenberg.prototype.constructor = Gutenberg
 
     Gutenberg.prototype.init = function() {
-        var self = this
-        
+        this.$masterTabs = $('#pages-master-tabs')
+
         /*
          * Input must have an identifier
          */
         if (!this.$el.attr('id')) {
             this.$el.attr('id', 'element-' + Math.random().toString(36).substring(7))
         }
+        
+        if (this.options.minheight === 0){
+            var mHeight = '100%';
+        } else {
+            var mHeight = this.options.minheight + 'px';
+        }
+        /**
+         * First we need to remove old instance and create new one,
+         * gutenberg.js can't initalize multiple instances of editor on one page.
+         */
+        // if (!window.Laraberg.editor){
+            
+        // }
 
-        Laraberg.initGutenberg(this.$el.attr('id'), { minHeight: '300px', laravelFilemanager: true })
+        Laraberg.init(this.$el.attr('id'), { minHeight: mHeight, laravelFilemanager: true })
+
         this.initProxy()
     }
 
     Gutenberg.prototype.initProxy = function() {
         this.$form.on('oc.beforeRequest', this.proxy(this.onFormBeforeRequest))
+        // this.$masterTabs.on('shown.bs.tab', this.proxy(this.onTabShown))
     }
 
     /*
      * Instantly synchronizes HTML content.
-     * The onSyncContent() method (above) is involved into this call,
-     * so the resulting HTML is (optionally) beautified.
      */
     Gutenberg.prototype.onFormBeforeRequest = function(ev) {
         this.$el.val(Laraberg.getContent())
     }
+
+    /*
+     * Triggered when a tab is displayed.
+     */
+    // Gutenberg.prototype.onTabShown = function(e) {
+    //     Laraberg.remove(this.$el.attr('id'), { minHeight: '300px', laravelFilemanager: true })
+    // }
 
     // GUTENBERG PLUGIN DEFINITION
     // ============================

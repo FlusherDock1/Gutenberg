@@ -1,0 +1,43 @@
+# ===================================
+#  Form Field Definitions
+# ===================================
+
+tabs:
+    fields:
+        section_standard:
+            label: 'reazzon.gutenberg::lang.settings.tab.integrations.section_standard.name'
+            tab: 'reazzon.gutenberg::lang.settings.tab.integrations.name'
+            type: section
+            span: left
+
+        section_custom:
+            label: 'reazzon.gutenberg::lang.settings.tab.integrations.section_custom.name'
+            tab: 'reazzon.gutenberg::lang.settings.tab.integrations.name'
+            type: section
+            span: right
+
+        integration_blog:
+            label: 'reazzon.gutenberg::lang.settings.tab.integrations.blog.name'
+            tab: 'reazzon.gutenberg::lang.settings.tab.integrations.name'
+            comment: 'reazzon.gutenberg::lang.settings.tab.integrations.blog.comment'
+            type: switch
+            span: left
+
+
+        integration_good_news:
+            label: 'reazzon.gutenberg::lang.settings.tab.integrations.good_news.name'
+            tab: 'reazzon.gutenberg::lang.settings.tab.integrations.name'
+            comment: 'reazzon.gutenberg::lang.settings.tab.integrations.good_news.comment'
+            type: switch
+            span: right
+            disabled: true
+            readOnly: true
+
+        integration_static_pages:
+            label: 'reazzon.gutenberg::lang.settings.tab.integrations.static_pages.name'
+            tab: 'reazzon.gutenberg::lang.settings.tab.integrations.name'
+            comment: 'reazzon.gutenberg::lang.settings.tab.integrations.static_pages.comment'
+            type: switch
+            span: left
+            disabled: true
+            readOnly: true

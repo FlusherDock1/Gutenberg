@@ -6,6 +6,7 @@ import './../scss/laraberg.scss'
 import './gutenberg/settings'
 import getContent from './lib/get-content'
 import init from './gutenberg/init'
+import remove from './gutenberg/remove'
 import { registerBlock, registerCategory } from './lib/custom-blocks'
 
 const Laraberg = {
@@ -14,7 +15,8 @@ const Laraberg = {
   getContent: getContent,
   editor: null,
   registerCategory: registerCategory,
-  registerBlock: registerBlock
+  registerBlock: registerBlock,
+  remove: remove
 }
 
 window.Laraberg = Laraberg

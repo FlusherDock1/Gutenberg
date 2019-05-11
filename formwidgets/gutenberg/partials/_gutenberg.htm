@@ -10,9 +10,10 @@
         type="hidden"
         id="<?= $this->getId('input') ?>"
         name="<?= $name ?>"
-        value="<?= e($model->getRawContent()) ?>"
+        value="<?= e($value) ?>"
         class="form-control"
         autocomplete="off"
-        data-control="gutenberg" />
+        data-control="gutenberg"
+        data-minheight="<?= e($minheight) ?>" />
 
 <?php endif ?>
