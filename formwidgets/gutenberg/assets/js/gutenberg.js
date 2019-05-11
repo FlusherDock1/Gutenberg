@@ -31,7 +31,7 @@
     Gutenberg.prototype.constructor = Gutenberg
 
     Gutenberg.prototype.init = function() {
-        this.$masterTabs = $('#pages-master-tabs')
+        // this.$masterTabs = $('#pages-master-tabs')
 
         /*
          * Input must have an identifier
