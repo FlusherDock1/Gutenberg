@@ -3,6 +3,8 @@
 use Event;
 use System\Classes\PluginManager;
 use ReaZzon\Gutenberg\Models\Settings;
+use ReaZzon\Gutenberg\Helpers\BlockHelper;
+use ReaZzon\Gutenberg\Helpers\EmbedHelper;
 
 class Extenders 
 {
@@ -34,7 +36,17 @@ class Extenders
                     }
                 }
             });
-            
+
+            // Repalcing original content_html attribute.
+            \RainLab\Blog\Models\Post::extend(function($model) {
+                $model->bindEvent('model.getAttribute', function($attribute, $value) use ($model){
+                    if ($attribute == 'content_html') {
+                        $model->content_html = "<div class='gutenberg__content wp-embed-responsive'>".
+                            BlockHelper::renderBlocks(EmbedHelper::renderEmbeds($model->content))
+                        ."</div>";
+                    }
+                });
+            });
         }
     }
 
