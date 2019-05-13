@@ -32,11 +32,12 @@ class Plugin extends PluginBase
      */
     public function boot()
     {
-        Extenders::Blog();
+        Extenders::RainLabBlog();
+        Extenders::LovataGoodNews();
 
         // Coming soon.
         // Extenders::StaticPages();
-        // Extenders::GoodNews();
+        // 
     }
 
     /**

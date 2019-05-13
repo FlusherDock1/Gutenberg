@@ -9,7 +9,7 @@ use ReaZzon\Gutenberg\Helpers\EmbedHelper;
 class Extenders 
 {
 
-    public static function Blog()
+    public static function RainLabBlog()
     {
         if (Settings::get('integration_blog', false) && 
             PluginManager::instance()->hasPlugin('RainLab.Blog'))
@@ -41,12 +41,63 @@ class Extenders
             \RainLab\Blog\Models\Post::extend(function($model) {
                 $model->bindEvent('model.getAttribute', function($attribute, $value) use ($model){
                     if ($attribute == 'content_html') {
-                        $model->content_html = "<div class='gutenberg__content wp-embed-responsive'>".
-                            BlockHelper::renderBlocks(EmbedHelper::renderEmbeds($model->content))
+                        return "<div class='gutenberg__content wp-embed-responsive'>".
+                            BlockHelper::renderBlocks(EmbedHelper::renderEmbeds($value))
                         ."</div>";
                     }
                 });
             });
+        }
+    }
+
+    /**
+     * Lovata.GoodNews integration
+     * 
+     * DONE:
+     *      - Full static content editing support and rendring
+     * 
+     * TODO: 
+     *      - Reusable blocks rendering
+     * 
+     */
+    public static function LovataGoodNews()
+    {
+        if (Settings::get('integration_good_news', false) && 
+            PluginManager::instance()->hasPlugin('Lovata.GoodNews'))
+        {
+
+            Event::listen('backend.form.extendFields', function ($widget) {
+
+                // Only for Lovata.GoodNews Articles controller
+                if (!$widget->getController() instanceof \Lovata\GoodNews\Controllers\Articles) {
+                    return;
+                }
+
+                // Only for Lovata.GoodNews Article model
+                if (!$widget->model instanceof \Lovata\GoodNews\Models\Article) {
+                    return;
+                }
+
+                // Finding content field and changing it's type regardless whatever it already is.
+                foreach ($widget->getFields() as $field) {
+                    if ($field->fieldName === 'content'){
+                        $field->config['type']      = 'gutenberg';
+                        $field->config['widget']    = 'ReaZzon\Gutenberg\FormWidgets\Gutenberg';
+                        $field->config['minheight'] = 500;
+                    }
+                }
+            });
+
+            // Repalcing original content attribute.
+            // \Lovata\GoodNews\Models\Article::extend(function($model) {
+            //     $model->bindEvent('model.getAttribute', function($attribute, $value) use ($model){
+            //         if ($attribute == 'content') {
+            //             return "<div class='gutenberg__content wp-embed-responsive'>".
+            //                 BlockHelper::renderBlocks(EmbedHelper::renderEmbeds($value))
+            //             ."</div>";
+            //         }
+            //     });
+            // });
         }
     }
 
@@ -79,4 +130,6 @@ class Extenders
             ]);
         });
     }
+
+
 }
