@@ -61,7 +61,7 @@ All current block are from standart [Gutenberg.js](https://github.com/front/gute
 - ~~Reusable blocks aren't working~~ **DONE in 1.0.8 update**
 - ~~Removing WP widgets~~ **DONE in 1.0.9 update**
 - ~~RainLab.Blog integration~~ **DONE in 1.1.0 update**
-- Lovata.GoodNews integration
+- ~~Lovata.GoodNews integration~~ **DONE in 1.1.2 update**
 - RainLab.StaticPages integration
 
 **Later work:**
