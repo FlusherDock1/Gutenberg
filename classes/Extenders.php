@@ -50,16 +50,6 @@ class Extenders
         }
     }
 
-    /**
-     * Lovata.GoodNews integration
-     * 
-     * DONE:
-     *      - Full static content editing support and rendring
-     * 
-     * TODO: 
-     *      - Reusable blocks rendering
-     * 
-     */
     public static function LovataGoodNews()
     {
         if (Settings::get('integration_good_news', false) && 
@@ -89,15 +79,13 @@ class Extenders
             });
 
             // Repalcing original content attribute.
-            // \Lovata\GoodNews\Models\Article::extend(function($model) {
-            //     $model->bindEvent('model.getAttribute', function($attribute, $value) use ($model){
-            //         if ($attribute == 'content') {
-            //             return "<div class='gutenberg__content wp-embed-responsive'>".
-            //                 BlockHelper::renderBlocks(EmbedHelper::renderEmbeds($value))
-            //             ."</div>";
-            //         }
-            //     });
-            // });
+            \Lovata\GoodNews\Classes\Item\ArticleItem::extend(function($elementItem) {
+                $elementItem->addDynamicMethod('getContentAttribute', function() use ($elementItem){
+                    return "<div class='gutenberg__content wp-embed-responsive'>".
+                        BlockHelper::renderBlocks(EmbedHelper::renderEmbeds($elementItem->getAttribute('content')))
+                    ."</div>";
+                });
+            });
         }
     }
 

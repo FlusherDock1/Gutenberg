@@ -30,8 +30,6 @@ tabs:
             comment: 'reazzon.gutenberg::lang.settings.tab.integrations.good_news.comment'
             type: switch
             span: right
-            disabled: true
-            readOnly: true
 
         integration_static_pages:
             label: 'reazzon.gutenberg::lang.settings.tab.integrations.static_pages.name'

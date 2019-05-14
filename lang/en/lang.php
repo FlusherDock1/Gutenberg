@@ -25,7 +25,9 @@ return [
                 ],
                 'good_news' => [
                     'name' => 'Lovata.GoodNews Integration',
-                    'comment' => 'Coming soon.',
+                    'comment' => 'Switching default visual editor in post editing form to Gutenberg.
+                                  Attention! If you have posts that are created via another WISYWIG, Gutenberg will not work with it! And all your posts will look broken.
+                                  I\'m not recommending switching visual editor on already working web-site.'
                 ],
                 'section_standard' => [
                     'name' => 'Standard plugins'

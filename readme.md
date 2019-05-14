@@ -17,9 +17,9 @@ All current block are from standart [Gutenberg.js](https://github.com/front/gute
  
 **Working integrations:**
 - [RainLab.Blog](https://octobercms.com/plugin/rainlab-blog)
+- [Lovata.GoodNews](https://octobercms.com/plugin/lovata-goodnews)
 
 **Coming Soon integrations:**
-- [Lovata.GoodNews](https://octobercms.com/plugin/lovata-goodnews)
 - [RainLab.StaticPages](https://octobercms.com/plugin/rainlab-pages)
 
 **Working:**
