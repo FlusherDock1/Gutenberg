@@ -4,6 +4,24 @@
 @import './wordpress.scss';
 @import './wordpress-overrides.scss';
 
+.gutenberg__editor{
+  .edit-post-layout{
+    .edit-post-sidebar{
+      overflow: unset;
+      .edit-post-sidebar__panel-tabs{
+        top: 50px;
+      }
+      .components-panel{
+        overflow: unset;
+        top: 100px;
+        margin: 0;
+        display: block;
+        position: sticky;
+      }
+    }
+  }
+}
+
 .laraberg__editor {
   width: 100%;
   // overflow: hidden;

@@ -20569,6 +20569,18 @@ body.toolbar-tray-open.toolbar-vertical.toolbar-fixed {
     top: 0;
     margin-left: 0; } }
 
+.gutenberg__editor .edit-post-layout .edit-post-sidebar {
+  overflow: unset; }
+  .gutenberg__editor .edit-post-layout .edit-post-sidebar .edit-post-sidebar__panel-tabs {
+    top: 50px; }
+  .gutenberg__editor .edit-post-layout .edit-post-sidebar .components-panel {
+    overflow: unset;
+    top: 100px;
+    margin: 0;
+    display: block;
+    position: -webkit-sticky;
+    position: sticky; }
+
 .laraberg__editor {
   width: 100%;
   border: 1px solid #e2e4e7; }

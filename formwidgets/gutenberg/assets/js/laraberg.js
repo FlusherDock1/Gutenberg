@@ -2984,7 +2984,7 @@ define(String.prototype, "padRight", "".padEnd);
 "pop,reverse,shift,keys,values,entries,indexOf,every,some,forEach,map,filter,find,findIndex,includes,join,slice,concat,push,splice,unshift,sort,lastIndexOf,reduce,reduceRight,copyWithin,fill".split(",").forEach(function (key) {
   [][key] && define(Array, key, Function.call.bind([][key]));
 });
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../../webpack/buildin/global.js */ "./node_modules/webpack/buildin/global.js?c8ba")))
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../../webpack/buildin/global.js */ "./node_modules/webpack/buildin/global.js")))
 
 /***/ }),
 
@@ -13971,7 +13971,7 @@ module.exports = __webpack_require__(/*! ./modules/_core */ "./node_modules/babe
   typeof self === "object" ? self : this
 );
 
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../../../webpack/buildin/global.js */ "./node_modules/webpack/buildin/global.js?c8ba")))
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../../../webpack/buildin/global.js */ "./node_modules/webpack/buildin/global.js")))
 
 /***/ }),
 
@@ -14203,9 +14203,9 @@ process.umask = function() { return 0; };
 /***/ }),
 
 /***/ "./node_modules/punycode/punycode.js":
-/*!************************************************************************************************************************************************************!*\
-  !*** C:/Users/rzzsa/Documents/OSPanel/domains/laraberg/plugins/reazzon/gutenberg/formwidgets/gutenberg/assets/resources/node_modules/punycode/punycode.js ***!
-  \************************************************************************************************************************************************************/
+/*!*******************************************!*\
+  !*** ./node_modules/punycode/punycode.js ***!
+  \*******************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -14729,14 +14729,14 @@ process.umask = function() { return 0; };
 
 }(this));
 
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../webpack/buildin/module.js */ "./node_modules/webpack/buildin/module.js")(module), __webpack_require__(/*! ./../webpack/buildin/global.js */ "./node_modules/webpack/buildin/global.js?cd00")))
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../webpack/buildin/module.js */ "./node_modules/webpack/buildin/module.js")(module), __webpack_require__(/*! ./../webpack/buildin/global.js */ "./node_modules/webpack/buildin/global.js")))
 
 /***/ }),
 
 /***/ "./node_modules/querystring-es3/decode.js":
-/*!*****************************************************************************************************************************************************************!*\
-  !*** C:/Users/rzzsa/Documents/OSPanel/domains/laraberg/plugins/reazzon/gutenberg/formwidgets/gutenberg/assets/resources/node_modules/querystring-es3/decode.js ***!
-  \*****************************************************************************************************************************************************************/
+/*!************************************************!*\
+  !*** ./node_modules/querystring-es3/decode.js ***!
+  \************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -14830,9 +14830,9 @@ var isArray = Array.isArray || function (xs) {
 /***/ }),
 
 /***/ "./node_modules/querystring-es3/encode.js":
-/*!*****************************************************************************************************************************************************************!*\
-  !*** C:/Users/rzzsa/Documents/OSPanel/domains/laraberg/plugins/reazzon/gutenberg/formwidgets/gutenberg/assets/resources/node_modules/querystring-es3/encode.js ***!
-  \*****************************************************************************************************************************************************************/
+/*!************************************************!*\
+  !*** ./node_modules/querystring-es3/encode.js ***!
+  \************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -14927,9 +14927,9 @@ var objectKeys = Object.keys || function (obj) {
 /***/ }),
 
 /***/ "./node_modules/querystring-es3/index.js":
-/*!****************************************************************************************************************************************************************!*\
-  !*** C:/Users/rzzsa/Documents/OSPanel/domains/laraberg/plugins/reazzon/gutenberg/formwidgets/gutenberg/assets/resources/node_modules/querystring-es3/index.js ***!
-  \****************************************************************************************************************************************************************/
+/*!***********************************************!*\
+  !*** ./node_modules/querystring-es3/index.js ***!
+  \***********************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -14943,9 +14943,9 @@ exports.encode = exports.stringify = __webpack_require__(/*! ./encode */ "./node
 /***/ }),
 
 /***/ "./node_modules/url/url.js":
-/*!**************************************************************************************************************************************************!*\
-  !*** C:/Users/rzzsa/Documents/OSPanel/domains/laraberg/plugins/reazzon/gutenberg/formwidgets/gutenberg/assets/resources/node_modules/url/url.js ***!
-  \**************************************************************************************************************************************************/
+/*!*********************************!*\
+  !*** ./node_modules/url/url.js ***!
+  \*********************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -15687,9 +15687,9 @@ Url.prototype.parseHost = function() {
 /***/ }),
 
 /***/ "./node_modules/url/util.js":
-/*!***************************************************************************************************************************************************!*\
-  !*** C:/Users/rzzsa/Documents/OSPanel/domains/laraberg/plugins/reazzon/gutenberg/formwidgets/gutenberg/assets/resources/node_modules/url/util.js ***!
-  \***************************************************************************************************************************************************/
+/*!**********************************!*\
+  !*** ./node_modules/url/util.js ***!
+  \**********************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -15714,38 +15714,7 @@ module.exports = {
 
 /***/ }),
 
-/***/ "./node_modules/webpack/buildin/global.js?c8ba":
-/*!************************************************!*\
-  !*** ./node_modules/webpack/buildin/global.js ***!
-  \************************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-var g;
-
-// This works in non-strict mode
-g = (function() {
-	return this;
-})();
-
-try {
-	// This works if eval is allowed (see CSP)
-	g = g || new Function("return this")();
-} catch (e) {
-	// This works if the window reference is available
-	if (typeof window === "object") g = window;
-}
-
-// g can still be undefined, but nothing to do about it...
-// We return undefined, instead of nothing here, so it's
-// easier to handle this case. if(!global) { ...}
-
-module.exports = g;
-
-
-/***/ }),
-
-/***/ "./node_modules/webpack/buildin/global.js?cd00":
+/***/ "./node_modules/webpack/buildin/global.js":
 /*!***********************************!*\
   !*** (webpack)/buildin/global.js ***!
   \***********************************/
