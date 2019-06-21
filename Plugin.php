@@ -21,7 +21,8 @@ class Plugin extends PluginBase
             'name'        => 'reazzon.gutenberg::lang.plugin.name',
             'description' => 'reazzon.gutenberg::lang.plugin.description',
             'author'      => 'Nick Khaetsky',
-            'icon'        => 'icon-pencil-square-o'
+            'icon'        => 'icon-pencil-square-o',
+            'homepage'    => 'https://github.com/FlusherDock1/Gutenberg' 
         ];
     }
     
@@ -61,7 +62,7 @@ class Plugin extends PluginBase
     {
         return [
             'reazzon.gutenberg.access_settings' => [
-                'tab' => 'reazzon.gutenberg::lang.plugin.name',
+                'tab'   => 'reazzon.gutenberg::lang.plugin.name',
                 'label' => 'reazzon.gutenberg::lang.permission.access_settings'
             ],
         ];
