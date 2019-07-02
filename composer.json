@@ -1,6 +1,6 @@
 {
     "name": "reazzon/gutenberg",
-    "minimum-stability": "Drag&Drop richeditor with blocks for OctoberCMS backend forms.",
+    "description": "Drag&Drop richeditor with blocks for OctoberCMS backend forms.",
     "type": "october-plugin",
     "license": "MIT",
     "keywords": [
