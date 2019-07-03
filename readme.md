@@ -79,6 +79,12 @@ Install plugin by OctoberCMS plugin updater.
 
 Go to Settings –> Updates&Plugins find Gutenberg in plugin search. Click on icon and install it.
 
+or via Composer
+
+```
+composer require reazzon/gutenberg
+```
+
 ## Usage
 
 This plugin works only by implementing Gutenberg behavior in your model. 
