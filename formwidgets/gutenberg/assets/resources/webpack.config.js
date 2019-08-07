@@ -1,16 +1,22 @@
 const path = require('path')
-
-const CopyWebpackPlugin = require('copy-webpack-plugin')
+const webpack = require('webpack')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
+
+const externals = {
+  react: 'React',
+  'react-dom': 'ReactDOM',
+  moment: 'moment'
+}
 
 module.exports = {
   mode: process.env.NODE_ENV,
-  entry: './js/laraberg.js',
+  entry: './src/resources/js/laraberg.js',
   output: {
     filename: 'laraberg.js',
-    path: path.resolve(__dirname, '../js')
+    path: path.resolve(__dirname, 'public/js')
   },
   devtool: 'source-map',
+  externals: externals,
   module: {
     rules: [
       {
@@ -34,11 +40,6 @@ module.exports = {
     ]
   },
   plugins: [
-    new MiniCssExtractPlugin({ filename: '../css/laraberg.css' }),
-    new CopyWebpackPlugin([
-      { from: 'node_modules/tinymce/plugins', to: 'plugins' },
-      { from: 'node_modules/tinymce/themes', to: 'themes' },
-      { from: 'node_modules/tinymce/skins', to: 'skins' }
-    ], {})
+    new MiniCssExtractPlugin({ filename: '../css/laraberg.css' })
   ]
 }

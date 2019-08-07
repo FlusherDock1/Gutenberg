@@ -4,8 +4,20 @@ import { editorSettings } from '../gutenberg/settings'
 import * as Notices from '../lib/notices'
 
 let routePrefix
+let searchCb
 
+/**
+ * Requests Gutenberg can make.
+ * Each request has a method and a regex to match with the URL provided by Gutenberg.
+ * When the matchPath() function matches Gutenberg's request with one of the requests in this object
+ * the 'run' function gets executed.
+ */
 const requests = {
+  getAutosaves: {
+    method: 'GET',
+    regex: /\/wp\/v2\/(.*)\/autosaves\?(.*)/g,
+    run: getAutosaves
+  },
   getBlock: {
     method: 'GET',
     regex: /\/wp\/v2\/blocks\/(\d*)/g,
@@ -18,7 +30,7 @@ const requests = {
   },
   postBlocks: {
     method: 'POST',
-    regex: /\/wp\/v2\/blocks.*/g,
+    regex: /\/wp\/v2\/blocks($|[?].*)/g,
     run: postBlocks
   },
   putBlock: {
@@ -31,10 +43,20 @@ const requests = {
     regex: /\/wp\/v2\/blocks\/(\d*)/g,
     run: deleteBlock
   },
+  optionsBlocks: {
+    method: 'OPTIONS',
+    regex: /\/wp\/v2\/blocks.*/g,
+    run: optionsBlocks
+  },
   getEmbed: {
     method: 'GET',
     regex: /\/oembed\/1\.0\/proxy\?(.*)/g,
     run: getEmbed
+  },
+  postMedia: {
+    method: 'POST',
+    regex: /\/wp\/v2\/media/g,
+    run: postMedia
   },
   optionsMedia: {
     method: 'OPTIONS',
@@ -43,13 +65,23 @@ const requests = {
   },
   getPage: {
     method: 'GET',
-    regex: /\/wp\/v2\/pages\/(\d*)/g,
+    regex: /\/wp\/v2\/pages\/(\d*)($|[?].*)/g,
     run: getPage
   },
   putPage: {
     method: 'PUT',
     regex: /\/wp\/v2\/pages\/(\d*)/g,
     run: putPage
+  },
+  postPage: {
+    method: 'POST',
+    regex: /\/wp\/v2\/pages\/(\d*)/g,
+    run: postPage
+  },
+  getSearch: {
+    method: 'GET',
+    regex: /\/wp\/v2\/search\?search=([^&]*)&per_page=([^&]*)&type=([^&]*)/g,
+    run: getSearch
   },
   getTaxonomies: {
     method: 'GET',
@@ -73,8 +105,13 @@ const requests = {
   },
   getTypes: {
     method: 'GET',
-    regex: /\/wp\/v2\/types\?(.*)/g,
+    regex: /\/wp\/v2\/types($|[?].*)/g,
     run: getTypes
+  },
+  getUser: {
+    method: 'GET',
+    regex: /\/wp\/v2\/users\/me($|[?].*)/g,
+    run: getUser
   },
   getUsers: {
     method: 'GET',
@@ -83,45 +120,126 @@ const requests = {
   }
 }
 
+async function getAutosaves () {
+  return []
+}
+
+/**
+ * Get a reusable block
+ * @param {Object} options
+ * @param {Array} matches
+ */
 async function getBlock (options, matches) {
-  let id = matches[1]
-  let response = await axios.get(`${routePrefix}/blocks/${id}`)
-  return response.data
+  // Because of a bug an OPTIONS request to specific resources (by ID) are sent as GET requests
+  // those requests contain a parse property that is set to false
+  if (options.parse === false) {
+    return {
+      headers: {
+        get: value => {
+          if (value === 'allow') {
+            return ['GET', 'POST', 'PUT', 'DELETE']
+          }
+        }
+      }
+    }
+  } else {
+    const id = matches[1]
+    const response = await axios.get(`${routePrefix}/blocks/${id}`)
+    return response.data
+  }
 }
 
+/**
+ * Get all reusable blocks
+ */
 async function getBlocks () {
-  let response = await axios.get(`${routePrefix}/blocks`)
+  const response = await axios.get(`${routePrefix}/blocks`)
   return response.data
 }
 
+/**
+ * Create a reusable block
+ * @param {Object} options
+ */
 async function postBlocks (options) {
-  let response = await axios.post(`${routePrefix}/blocks`, options.data)
+  const response = await axios.post(`${routePrefix}/blocks`, options.data)
   return response.data
 }
 
+/**
+ * Update a reusable block
+ * @param {Object} options
+ * @param {Array} matches
+ */
 async function putBlock (options, matches) {
-  let id = matches[1]
-  let response = await axios.put(`${routePrefix}/blocks/${id}`, options.data)
+  const id = matches[1]
+  const response = await axios.put(`${routePrefix}/blocks/${id}`, options.data)
   return response.data
 }
 
+/**
+ * Delete a reusable block
+ * @param {Object} options
+ * @param {Array} matches
+ */
 async function deleteBlock (options, matches) {
-  let id = matches[1]
-  let response = await axios.delete(`${routePrefix}/blocks/${id}`)
+  const id = matches[1]
+  const response = await axios.delete(`${routePrefix}/blocks/${id}`)
   return response.data
 }
 
+/**
+ * Options request for blocks
+ * @param {Object} options
+ * @param {Array} matches
+ */
+async function optionsBlocks (options, matches) {
+  return {
+    headers: {
+      get: value => {
+        if (value === 'allow') {
+          return ['GET', 'POST', 'PUT', 'DELETE']
+        }
+      }
+    }
+  }
+}
+
+/**
+ * Get OEmbed HTML
+ * @param {Object} options
+ * @param {Array} matches
+ */
 async function getEmbed (options, matches) {
-  let response = await axios.get(`${routePrefix}/oembed?${matches[1]}`)
+  const response = await axios.get(`${routePrefix}/oembed?${matches[1]}`)
   return response.data
 }
 
+/**
+ * Handle unsupported media upload request
+ */
+async function postMedia () {
+  Notices.error('Drag & drop file uploads are not supported yet.')
+  // We need to return those values to prevent additional error messages
+  return {
+    caption: {},
+    title: {},
+    description: {}
+  }
+}
+
+/**
+ * Get media mockdata
+ */
 async function optionsMedia () {
   return MockData.media
 }
 
+/**
+ * Get page from mockdata and target value
+ */
 async function getPage () {
-  let content = document.getElementById(editorSettings.target).value || ''
+  const content = document.getElementById(editorSettings.target).value || ''
   return {
     ...MockData.page,
     content: {
@@ -130,6 +248,10 @@ async function getPage () {
   }
 }
 
+/**
+ * Mock POST page request
+ * @param {Object} options
+ */
 export async function postPage (options) {
   return {
     ...MockData.page,
@@ -139,6 +261,10 @@ export async function postPage (options) {
   }
 }
 
+/**
+ * Mock PUT page request
+ * @param {Object} options
+ */
 export async function putPage (options) {
   return {
     ...MockData.page,
@@ -148,40 +274,96 @@ export async function putPage (options) {
   }
 }
 
-async function getTaxonomies () {
-  return 'ok'
+/**
+ * Returns searchCb result or an empty array
+ * @param {Object} options
+ * @param {Array} matches
+ * @returns {Array}
+ */
+export async function getSearch (options, matches) {
+  if (!searchCb) return []
+
+  const search = matches[1]
+  const perPage = matches[2]
+  const type = matches[3]
+  const result = await searchCb(search, perPage, type)
+
+  if (Array.isArray(result)) {
+    return result
+  }
+
+  Notices.error('Search callback must return an Array.')
+  return []
 }
 
+/**
+ * Mock GET taxonomies request
+ */
+async function getTaxonomies (options, matches) {
+  return []
+}
+
+/**
+ * Mock themes request
+ */
 async function getThemes () {
   return MockData.themes
 }
 
+/**
+ * Mock post types block request
+ */
 async function getTypeBlock () {
   return MockData.types.block
 }
 
+/**
+ * Mock post types page request
+ */
 async function getTypePage () {
   return MockData.types.page
 }
 
+/**
+ * Mock post types request
+ */
 async function getTypes () {
   return MockData.types
 }
 
-async function getUsers () {
-  return 'ok'
+/**
+ * Mock user request
+ */
+async function getUser () {
+  return MockData.user
 }
 
+/**
+ * Mock users request
+ */
+function getUsers () {
+  return new Promise(resolve => {
+    resolve([MockData.user])
+  })
+}
+
+/**
+ * Matches a Gutenberg request to the available requests in the requests variable
+ * @param {Object} options - options object provided by Gutenberg
+ * @returns {Promsie} - promise containing results
+ */
 function matchPath (options) {
   let promise
   Object.keys(requests).forEach((key) => {
-    let request = requests[key]
+    const request = requests[key]
     // Reset lastIndex so regex starts matching from the first character
     request.regex.lastIndex = 0
-    let matches = request.regex.exec(options.path)
+    const matches = request.regex.exec(options.path)
+
+    if (options.headers && options.headers['X-HTTP-Method-Override']) options.method = options.headers['X-HTTP-Method-Override']
+
     if ((options.method === request.method || (!options.method && request.method === 'GET')) && matches && matches.length > 0) {
       promise = request.run(options, matches)
-        .catch(() => Notices.error('Could not complete request.'))
     }
   })
 
@@ -196,19 +378,24 @@ function matchPath (options) {
           status: 404
         }
       }))
-    }).catch(error => {
-      Notices.error(`${error.message} ${error.data.data.path}`)
     })
   }
+
   return promise
 }
 
 export default function apiFetch (options) {
-  return matchPath(options)
+  const result = matchPath(options)
+  return result.then(res => {
+    return res
+  }).catch(error => {
+    Notices.error(`${error.message} - ${error.data.data.path}`)
+  })
 }
 
 export function configureAPI (options) {
   routePrefix = options.prefix || '/laraberg'
+  searchCb = options.searchCb || null
 }
 
 class FetchError extends Error {
