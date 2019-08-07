@@ -2,7 +2,7 @@
   "name": "laraberg",
   "version": "1.0.0-rc.1",
   "description": "A Gutenberg implementation for Laravel",
-  "main": "src/resources/laraberg.js",
+  "main": "js/laraberg.js",
   "directories": {
     "test": "tests"
   },
