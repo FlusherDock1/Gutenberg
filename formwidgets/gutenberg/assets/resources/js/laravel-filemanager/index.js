@@ -3,14 +3,16 @@ export default function (config) {
   const { Component } = element
 
   class LaravelFilemanager extends Component {
-    constructor (props) {
-      super(props)
+    constructor () {
+      super(...arguments)
+      this.openMediaManager = this.openMediaManager.bind(this)
+      this.onSelect = this.onSelect.bind(this)
       this.state = {
         media: []
       }
     }
 
-    getMediaType = (path) => {
+    getMediaType (path) {
       const video = ['mp4', 'm4v', 'mov', 'wmv', 'avi', 'mpg', 'ogv', '3gp', '3g2']
       const audio = ['mp3', 'm4a', 'ogg', 'wav']
       const extension = path.split('.').slice(-1).pop()
@@ -23,34 +25,51 @@ export default function (config) {
       }
     }
 
-    onSelect = (url, path) => {
+    onSelect (items) {
       this.props.value = null
       const { multiple, onSelect } = this.props
-      const media = {
-        url: url,
-        type: this.getMediaType(path)
+
+      var path, publicUrl
+      for (var i = 0, len = items.length; i < len; i++) {
+        path = items[i].path
+        publicUrl = items[i].publicUrl
+
+        const media = {
+          url: publicUrl,
+          type: this.getMediaType(path)
+        }
+
+        if (multiple) {
+          this.state.media.push(media)
+        } else if (items.length > 1) {
+          $.oc.alert($.oc.lang.get('mediamanager.invalid_file_single_insert'))
+          return
+        }
+
+        onSelect(multiple ? this.state.media : media)
       }
-      if (multiple) { this.state.media.push(media) }
-      onSelect(multiple ? this.state.media : media)
     }
 
-    openModal = () => {
-      let type = 'file'
-      if (this.props.allowedTypes.length === 1 && this.props.allowedTypes[0] === 'image') {
-        type = 'image'
-      }
-      this.openLFM(type, this.onSelect)
-    }
+    openMediaManager () {
+      const media = new $.oc.mediaManager.popup({
+        alias: 'ocmediamanager',
+        cropAndInsertButton: true,
+        onInsert: (items) => {
+          if (!items.length) {
+            $.oc.alert($.oc.lang.get('mediamanager.invalid_file_empty_insert'))
+            return
+          }
 
-    openLFM = (type, cb) => {
-      let routePrefix = (config && config.prefix) ? config.prefix : '/laravel-filemanager'
-      window.open(routePrefix + '?type=' + type, 'FileManager', 'width=900,height=600')
-      window.SetUrl = cb
+          this.onSelect(items)
+
+          media.hide()
+        }
+      })
     }
 
     render () {
       const { render } = this.props
-      return render({ open: this.openModal })
+      return render({ open: this.openMediaManager })
     }
   }
 

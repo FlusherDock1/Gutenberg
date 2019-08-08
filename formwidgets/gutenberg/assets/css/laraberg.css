@@ -11012,7 +11012,6 @@ body.block-editor-page {
 
 .laraberg__editor {
   width: auto;
-  overflow: hidden;
   border: 1px solid #e2e4e7;
   box-sizing: border-box;
   min-height: 400px;
@@ -11037,11 +11036,21 @@ body.block-editor-page {
   .laraberg__editor .edit-post-sidebar {
     position: absolute;
     top: 56px;
-    min-height: calc(400px - 56px); }
-    .laraberg__editor .edit-post-sidebar .edit-post-sidebar__panel-tabs ul {
-      list-style: none;
+    min-height: calc(400px - 56px);
+    overflow: unset; }
+    .laraberg__editor .edit-post-sidebar .edit-post-sidebar__panel-tabs {
+      top: 50px; }
+      .laraberg__editor .edit-post-sidebar .edit-post-sidebar__panel-tabs ul {
+        list-style: none;
+        margin: 0;
+        padding: 0; }
+    .laraberg__editor .edit-post-sidebar .components-panel {
+      overflow: unset;
+      top: 100px;
       margin: 0;
-      padding: 0; }
+      display: block;
+      position: -webkit-sticky;
+      position: sticky; }
   .laraberg__editor .editor-media-placeholder__media-library-button {
     margin-bottom: 0.5rem; }
   .laraberg__editor .components-placeholder {
@@ -11093,6 +11102,8 @@ body.block-editor-page {
   .laraberg__editor .laraberg-sidebar-content {
     padding: 15px;
     margin: unset; }
+  .laraberg__editor .wp-block {
+    max-width: 1000px; }
 
 .gutenberg__content .alignleft {
   float: left;

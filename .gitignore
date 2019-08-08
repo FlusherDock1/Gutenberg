@@ -1,6 +1,7 @@
 /vendor
 /formwidgets/gutenberg/assets/resources/node_modules
 /formwidgets/gutenberg/assets/resources/package-lock.json
+/formwidgets/gutenberg/assets/resources/gutenberg
 
 composer.lock
 .DS_Store
