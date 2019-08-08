@@ -1,22 +1,10 @@
-import { configureAPI } from '../api/api-fetch'
-import configureEditor, { clearSubmitFromButtons } from '../lib/configure-editor'
-import { domReady, data, editPost } from '@frontkom/gutenberg-js'
 import { editorSettings, overridePost } from './settings'
+import { configureAPI } from '../api/api-fetch'
+import configureEditor from '../lib/configure-editor'
 import { elementReady } from '../lib/element-ready'
 
-// Setup sidebar events
-window.customGutenberg = {
-  events: {
-    'OPEN_GENERAL_SIDEBAR': async (action, store) => {
-      // console.log('OPEN_GENERAL_SIDEBAR', action, store)
-      await elementReady('.edit-post-sidebar')
-      clearSubmitFromButtons()
-    },
-    'CLOSE_GENERAL_SIDEBAR': async (action, store) => {
-      // console.log('CLOSE_GENERAL_SIDEBAR', action, store)
-    }
-  }
-}
+const { blocks, data, domReady, editPost } = window.wp
+const { unregisterBlockType, registerBlockType, getBlockType } = blocks
 
 /**
  * Initialize the Gutenberg editor
@@ -24,11 +12,22 @@ window.customGutenberg = {
  */
 export default function init (target, options = {}) {
   configureAPI(options)
+
+  // Disable publish sidebar
+  data.dispatch('core/editor').disablePublishSidebar()
+
+  // Disable tips
+  data.dispatch('core/nux').disableTips()
+
   window._wpLoadGutenbergEditor = new Promise(function (resolve) {
     domReady(async () => {
       const larabergEditor = createEditorElement(target)
-      resolve(editPost.initializeEditor(larabergEditor.id, 'page', 0, editorSettings, overridePost))
-      removeWpStock()
+      try {
+        resolve(editPost.initializeEditor(larabergEditor.id, 'page', 1, editorSettings, overridePost))
+        fixReusableBlocks()
+      } catch (error) {
+        console.error(error)
+      }
       await elementReady('.edit-post-layout')
       configureEditor(options)
     })
@@ -47,24 +46,20 @@ function createEditorElement (target) {
   editor.classList.add('laraberg__editor', 'gutenberg__editor', 'block-editor__container', 'wp-embed-responsive')
   element.parentNode.insertBefore(editor, element)
   element.hidden = true
+
   editorSettings.target = target
   window.Laraberg.editor = editor
 
   return editor
 }
 
-/**
- * Removes stock WP widgets category and other wp blocks.
- */
-function removeWpStock () {
-  // Removing Widgets category
-  const currentCategories = data.select('core/blocks').getCategories().filter(item => item.slug !== "widgets")
-  data.dispatch('core/blocks').setCategories([...currentCategories])
-
-  // Removing stock WP blocks, that aren't working outside of WP.
-  data.dispatch('core/blocks').removeBlockTypes([
-    'core/nextpage',
-    'core/more',
-    'core/freeform'
-  ])
+function fixReusableBlocks () {
+  const coreBlock = getBlockType('core/block')
+  unregisterBlockType('core/block')
+  coreBlock.attributes = {
+    ref: {
+      type: 'number'
+    }
+  }
+  registerBlockType('core/block', coreBlock)
 }

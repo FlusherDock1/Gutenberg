@@ -1,19 +1,36 @@
 import addQueryArgs from './add-query-args'
 import apiFetch from '../api/api-fetch'
 
-window.wp = {
-  apiFetch,
-  url: { addQueryArgs }
-}
-
 window.userSettings = {
-  uid: 2 // Among other things, this uid is used to identify and store editor user preferences in localStorage
+  secure: '',
+  time: 1234567,
+  uid: 1
 }
 
 // set your root path
 window.wpApiSettings = {
-  root: '/'
+  root: window.location.origin + '/',
+  nonce: '1234567890',
+  versionString: 'wp/v2'
 }
+
+// postboxes
+window.postboxes = window.postboxes || {
+  add_postbox_toggles: (page, args) => {
+    //
+  }
+}
+
+window.wp.url = { ...window.wp.url, addQueryArgs }
+
+const {
+  use,
+  createRootURLMiddleware,
+  setFetchHandler
+} = window.wp.apiFetch
+
+use(createRootURLMiddleware(window.wpApiSettings.root))
+setFetchHandler(apiFetch)
 
 // Some editor settings
 export const editorSettings = {
@@ -27,13 +44,11 @@ export const editorSettings = {
   titlePlaceholder: 'Add title',
   bodyPlaceholder: 'Write your story',
   isRTL: false,
+  hasPermissionsToManageWidgets: true,
   postLock: {
     isLocked: false
   },
-  autosaveInterval: 10,
-  canAutosave: false, // to disable Editor Autosave featured (default: true)
-  canPublish: false, // to disable Editor Publish featured (default: true)
-  canSave: false // to disable Editor Save featured (default: true)    };
+  autosaveInterval: 9999
 }
 
 // Post properties to override

@@ -1,15 +1,24 @@
-import { data } from '@frontkom/gutenberg-js'
+// import { data } from '@frontkom/gutenberg-js'
 import { editorSettings } from '../gutenberg/settings'
 import { elementRendered } from './element-ready'
-import setupLaravelFilemanager from '../laravel-filemanager/laravel-filemanager'
+import registerSidebar from '../sidebar/sidebar'
+import setupLaravelFilemanager from '../laravel-filemanager'
+import setupMockFilemanager from '../mock-file-uploader'
+import setupActions from './actions'
+
+const { data } = window.wp
 
 /**
  * Configures the editor according to the provided options object
  * @param {Object} options
  */
 export default function configureEditor (options) {
-  setupSubmit(editorSettings.target)
+  setupActions()
   setupMedia(options)
+  setupSidebar(options)
+  setupSubmit(editorSettings.target)
+  disableWPBlocks()
+  removeElements()
   if (options.maxHeight) { setMaxHeight(options.maxHeight) }
   if (options.minHeight) { setMinHeight(options.minHeight) }
   if (options.height) { setHeight(options.height) }
@@ -19,10 +28,40 @@ export default function configureEditor (options) {
  * Set all editor button types to 'button' to prevent submitting the form
  */
 export function clearSubmitFromButtons () {
-  let buttons = document.getElementById('laraberg__editor').getElementsByTagName('button')
-  if (buttons.length > 0) {
-    Array.from(buttons).forEach(button => { button.type = 'button' })
-  }
+  // Add button selectors here if they should keep submit type
+  const whitelist = [
+    '.reusable-block-edit-panel button'
+  ]
+
+  const whitelistString = whitelist.reduce((string, item) => {
+    if (string !== '') {
+      string = `${string}, `
+    }
+    return `${string}.laraberg__editor ${item}`
+  }, '')
+
+  elementRendered('.laraberg__editor button', (el) => {
+    if (document.querySelector(whitelistString)) return
+    el.type = 'button'
+  })
+}
+
+function disableWPBlocks () {
+  data.dispatch('core/blocks').removeBlockTypes([
+    'core/archives',
+    'core/categories',
+    'core/freeform',
+    'core/latest-comments',
+    'core/latest-posts',
+    'core/more',
+    'core/nextpage',
+    'core/page-break',
+    'core/shortcode',
+    'core/calendar',
+    'core/rss',
+    'core/search',
+    'core/tag-cloud'
+  ])
 }
 
 /**
@@ -30,8 +69,12 @@ export function clearSubmitFromButtons () {
  * @param {String} maxHeight css value for max-height
  */
 function setMaxHeight (maxHeight) {
-  const contentContainer = window.Laraberg.editor.querySelector('.edit-post-layout__content')
-  contentContainer.style.maxHeight = maxHeight
+  const editor = window.Laraberg.editor
+  editor.style.maxHeight = maxHeight
+
+  elementRendered('.edit-post-layout__content', (el) => {
+    el.style.minHeight = `calc(${maxHeight} - 56px)`
+  })
 }
 
 /**
@@ -39,8 +82,12 @@ function setMaxHeight (maxHeight) {
  * @param {String} minHeight css value for min-height
  */
 function setMinHeight (minHeight) {
-  const contentContainer = window.Laraberg.editor.querySelector('.edit-post-layout__content')
-  contentContainer.style.minHeight = minHeight
+  const editor = window.Laraberg.editor
+  editor.style.minHeight = minHeight
+
+  elementRendered('.edit-post-sidebar', (el) => {
+    el.style.minHeight = `calc(${minHeight} - 56px)`
+  })
 }
 
 /**
@@ -48,8 +95,9 @@ function setMinHeight (minHeight) {
  * @param {String} height css value for height
  */
 function setHeight (height) {
-  const contentContainer = window.Laraberg.editor.querySelector('.edit-post-layout__content')
-  contentContainer.style.height = height
+  const editor = window.Laraberg.editor
+  editor.classList.add('fixed-height')
+  editor.style.height = height
 }
 
 /**
@@ -61,9 +109,18 @@ function setupMedia (options) {
   if (options.laravelFilemanager) {
     setupLaravelFilemanager(options.laravelFilemanager)
   } else {
-    data.dispatch('core/blocks').removeBlockTypes('core/cover')
-    data.dispatch('core/blocks').removeBlockTypes('core/gallery')
-    data.dispatch('core/blocks').removeBlockTypes('core/media-text')
+    setupMockFilemanager()
+    data.dispatch('core/blocks').removeBlockTypes([
+      'core/cover',
+      'core/gallery',
+      'core/media-text'
+    ])
+  }
+}
+
+function setupSidebar (options) {
+  if (options.sidebar) {
+    registerSidebar()
   }
 }
 
@@ -89,4 +146,21 @@ function setupSubmit (target) {
  */
 function removeUploadButton () {
   elementRendered('.components-form-file-upload button', element => element.remove())
+}
+
+/**
+ * Removes some unnecessary elements from the editor
+ */
+function removeElements () {
+  // Manage All Reusable blocks
+  elementRendered('[href="edit.php?post_type=wp_block"]', element => { element.remove() })
+
+  // Publish button
+  elementRendered('.editor-post-publish-button', element => { element.style.display = 'none' })
+  elementRendered('.editor-post-publish-panel__toggle', element => { element.style.display = 'none' })
+
+  // Remove article button
+  elementRendered('.editor-post-trash', element => { element.remove() })
+
+  elementRendered('.editor-post-saved-state', element => { element.style.display = 'none' })
 }

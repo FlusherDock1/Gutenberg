@@ -1,4 +1,5 @@
-1.1.25: Sticky sidebar 
+1.2.0: !!! Migration to Larabeg 1.0.0-rc.1.
+1.1.25: Sticky sidebar
 1.1.2: Lovata.GoodNews integration
 1.1.1: Reusable blocks are now working in RainLab.Blog Integration
 1.1.0: RainLab.Blog integration
@@ -12,7 +13,7 @@
   - update_blocks_table.php
 1.0.5: Removed update_blocks migration
 1.0.4: Removed json type completly
-1.0.2: 
+1.0.2:
   - Migrations
   - create_blocks_table.php
   - create_contents_table.php
