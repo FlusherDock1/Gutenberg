@@ -6,14 +6,13 @@ use ReaZzon\Gutenberg\Models\Settings;
 use ReaZzon\Gutenberg\Helpers\BlockHelper;
 use ReaZzon\Gutenberg\Helpers\EmbedHelper;
 
-class Extenders 
+class Extenders
 {
 
     public static function RainLabBlog()
     {
-        if (Settings::get('integration_blog', false) && 
-            PluginManager::instance()->hasPlugin('RainLab.Blog'))
-        {
+        if (Settings::get('integration_blog', false) &&
+            PluginManager::instance()->hasPlugin('RainLab.Blog')) {
 
             Event::listen('backend.form.extendFields', function ($widget) {
 
@@ -29,21 +28,21 @@ class Extenders
 
                 // Finding content field and changing it's type regardless whatever it already is.
                 foreach ($widget->getFields() as $field) {
-                    if ($field->fieldName === 'content'){
-                        $field->config['type']      = 'gutenberg';
-                        $field->config['widget']    = 'ReaZzon\Gutenberg\FormWidgets\Gutenberg';
+                    if ($field->fieldName === 'content') {
+                        $field->config['type'] = 'gutenberg';
+                        $field->config['widget'] = 'ReaZzon\Gutenberg\FormWidgets\Gutenberg';
                         $field->config['minheight'] = 500;
                     }
                 }
             });
 
             // Repalcing original content_html attribute.
-            \RainLab\Blog\Models\Post::extend(function($model) {
-                $model->bindEvent('model.getAttribute', function($attribute, $value) use ($model){
+            \RainLab\Blog\Models\Post::extend(function ($model) {
+                $model->bindEvent('model.getAttribute', function ($attribute, $value) use ($model) {
                     if ($attribute == 'content_html') {
-                        return "<div class='gutenberg__content wp-embed-responsive'>".
+                        return "<div class='gutenberg__content wp-embed-responsive'>" .
                             BlockHelper::renderBlocks(EmbedHelper::renderEmbeds($value))
-                        ."</div>";
+                            . "</div>";
                     }
                 });
             });
@@ -52,9 +51,8 @@ class Extenders
 
     public static function LovataGoodNews()
     {
-        if (Settings::get('integration_good_news', false) && 
-            PluginManager::instance()->hasPlugin('Lovata.GoodNews'))
-        {
+        if (Settings::get('integration_good_news', false) &&
+            PluginManager::instance()->hasPlugin('Lovata.GoodNews')) {
 
             Event::listen('backend.form.extendFields', function ($widget) {
 
@@ -70,20 +68,20 @@ class Extenders
 
                 // Finding content field and changing it's type regardless whatever it already is.
                 foreach ($widget->getFields() as $field) {
-                    if ($field->fieldName === 'content'){
-                        $field->config['type']      = 'gutenberg';
-                        $field->config['widget']    = 'ReaZzon\Gutenberg\FormWidgets\Gutenberg';
+                    if ($field->fieldName === 'content') {
+                        $field->config['type'] = 'gutenberg';
+                        $field->config['widget'] = 'ReaZzon\Gutenberg\FormWidgets\Gutenberg';
                         $field->config['minheight'] = 500;
                     }
                 }
             });
 
             // Repalcing original content attribute.
-            \Lovata\GoodNews\Classes\Item\ArticleItem::extend(function($elementItem) {
-                $elementItem->addDynamicMethod('getContentAttribute', function() use ($elementItem){
-                    return "<div class='gutenberg__content wp-embed-responsive'>".
+            \Lovata\GoodNews\Classes\Item\ArticleItem::extend(function ($elementItem) {
+                $elementItem->addDynamicMethod('getContentAttribute', function () use ($elementItem) {
+                    return "<div class='gutenberg__content wp-embed-responsive'>" .
                         BlockHelper::renderBlocks(EmbedHelper::renderEmbeds($elementItem->getAttribute('content')))
-                    ."</div>";
+                        . "</div>";
                 });
             });
         }
@@ -91,32 +89,33 @@ class Extenders
 
     /**
      * Static pages currently in work.
-     * 
+     *
+     *
      * DONE:
      *      - Gutenberg.js working with content from static files.
      *      - Full work on master tab
-     * 
-     * TODO: 
+     *
+     * TODO:
      *      - Reload of formwidget everytime tab is changed. Gutenberg.js can't have mulitple instances at one page.
-     * 
+     *
      */
     public static function StaticPages()
     {
-        Event::listen('backend.form.extendFields', function ($widget) {
-            if (!$widget->getController() instanceof \RainLab\Pages\Controllers\Index ||
-                !$widget->model instanceof \RainLab\Pages\Classes\Page) {
-                return; 
-            }
-
-            // Registering gutenberg formwidget
-            $widget->addSecondaryTabFields([
-                'markup' => [
-                    'tab'     => 'rainlab.pages::lang.editor.content',
-                    'type'    => 'gutenberg',
-                    'stretch' => 'true'
-                ]
-            ]);
-        });
+//        Event::listen('backend.form.extendFields', function ($widget) {
+//            if (!$widget->getController() instanceof \RainLab\Pages\Controllers\Index ||
+//                !$widget->model instanceof \RainLab\Pages\Classes\Page) {
+//                return;
+//            }
+//
+//            // Registering gutenberg formwidget
+//            $widget->addSecondaryTabFields([
+//                'markup' => [
+//                    'tab' => 'rainlab.pages::lang.editor.content',
+//                    'type' => 'gutenberg',
+//                    'stretch' => 'true'
+//                ]
+//            ]);
+//        });
     }
 
 

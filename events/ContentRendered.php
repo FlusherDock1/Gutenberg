@@ -1,8 +1,7 @@
 <?php namespace ReaZzon\Gutenberg\Events;
 
-use Illuminate\Queue\SerializesModels;
-
 use ReaZzon\Gutenberg\Models\Content;
+use Illuminate\Queue\SerializesModels;
 
 class ContentRendered
 {
@@ -12,8 +11,8 @@ class ContentRendered
 
     /**
      * Create a new event instance
-     * 
-     * @param ReaZzon\Gutenberg\Models\Content $content
+     *
+     * @param Content $content
      * @return void
      */
     public function __construct(Content $content)

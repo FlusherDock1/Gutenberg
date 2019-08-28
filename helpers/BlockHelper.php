@@ -6,28 +6,27 @@ class BlockHelper
 {
     /**
      * Renders any blocks in the HTML (recursively)
-     * @param String $html
+     * @param $html
+     * @return string|string[]|null
      */
     public static function renderBlocks($html)
     {
-        $regex = '/<!-- wp:block {"ref":(\d*)} \/-->/';
-        $result = preg_replace_callback($regex, function ($matches) {
+        return preg_replace_callback('/<!-- wp:block {"ref":(\d*)} \/-->/', function ($matches) {
             return self::renderBlock($matches[1]);
         }, $html);
-        return $result;
     }
 
     /**
      * Returns the HTML of the Block with $id
-     * @param Int $id
+     * @param $id
+     * @return string
      */
     private static function renderBlock($id)
     {
-        $block = Block::find($id);
-        if ($block) {
+        if ($block = Block::find($id)) {
             return $block->render();
-        } else {
-            return 'Block not found';
         }
+
+        return 'Block not found';
     }
 }

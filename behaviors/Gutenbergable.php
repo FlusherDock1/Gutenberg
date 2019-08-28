@@ -14,9 +14,12 @@ class Gutenbergable extends ModelBehavior
     public function __construct($model)
     {
         parent::__construct($model);
-        $model->morphOne['content'] = [Content::class, 'name' => 'contentable'];
+        $model->morphOne['content'] = [ Content::class,
+            'name' => 'contentable',
+            'delete' => true
+        ];
     }
-    
+
     /**
      * Returns the rendered HTML from the Content object
      * @return String
@@ -47,10 +50,10 @@ class Gutenbergable extends ModelBehavior
     /**
      * Sets the content object using the raw editor content
      * @param String $content
-     * @param String $save - Calls .save() on the Content object if true
+     * @param boolean $save - Calls .save() on the Content object if true
      */
     public function setContent($content, $save = false)
-    {   
+    {
         if (!$this->model->content) { $this->createContent(); }
 
         $this->model->content->setContent($content);

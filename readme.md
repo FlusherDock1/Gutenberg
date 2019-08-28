@@ -122,7 +122,7 @@ In order to correctly display Gutenberg styles. You must add laraberg public sty
 
 ## Working with source js code
 
-If you want add some features you can work with source files of Laraberg in `/plugins/reazzon/gutenberg/formwidgets/gutenberg/assets/resources`, to setup all environment follow these steps:
+If you want to add some features you can work with source files of Laraberg in `/plugins/reazzon/gutenberg/formwidgets/gutenberg/assets/resources`, to set up all environment follow these steps:
  
 1. Clone Gutenberg rep.:
 `git clone https://github.com/WordPress/gutenberg.git gutenberg`
