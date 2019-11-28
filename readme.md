@@ -1,8 +1,6 @@
 # Gutenberg for OctoberCMS
 **PLUGIN CURRENTLY IN BETA.** 
 
-**RAINLAB.BLOG AND LOVATA.GOODNEWS INTEGRATION READY**
-
 [This text in russian](https://octoclub.ru/d/70-gutenberg-%D0%B2%D0%B8%D0%B7%D1%83%D0%B0%D0%BB%D1%8C%D0%BD%D1%8B%D0%B9-dragdrop-%D1%80%D0%B5%D0%B4%D0%B0%D0%BA%D1%82%D0%BE%D1%80-%D0%B1%D0%BB%D0%BE%D0%BA%D0%BE%D0%B2-%D0%B4%D0%BB%D1%8F-%D0%BF%D0%BB%D0%B0%D0%B3%D0%B8%D0%BD%D0%BE%D0%B2)
 
 Gutenberg is a rich-text visual editor from WordPress, with the features of bulidng content with blocks. With Gutenberg, you can create truly unique content for your website by simply dragging and dropping blocks.
@@ -16,6 +14,7 @@ Integration of Laraberg by [VanOns\Laraberg](https://github.com/VanOns/laraberg)
 **Working integrations:**
 - [RainLab.Blog](https://octobercms.com/plugin/rainlab-blog)
 - [Lovata.GoodNews](https://octobercms.com/plugin/lovata-goodnews)
+- [Indikator.News](https://octobercms.com/plugin/indikator-news)
 
 **Coming Soon integrations:**
 - [RainLab.StaticPages](https://octobercms.com/plugin/rainlab-pages)
@@ -57,6 +56,7 @@ Integration of Laraberg by [VanOns\Laraberg](https://github.com/VanOns/laraberg)
 - ~~RainLab.Blog integration~~ **DONE in 1.1.0 update**
 - ~~Lovata.GoodNews integration~~ **DONE in 1.1.2 update**
 - ~~Migration to release version of Laraberg~~ **DONE in 1.2.0 update**
+- ~~Indikator.News integration~~ **DONE in 1.2.5 update**
 - RainLab.StaticPages integration
 
 **Later work:**
