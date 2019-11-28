@@ -1,7 +1,6 @@
 <?php namespace ReaZzon\Gutenberg\Models;
 
 use Model;
-use ReaZzon\Gutenberg\Events\ContentRendered;
 use ReaZzon\Gutenberg\Helpers\BlockHelper;
 use ReaZzon\Gutenberg\Helpers\EmbedHelper;
 
@@ -34,7 +33,6 @@ class Content extends Model
 
     /**
      * Sets the raw content and performs some initial rendering
-     * @param String $html
      */
     public function beforeSave()
     {
@@ -46,8 +44,6 @@ class Content extends Model
      */
     public function renderRaw()
     {
-        $this->rendered_content = EmbedHelper::renderEmbeds($this->raw_content);
-        // event(new ContentRendered($this));
-        return $this->rendered_content;
+        return EmbedHelper::renderEmbeds($this->raw_content);
     }
 }

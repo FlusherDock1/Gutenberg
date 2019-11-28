@@ -3,7 +3,6 @@
 use Model;
 use ReaZzon\Gutenberg\Helpers\BlockHelper;
 use ReaZzon\Gutenberg\Helpers\EmbedHelper;
-use ReaZzon\Gutenberg\Helpers\SlugHelper;
 
 /**
  * Block Model
@@ -16,21 +15,24 @@ class Block extends Model
     public $table = 'reazzon_gutenberg_blocks';
 
     /**
-     * Add array attributes that do not have a corresponding column in your database
+     * @var array Add array attributes that do not have a corresponding column in your database
      */
-    protected $appends = ['content', 'title'];
+    protected $appends = [
+        'content',
+        'title'
+    ];
 
     /**
      * Updates slug according to title
      */
     public function updateSlug()
     {
-        $this->slug = SlugHelper::slugify($this->raw_title);
+        $this->slug = str_slug($this->raw_title, "-");
     }
 
     /**
      * Returns the rendered content of the block
-     * @return String - The completely rendered content
+     * @return string - The completely rendered content
      */
     public function render()
     {
@@ -39,17 +41,16 @@ class Block extends Model
 
     /**
      * Renders the content of the Block object
-     * @return String
+     * @return string
      */
     public function renderRaw()
     {
-        $this->rendered_content = EmbedHelper::renderEmbeds($this->raw_content);
-        return $this->rendered_content;
+        return EmbedHelper::renderEmbeds($this->raw_content);
     }
 
     /**
      * Sets the raw content and performs some initial rendering
-     * @param String $html
+     * @param string $content
      */
     public function setContent($content)
     {
@@ -59,7 +60,7 @@ class Block extends Model
 
     /**
      * Returns a content object similar to WordPress
-     * @return Array
+     * @return array
      */
     public function getContentAttribute()
     {
@@ -71,7 +72,7 @@ class Block extends Model
 
     /**
      * Returns a content object similar to WordPress
-     * @return Array
+     * @return array
      */
     public function getTitleAttribute()
     {

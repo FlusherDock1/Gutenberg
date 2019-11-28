@@ -9,17 +9,24 @@ class Gutenbergable extends ModelBehavior
 {
 
     /**
-     * Constructor
+     * Gutenbergable constructor.
+     *
+     * @param $model
      */
     public function __construct($model)
     {
         parent::__construct($model);
-        $model->morphOne['content'] = [Content::class, 'name' => 'contentable'];
+        $model->morphOne['content'] = [
+            Content::class,
+            'name' => 'contentable',
+            'delete' => true
+        ];
     }
-    
+
     /**
      * Returns the rendered HTML from the Content object
-     * @return String
+     *
+     * @return string
      */
     public function renderContent()
     {
@@ -28,7 +35,8 @@ class Gutenbergable extends ModelBehavior
 
     /**
      * Returns the raw content that came out of Gutenberg
-     * @return String
+     *
+     * @return string
      */
     public function getRawContent()
     {
@@ -37,7 +45,8 @@ class Gutenbergable extends ModelBehavior
 
     /**
      * Returns the Gutenberg content with some initial rendering done to it
-     * @return String
+     *
+     * @return string
      */
     public function getRenderedContent()
     {
@@ -46,11 +55,12 @@ class Gutenbergable extends ModelBehavior
 
     /**
      * Sets the content object using the raw editor content
-     * @param String $content
-     * @param String $save - Calls .save() on the Content object if true
+     *
+     * @param $content
+     * @param bool $save Calls .save() on the Content object if true
      */
     public function setContent($content, $save = false)
-    {   
+    {
         if (!$this->model->content) { $this->createContent(); }
 
         $this->model->content->setContent($content);

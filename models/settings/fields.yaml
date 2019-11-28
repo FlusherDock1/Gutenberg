@@ -4,6 +4,11 @@
 
 tabs:
     fields:
+        warning:
+            type: partial
+            tab: 'reazzon.gutenberg::lang.settings.tab.integrations.name'
+            path: $/reazzon/gutenberg/models/settings/warning.htm
+
         section_standard:
             label: 'reazzon.gutenberg::lang.settings.tab.integrations.section_standard.name'
             tab: 'reazzon.gutenberg::lang.settings.tab.integrations.name'
@@ -23,7 +28,6 @@ tabs:
             type: switch
             span: left
 
-
         integration_good_news:
             label: 'reazzon.gutenberg::lang.settings.tab.integrations.good_news.name'
             tab: 'reazzon.gutenberg::lang.settings.tab.integrations.name'
@@ -39,3 +43,10 @@ tabs:
             span: left
             disabled: true
             readOnly: true
+
+        integration_indikator_news:
+            label: 'reazzon.gutenberg::lang.settings.tab.integrations.indikator_news.name'
+            tab: 'reazzon.gutenberg::lang.settings.tab.integrations.name'
+            comment: 'reazzon.gutenberg::lang.settings.tab.integrations.indikator_news.comment'
+            type: switch
+            span: right

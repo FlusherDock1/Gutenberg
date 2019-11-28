@@ -22,23 +22,24 @@ class Plugin extends PluginBase
             'description' => 'reazzon.gutenberg::lang.plugin.description',
             'author'      => 'Nick Khaetsky',
             'icon'        => 'icon-pencil-square-o',
-            'homepage'    => 'https://github.com/FlusherDock1/Gutenberg' 
+            'homepage'    => 'https://github.com/FlusherDock1/Gutenberg'
         ];
     }
-    
+
     /**
      * Boot method, called right before the request route.
      *
-     * @return array
+     * @return array|void
      */
     public function boot()
     {
         Extenders::RainLabBlog();
         Extenders::LovataGoodNews();
+        Extenders::IndikatorNews();
 
         // Coming soon.
         // Extenders::StaticPages();
-        // 
+        //
     }
 
     /**
