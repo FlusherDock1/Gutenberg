@@ -44,6 +44,6 @@ class Content extends Model
      */
     public function renderRaw()
     {
-        return EmbedHelper::renderEmbeds($this->raw_content);
+        $this->rendered_content = EmbedHelper::renderEmbeds($this->raw_content);
     }
 }
