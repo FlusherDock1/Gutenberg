@@ -36,7 +36,8 @@ class Content extends Model
      */
     public function beforeSave()
     {
-        $this->renderRaw();
+        $this->rendered_content = $this->renderRaw();
+
     }
 
     /**
