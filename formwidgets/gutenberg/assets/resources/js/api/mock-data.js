@@ -10,16 +10,12 @@ export const media = {
   }
 }
 
-const date = (new Date()).toISOString()
-
 export const page = {
   id: 1,
   content: {
     raw: '',
     rendered: ''
   },
-  date,
-  date_gmt: date,
   title: {
     raw: 'Preview page',
     rendered: 'Preview page'
@@ -70,7 +66,9 @@ export const themes = [{
 export const types = {
   page: {
     id: 1,
-    labels: {},
+    labels: {
+      singular_name: 'Page'
+    },
     name: 'Page',
     rest_base: 'pages',
     slug: 'page',
@@ -94,6 +92,9 @@ export const types = {
   },
   block: {
     capabilities: {},
+    labels: {
+      singular_name: 'Block'
+    },
     name: 'Blocks',
     rest_base: 'blocks',
     slug: 'wp_block',

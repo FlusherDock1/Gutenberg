@@ -4,20 +4,24 @@ import configureEditor from '../lib/configure-editor'
 import { elementReady } from '../lib/element-ready'
 
 const { blocks, data, domReady, editPost } = window.wp
+const { unregisterPlugin } = window.wp.plugins
 const { unregisterBlockType, registerBlockType, getBlockType } = blocks
 
 /**
  * Initialize the Gutenberg editor
  * @param {string} target the element ID to render the gutenberg editor in
+ * @param options
  */
 export default function init (target, options = {}) {
   configureAPI(options)
 
-  // Disable publish sidebar
-  data.dispatch('core/editor').disablePublishSidebar()
+  // Toggle features
+  const { toggleFeature } = data.dispatch('core/edit-post')
+  toggleFeature('welcomeGuide')
+  toggleFeature('fullscreenMode')
 
-  // Disable tips
-  data.dispatch('core/nux').disableTips()
+  // Disable block patterns
+  unregisterPlugin('edit-post')
 
   window._wpLoadGutenbergEditor = new Promise(function (resolve) {
     domReady(async () => {

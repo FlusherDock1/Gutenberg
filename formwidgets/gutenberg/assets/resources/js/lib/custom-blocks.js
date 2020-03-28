@@ -16,7 +16,7 @@ export function registerBlock (name, block) {
  * @param {String} slug - The slug for the category (eg: my-category)
  */
 export function registerCategory (title, slug) {
-  let category = {
+  const category = {
     slug: slug,
     title: title
   }

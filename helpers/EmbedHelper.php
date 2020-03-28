@@ -7,27 +7,47 @@ class EmbedHelper
 
     /**
      * Renders any embeds in the HTML
-     * @param string $html
-     * @return string - The HTML containing all embed code
+     * @param String $html
+     * @return String - The HTML containing all embed code
      */
     public static function renderEmbeds($html)
     {
+        // Match URL from raw Gutenberg embed content
         $regex = '/<!-- wp:core-embed\/.*?-->\s*?<figure class="wp-block-embed.*?".*?<div class="wp-block-embed__wrapper">\s*?(.*?)\s*?<\/div><\/figure>/';
         return preg_replace_callback($regex, function ($matches) {
-            $embed = self::createEmbed($matches[1]);
+            $embed = self::create($matches[1]);
             $url = preg_replace('/\//', '\/', preg_quote($matches[1]));
+            // Replace URL with OEmbed HTML
             return preg_replace("/>\s*?$url\s*?</", ">$embed->code<", $matches[0]);
         }, $html);
     }
 
     /**
-     * Creates an embed from a URL
-     * @param $url
-     * @return \Embed\Adapters\Adapter
+     * Transforms the Embed/Embed object to a format that Gutenberg can handle
+     * @param Embed $embed
+     * @return array
      */
-    public static function createEmbed($url)
+    public static function serialize($embed) {
+        return [
+            'url' => $embed->url,
+            'author_name' => $embed->authorName,
+            'author_url' => $embed->authorUrl,
+            'html' => $embed->code,
+            'width' => $embed->width,
+            'height' => $embed->height,
+            'type' => $embed->type,
+            'provider_name' => $embed->providerName,
+            'provider_url' => $embed->providerUrl
+        ];
+    }
+
+    /**
+     * Creates an embed from a URL
+     * @param String $url
+     * @return mixed
+     */
+    public static function create($url)
     {
         return Embed::create($url);
     }
 }
-

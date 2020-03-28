@@ -3,7 +3,7 @@ import * as MockData from '../api/mock-data'
 const { data } = window.wp
 
 export function getContent () {
-  data.dispatch('core/editor').savePost()
+  data.dispatch('core/editor').autosave()
   return data.select('core/editor').getEditedPostContent()
 }
 

@@ -41,11 +41,6 @@
   }
 
   .edit-post-sidebar {
-    position: absolute;
-    top: 56px;
-    min-height: calc(400px - 56px);
-    overflow: unset;
-
     .edit-post-sidebar__panel-tabs {
       top: 50px;
       ul {
@@ -66,9 +61,15 @@
   .editor-media-placeholder__media-library-button {
     margin-bottom: 0.5rem;
   }
-
+  .edit-post-fullscreen-mode-close.has-icon{
+    display: none !important;
+  }
   .components-placeholder {
     width: auto;
+  }
+
+  .components-popover.block-editor-block-list__block-popover{
+    z-index: 30;
   }
 
   .screen-reader-text,
@@ -182,4 +183,23 @@
 
 .laraberg-sidebar {
   display: none;
+}
+
+.wp-block-html .block-editor-plain-text {
+  width: 100%;
+}
+
+.is-fullscreen-mode{
+  .block-editor__container{
+    position: fixed;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    z-index: 200;
+    .block-editor-editor-skeleton__content {
+      height: calc(100vh - 60px);
+    }
+  }
+
 }

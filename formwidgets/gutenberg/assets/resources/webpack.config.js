@@ -4,15 +4,14 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 
 const externals = {
   react: 'React',
-  'react-dom': 'ReactDOM',
-  moment: 'moment'
+  'react-dom': 'ReactDOM'
 }
 
 module.exports = {
   mode: process.env.NODE_ENV,
   entry: './js/laraberg.js',
   output: {
-    filename: 'laraberg.js',
+    filename: '../js/laraberg.js',
     path: path.resolve(__dirname, '../js')
   },
   devtool: 'source-map',
