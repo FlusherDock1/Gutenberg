@@ -101,7 +101,9 @@ After you need to add behavior to $implement array in your model controller.
 public $implement = ['ReaZzon.Gutenberg.Behaviors.GutenbergController'];
 ```
 
-Done. Your model now has morphOne with `Gutenberg\Content` Model by `content` field.
+Done. Your model now has morphOne with `Gutenberg\Content` Model by `content` field that **renders only on created model page**.
+
+
 
 ## Rendering
 
