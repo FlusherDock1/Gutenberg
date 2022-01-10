@@ -1,25 +1,26 @@
-1.3.2: Fixing another bug with Gutenberg trying to implement wordpress behavior
-1.3.1: Fixing bug with non working Blog, oodNews, and etc. integrations
-1.3.0: !!! Migration to Laraberg 1.1.0, fixing embed and fullscreen bug. Gutenberg now shows only on created model.
-1.2.6: Fixing content block rendering caching
-1.2.5: Indikator.News integration
-1.2.0: !!! Migration to Larabeg 1.0.0-rc.1.
-1.1.25: Sticky sidebar
-1.1.2: Lovata.GoodNews integration
-1.1.1: Reusable blocks are now working in RainLab.Blog Integration
-1.1.0: RainLab.Blog integration
-1.0.96: Fixing uninstalling error
-1.0.95: Fixing updating error
-1.0.9: Removed stock WP blocks
-1.0.8: Reusable blocks are now fully working
-1.0.7: Native media manager Support
-1.0.6:
-  - Changing blocks model title to string, updating Laraberg to public 0.3 beta version
-  - update_blocks_table.php
-1.0.5: Removed update_blocks migration
-1.0.4: Removed json type completly
+1.0.1: First version of Gutenberg
 1.0.2:
   - Migrations
   - create_blocks_table.php
   - create_contents_table.php
-1.0.1: First version of Gutenberg
+1.0.4: Removed json type completly
+1.0.5: Removed update_blocks migration
+1.0.6:
+  - Changing blocks model title to string, updating Laraberg to public 0.3 beta version
+  - update_blocks_table.php
+1.0.7: Native media manager Support
+1.0.8: Reusable blocks are now fully working
+1.0.9: Removed stock WP blocks
+1.0.95: Fixing updating error
+1.0.96: Fixing uninstalling error
+1.1.0: RainLab.Blog integration
+1.1.1: Reusable blocks are now working in RainLab.Blog Integration
+1.1.2: Lovata.GoodNews integration
+1.1.25: Sticky sidebar
+1.2.0: !!! Migration to Larabeg 1.0.0-rc.1.
+1.2.5: Indikator.News integration
+1.2.6: Fixing content block rendering caching
+1.3.0: !!! Migration to Laraberg 1.1.0, fixing embed and fullscreen bug. Gutenberg now shows only on created model.
+1.3.1: Fixing bug with non working Blog, oodNews, and etc. integrations
+1.3.2: Fixing another bug with Gutenberg trying to implement wordpress behavior
+1.4.0: October CMS v2 support
